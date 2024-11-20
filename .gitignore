@@ -2,3 +2,5 @@
 /.vscode
 /_minted-main
 /main.log
+*.aux
+*.log

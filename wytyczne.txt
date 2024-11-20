@@ -1,0 +1,35 @@
+Rozdziały
+1. Wprowadzenie - wprowadzenie do problemu - jaki problem rozwiązuje praca, co jest jego dziedziną. 
+Określenie celu pracy. Jedno zdanie - nie więcej niż 10 wyrazów, bardzo precyzyjne. 
+Recenzent musi dobrze zrozumieć cel. 
+Rozdział kończy się opisem podziału pracy inżynierskiej i podziałem odpowiedzialności (kto co robił, nie tylko co napisał w pracy, ale jakie były ogólnie odpowiedzialności). 
+Ogólnie w pracy w każdym rozdziale musi pojawić sie nazwisko autora rozdziału.
+2. Analiza problemu - opis problemu w sposób szczegółowy. 
+Przytoczenie naszej wiedzy na temat problemu, stan techniki, obecne aplikacje/systemy rozwiązujące problem, słabe mocne strony tych systemów. 
+Jakie są ich słabe strony i co my próbujemy rozwiązań naszą pracą. Cytaty z literatury.
+3. Propozycja rozwiązania problemu - ostateczna koncepcja aplikacji. Rozdział czysto koncepcyjny. 
+Krótki rozdział, jeżeli bardzo krótki, to można połączyć z rozdziałem 4.
+4. Opis projektu rozwiązania. Projekt aplikacji, systemu. 
+Projekt architektury systemu. Jeśli jest bardziej złożona logika, to można opisać. 
+Funkcje, moduły. Interfejs użytkownika, nietrywialna struktura danych, jeśli trywialna można opisać kilkoma zdaniami. 
+5. Techniczny opis implementacji. Opisać kod, który został wyprodukowany. Przedstawić strukturę kodu. 
+Fizyczna struktura - pliki, moduły, struktura katalogu. Przewodnik po kodzie. Co gdzie zostało zaimplementowane. 
+Ostatecznie najlepiej o każdym katalogu/pliku wspomnieć. Opisać w sposób zrozumiały, żeby można było trafić w odpowiednie miejsce. 
+Przedstawia się kluczowe elementy implementacji, jakieś ciekawe fragmenty - najlepiej wrzucić jakieś kawałki kodu.
+6. Instrukcja użytkowania wytworzonej aplikacji, rozwiązania. Można dać zrzuty ekranu.
+7. Wyniki testów. Wspomnienie o testowaniu, testy systemowe i użytkowe. Np. udostępnić użytkownikom i zbadać ich opinię. 
+Można też dać testy bezpieczeństwa. Podsumowanie wyników.
+8. Podsumowanie. Jeżeli czegoś nie udało się zrobić, należy to opisać. 
+Wnioski związane z możliwościami dalszego rozwoju (wnioski rodzaju inżynierskiego, np poprawić projekt UI, należy się skupić na tym albo na tym). 
+9. Literatura - odwołania do literatury - odwołania w postaci [n], np [1], n - numer odwołania. 
+Każda pozycja literatury jest w którymś miejscu cytowana, parafrazowana, chyba że oddzielimy to podtytułem "dodatkowe pozycje". 
+Wystarczy kilkanaście pozycji (15-20). Mogą tu być manuale, instrukcje, strony internetowe. Artykuły. 
+Od 3 do 5 pozycji to powinny być pozycje merytoryczne (artykuły naukowe lub książki, można użyc IEEE (?), google scholar). 
+Jeżeli robimy cytat dosłowny, to musimy je wziąć w cudzysłowy.
+
+Ilustracje i tabele muszą być podpisane i muszą być do nich odnośniki w tekście. Ilustracje są podpisane pod ilustracją, a tabele nad tabelą. Do każdego musi być odsyłacz numerkiem. Jako odnośnik do rysunku można użyć formy skrótowej np. "Na rys. 1. przedstawiono..." 
+Stosujemy styl bezosobowy, np. "Rysunek przedstawia..., Wykonano ..."
+Zwracać uwagę na ortografię i interpunkcję.
+Jeżeli używa się wyrażeń arytmetycznych, to lepiej to oddzielnie sformatować. Wzory powinno się numerować z prawej strony.
+Jeżeli przedstawiamy listingi (dłuższy kawałek kodu), to też trzeba dodać do nich etykietę.
+Czcionka bezszeryfowa. Nie nadużywać wytłuszczenia, można używać kursywę.

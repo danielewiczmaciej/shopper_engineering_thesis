@@ -1,27 +1,26 @@
 \documentclass{article}
 \usepackage{graphicx}  % for including images
-\usepackage{minted}    % for code highlighting
+
+\usepackage{polyglossia} % Language support for xelatex/lualatex
+\setmainlanguage{polish}
+\usepackage{fontspec}
+\setmainfont{Arial}
 
 \begin{document}
-\title{Shopper - Aplikacja sklepowa}
-\author{Maciej Danielewicz, Michał Jaskulski, Julian Janicki}
-\date{\today}
-\maketitle
 
-\section{Introduction}
-This is the introduction.
+\include{chapters/0_a_streszczenie}
+\include{chapters/0_b_spis_tresci}
+\include{chapters/0_c_wykaz_skrotow}
+\include{chapters/1_wstep}
+\include{chapters/2_analiza_problemu}
+\include{chapters/3_propozycja_rozwiazania_problemu}
+\include{chapters/4_opis_rozwiazania}
+\include{chapters/5_opis_techniczny_rozwiazania}
+\include{chapters/6_instrukcja_uzytkowania}
+\include{chapters/7_wyniki_testow}
+\include{chapters/8_podsumowanie}
+\include{chapters/9_literatura}
 
-\section{Code Snippet Example}
-Here is an example of Python code:
 
-\begin{minted}{python}
-def hello_world():
-    print("Hello, World!")
-\end{minted}
-
-\section{Image Example}
-Here is an example of an image:
-
-\includegraphics[width=0.5\textwidth]{./images/example.jpeg}
 
 \end{document}
