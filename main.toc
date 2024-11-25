@@ -1,17 +1,20 @@
 \selectlanguage *[]{polish}
-\contentsline {chapter}{\numberline {1}WPROWADZENIE}{2}{}%
-\contentsline {section}{\numberline {1.1}Motywacja}{2}{}%
-\contentsline {subsection}{\numberline {1.1.1}Wykluczenie społeczne}{2}{}%
-\contentsline {subsection}{\numberline {1.1.2}Dynamiczny rozwój rynku aplikacji mobilnych}{2}{}%
-\contentsline {subsection}{\numberline {1.1.3}Brak gotowych rozwiązań}{3}{}%
-\contentsline {section}{\numberline {1.2}Cel pracy}{3}{}%
-\contentsline {subsection}{\numberline {1.2.1}Inspiracja}{3}{}%
-\contentsline {subsubsection}{Chęć pomocy}{3}{}%
-\contentsline {chapter}{\numberline {2}ANALIZA PROBLEMU}{4}{}%
-\contentsline {section}{\numberline {2.1}Nawigacja wewnątrz budynku}{4}{}%
-\contentsline {section}{\numberline {2.2}Przetwarzanie języka naturalnego}{4}{}%
-\contentsline {chapter}{\numberline {3}PROPOZYCJA ROZWIĄZANIA PROBLEMU}{5}{}%
-\contentsline {chapter}{\numberline {4}OPIS ROZWIĄZANIA}{6}{}%
-\contentsline {chapter}{\numberline {5}INSTRUKCJA UŻYTKOWANIA}{7}{}%
-\contentsline {chapter}{\numberline {6}WYNIKI TESTÓW}{8}{}%
-\contentsline {chapter}{\numberline {7}LITERATURA}{9}{}%
+\contentsline {chapter}{Wykaz skrótów}{2}{}%
+\contentsline {chapter}{\numberline {1}WPROWADZENIE}{3}{}%
+\contentsline {section}{\numberline {1.1}Motywacja}{3}{}%
+\contentsline {subsection}{\numberline {1.1.1}Wykluczenie społeczne}{3}{}%
+\contentsline {subsection}{\numberline {1.1.2}Dynamiczny rozwój rynku aplikacji mobilnych}{3}{}%
+\contentsline {subsection}{\numberline {1.1.3}Brak gotowych rozwiązań}{4}{}%
+\contentsline {section}{\numberline {1.2}Cel pracy}{4}{}%
+\contentsline {subsection}{\numberline {1.2.1}Inspiracja}{4}{}%
+\contentsline {subsubsection}{Chęć pomocy}{4}{}%
+\contentsline {chapter}{\numberline {2}ANALIZA PROBLEMU}{5}{}%
+\contentsline {section}{\numberline {2.1}Nawigacja wewnątrz budynku}{5}{}%
+\contentsline {section}{\numberline {2.2}Przetwarzanie języka naturalnego}{5}{}%
+\contentsline {chapter}{\numberline {3}PROPOZYCJA ROZWIĄZANIA PROBLEMU}{6}{}%
+\contentsline {chapter}{\numberline {4}OPIS ROZWIĄZANIA}{7}{}%
+\contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{8}{}%
+\contentsline {section}{\numberline {5.1}Architektura systemu}{8}{}%
+\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{10}{}%
+\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{11}{}%
+\contentsline {chapter}{\numberline {8}LITERATURA}{12}{}%
