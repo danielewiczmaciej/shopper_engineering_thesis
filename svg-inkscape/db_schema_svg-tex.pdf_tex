@@ -1,0 +1,155 @@
+%% Creator: Inkscape 1.3.2 (091e20e, 2023-11-25), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'db_schema_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{353.5bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,2.56577104)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,2.51004257){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}stores\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,2.44497893){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}store_id (PK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,2.37991528){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}store_name\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,2.31485163){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}latitude\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,2.24978798){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}longitude\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,2.18472434){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}city\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,1.97256027){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}sections\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,1.90749662){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}section_id (PK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,1.84243298){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}section_name\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,1.77736933){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}store_id (FK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{db_schema_svg-tex.pdf}}%
+    \put(0.21357753,2.0786423){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}1:N\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,1.50014162){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}categories\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,1.43507797){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}category_id (PK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,1.37001432){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}category_name\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{db_schema_svg-tex.pdf}}%
+    \put(0.17680243,1.30495067){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}section_id (FK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{db_schema_svg-tex.pdf}}%
+    \put(0.21357753,1.6712873){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}1:N\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{db_schema_svg-tex.pdf}}%
+    \put(0.49646296,1.02772296){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}products\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{db_schema_svg-tex.pdf}}%
+    \put(0.49646296,0.96265931){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}product_id (PK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{db_schema_svg-tex.pdf}}%
+    \put(0.49646296,0.89759567){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}name\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{db_schema_svg-tex.pdf}}%
+    \put(0.49646296,0.83253202){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}description\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{db_schema_svg-tex.pdf}}%
+    \put(0.49646296,0.76746837){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}price\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{db_schema_svg-tex.pdf}}%
+    \put(0.49646296,0.70240477){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}category_id (FK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{db_schema_svg-tex.pdf}}%
+    \put(0.49646296,0.63734112){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}availability\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{db_schema_svg-tex.pdf}}%
+    \put(0.49646296,0.57227747){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}amount\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{db_schema_svg-tex.pdf}}%
+    \put(0.49646296,0.50721383){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}unit_id (FK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=26]{db_schema_svg-tex.pdf}}%
+    \put(0.35502024,1.13380499){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}1:N\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=27]{db_schema_svg-tex.pdf}}%
+    \put(0.51909379,1.50014162){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}units\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=28]{db_schema_svg-tex.pdf}}%
+    \put(0.51909379,1.43507797){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}unit_id (PK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=29]{db_schema_svg-tex.pdf}}%
+    \put(0.51909379,1.37001432){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}unit_name\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=30]{db_schema_svg-tex.pdf}}%
+    \put(0.51909379,1.30495067){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}unit_symbol\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=31]{db_schema_svg-tex.pdf}}%
+    \put(0.54455348,1.13380499){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}1:N\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=32]{db_schema_svg-tex.pdf}}%
+    \put(0.67185192,0.29504976){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}cart_items\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=33]{db_schema_svg-tex.pdf}}%
+    \put(0.67185192,0.22998611){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}cart_item_id (PK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=34]{db_schema_svg-tex.pdf}}%
+    \put(0.67185192,0.16492246){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}cart_id (FK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=35]{db_schema_svg-tex.pdf}}%
+    \put(0.67185192,0.09985881){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}product_id (FK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=36]{db_schema_svg-tex.pdf}}%
+    \put(0.67185192,0.03479516){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}quantity\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=37]{db_schema_svg-tex.pdf}}%
+    \put(0.64073452,0.40113179){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}1:N\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=38]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,1.56520526){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}users\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=39]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,1.50014162){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}user_id (PK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=40]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,1.43507797){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}email\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=41]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,1.37001432){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}password\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=42]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,1.30495067){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}first_name\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=43]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,1.23988703){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}last_name\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=44]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,0.86506384){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}carts\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=45]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,0.8000002){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}cart_id (PK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=46]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,0.73493659){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}user_id (FK)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=47]{db_schema_svg-tex.pdf}}%
+    \put(0.85006973,0.66987294){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}creation_date\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=48]{db_schema_svg-tex.pdf}}%
+    \put(0.88684484,1.13380499){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}1:N\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=49]{db_schema_svg-tex.pdf}}%
+    \put(0.77934838,0.40113179){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}1:N\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

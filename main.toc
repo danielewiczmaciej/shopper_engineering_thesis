@@ -15,6 +15,18 @@
 \contentsline {chapter}{\numberline {4}OPIS ROZWIĄZANIA}{7}{}%
 \contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{8}{}%
 \contentsline {section}{\numberline {5.1}Architektura systemu}{8}{}%
-\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{10}{}%
-\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{11}{}%
-\contentsline {chapter}{\numberline {8}LITERATURA}{12}{}%
+\contentsline {section}{\numberline {5.2}Baza danych}{9}{}%
+\contentsline {subsection}{\numberline {5.2.1}Opis bazy danych}{9}{}%
+\contentsline {subsection}{\numberline {5.2.2}Szczegółowy opis tabel}{10}{}%
+\contentsline {subsubsection}{Tabela stores}{10}{}%
+\contentsline {subsubsection}{Tabela sections}{10}{}%
+\contentsline {subsubsection}{Tabela categories}{10}{}%
+\contentsline {subsubsection}{Tabela units}{11}{}%
+\contentsline {subsubsection}{Tabela products}{11}{}%
+\contentsline {subsubsection}{Tabela users}{11}{}%
+\contentsline {subsubsection}{Tabela carts}{11}{}%
+\contentsline {subsubsection}{Tabela cart\_items}{12}{}%
+\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{13}{}%
+\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{14}{}%
+\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{15}{}%
+\contentsline {chapter}{\numberline {9}LITERATURA}{16}{}%
