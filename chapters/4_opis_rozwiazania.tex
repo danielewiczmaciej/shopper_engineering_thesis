@@ -5,7 +5,7 @@
 
 System składa się z pięciu głównych komponentów: nadajników BLE (ang. \textit{BLE beacon}), aplikacji mobilnej, systemu Wit.ai, serwera oraz bazy danych. Grafikę przedstawiającą architekturę systemu można zobaczyć na rysunku \ref{fig:architecture}.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includesvg[width=\textwidth]{images/architecture.svg}
     \caption{Architektura systemu.}
@@ -15,12 +15,6 @@ System składa się z pięciu głównych komponentów: nadajników BLE (ang. \te
 Aplikacja mobilna jest odpowiedzialna za odbieranie oraz przetwarzanie sygnału z nadajników. Jej zadaniem jest również interakcja z użytkownikiem i wysyłanie zapytań do serwera. Serwer przetwarza żądania użytkownika, wysyła zapytania do API (ang. \textit{Application Programming Interface}) serwisu Wit.ai, oraz komunikuje się z bazą danych. Baza danych przechowuje dane i modyfikuje lub udostępnia je na żadanie serwera. Komunikacja między aplikacją mobilną a serwerem odbywa się za pomocą protokołu HTTP. Serwer jest odpowiedzialny za przetwarzanie żądań użytkownika, a także za komunikację z bazą danych. Baza danych przechowuje dane o produktach, użytkownikach, koszykach, sklepach itp.
 
 \section{Baza danych}
-
-\begin{figure}[ht]
-    \includesvg[width=\textwidth]{images/database.svg}
-    \caption{Schemat bazy danych.}
-    \label{fig:database}
-\end{figure}
 
 \subsection{Opis bazy danych}
 
@@ -34,6 +28,12 @@ Użytkownicy systemu są reprezentowani w tabeli \textit{users}, gdzie zapisywan
 Szczegóły dotyczące zawartości koszyków są zapisane w tabeli \textit{cart\_items}, która łączy produkty z koszykami i zawiera informacje o liczbie sztuk danego produktu.
 
 Relacje pomiędzy tabelami są realizowane za pomocą kluczy obcych, z zastosowaniem reguły ON DELETE CASCADE, co zapewnia integralność danych oraz automatyczne usuwanie powiązanych rekordów w przypadku usunięcia danych z tabel nadrzędnych. Taka organizacja umożliwia łatwe skalowanie bazy danych oraz wspiera utrzymanie spójności danych w systemie.
+
+\begin{figure}[H]
+    \includesvg[width=\textwidth]{images/database.svg}
+    \caption{Schemat bazy danych.}
+    \label{fig:database}
+\end{figure}
 
 \subsection{Szczegółowy opis tabel}
 

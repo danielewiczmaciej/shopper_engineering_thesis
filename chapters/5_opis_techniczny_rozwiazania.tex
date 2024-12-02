@@ -34,4 +34,47 @@ Po zdefiniowaniu intencji i encji, aplikacja wit.ai pozwala na trenowanie modelu
 
 \subsection{Kreator}
 
-Wytrenowany model należy zaprogramować. W tym celu wit.ai udostępnia kreator (ang. \textit{composer}), który pozwala na zdefiniowanie akcji, które mają być wykonywane po rozpoznaniu intencji przez aplikację. 
+Wytrenowany model należy zaprogramować. W tym celu wit.ai udostępnia kreator (ang. \textit{composer}), który pozwala na zdefiniowanie akcji, które mają być wykonywane po rozpoznaniu intencji przez aplikację. Przykładowe akcje, które zostały zdefiniowane w aplikacji wit.ai przedstawiono na rysunku \ref{fig:wit_ai_composer}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/witai_composer.png}
+    \caption{Kreator aplikacji wit.ai}
+    \label{fig:wit_ai_composer}
+\end{figure}
+
+\subsubsection{Akcje}
+
+W ramach kreatora dostępne są 4 moduły blokowe definiujące akcje. Są to:
+\begin{itemize}
+    \item \textit{Decision} - moduł decydujący o dalszym przebiegu akcji,
+    \item \textit{Context} - moduł przechowujący kontekst akcji,
+    \item \textit{Input} - moduł pobierający dane wejściowe,
+    \item \textit{Response} - moduł generujący odpowiedź.
+\end{itemize}
+
+\subsubsection{Decision}
+
+Moduł \textit{Decision} pozwala na zdefiniowanie warunków, które muszą być spełnione, aby akcja mogła zostać wykonana. Dostępne są poniższe warunki:
+\begin{itemize}
+    \item \textit{Intent} - sprawdza, czy intencja użytkownika jest zgodna z zdefiniowaną intencją,
+    \item \textit{Entity} - sprawdza, czy encja użytkownika jest zgodna z zdefiniowaną encją,
+    \item \textit{Context} - sprawdza, czy kontekst akcji jest zgodny z zdefiniowanym kontekstem,
+    \item \textit{Trait} - sprawdza, czy cecha akcji jest zgodna z zdefiniowaną cechą.
+    \item \textit{Not/And/Or} - służy do łączenia warunków.
+\end{itemize}
+
+\subsubsection{Context}
+Moduł \textit{Context} pozwala na zdefiniowanie kontekstu akcji. Kontekst to zmienna, która przechowuje informacje o stanie akcji. Kontekst może być wykorzystywany w kolejnych akcjach. W ramach tego modułu możn a wykonać 4 akcje:
+\begin{itemize}
+    \item \textit{Set} - ustawia wartość kontekstu,
+    \item \textit{Save} - zapisuje rozpoznaną encję do kontekstu,
+    \item \textit{Copy} - kopiuje wskazaną wartość kontekstu,
+    \item \textit{Clear} - czyści kontekst.
+\end{itemize}
+
+\subsubsection{Input}
+Moduł \textit{Input} pozwala na pobranie danych wejściowych. Jest on wykorzystywany na początku kreatora, w celu przyjęcia wiadomości od użytkownika. Można go również użyć do uzyskania dodatkowych informacji od użytkownika.
+
+\subsubsection{Response}
+Moduł \textit{Response} pozwala na zdefiniowanie odpowiedzi, która ma zostać zwrócona do użytkownika. W odpowiedzi można wykorzystać zmienne zdefiniowane w kontekście akcji. Można zwrócić tekst, obraz, dźwięk, link, czy dowolny inny format. Oprócz tego, można również zwrócić nazwę funkcji, która ma zostać wykonana po zakończeniu akcji.

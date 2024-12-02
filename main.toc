@@ -23,13 +23,18 @@
 \contentsline {subsubsection}{Tabela units}{10}{}%
 \contentsline {subsubsection}{Tabela products}{10}{}%
 \contentsline {subsubsection}{Tabela users}{10}{}%
-\contentsline {subsubsection}{Tabela carts}{10}{}%
+\contentsline {subsubsection}{Tabela carts}{11}{}%
 \contentsline {subsubsection}{Tabela cart\_items}{11}{}%
 \contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{12}{}%
 \contentsline {section}{\numberline {5.1}Aplikacja wit.ai}{12}{}%
 \contentsline {subsection}{\numberline {5.1.1}Intencje i encje}{12}{}%
 \contentsline {subsection}{\numberline {5.1.2}Kreator}{13}{}%
-\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{14}{}%
-\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{15}{}%
-\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{16}{}%
-\contentsline {chapter}{\numberline {9}LITERATURA}{17}{}%
+\contentsline {subsubsection}{Akcje}{14}{}%
+\contentsline {subsubsection}{Decision}{14}{}%
+\contentsline {subsubsection}{Context}{14}{}%
+\contentsline {subsubsection}{Input}{14}{}%
+\contentsline {subsubsection}{Response}{15}{}%
+\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{16}{}%
+\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{17}{}%
+\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{18}{}%
+\contentsline {chapter}{\numberline {9}LITERATURA}{19}{}%
