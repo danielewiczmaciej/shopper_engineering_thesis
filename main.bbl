@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{3}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -9,5 +9,21 @@
 K.~R. Chowdhary.
 \newblock \emph{Natural Language Processing}, pages 603--649.
 \newblock Springer India, New Delhi, 2020.
-\newblock ISBN 978-81-322-3972-7
+\newblock ISBN 978-81-322-3972-7.
+\newblock \doi{10.1007/978-81-322-3972-7_19}.
+\newblock URL \url{https://doi.org/10.1007/978-81-322-3972-7_19}.
+
+\bibitem[Croes(1958)]{Croes1958}
+G.~A. Croes.
+\newblock A method for solving traveling-salesman problems.
+\newblock \emph{Operations Research}, 6\penalty0 (6):\penalty0 791--812, 1958.
+\newblock URL \url{https://www.jstor.org/stable/167074}.
+
+\bibitem[Gutin and Punnen(2002)]{Gutin2002}
+Gregory Gutin and Abraham~P. Punnen.
+\newblock \emph{The Traveling Salesman Problem and Its Variations}.
+\newblock Springer, Berlin, 2002.
+\newblock \doi{10.1007/b101971}.
+\newblock URL \url{https://link.springer.com/book/10.1007/b101971}.
+
 \end{thebibliography}

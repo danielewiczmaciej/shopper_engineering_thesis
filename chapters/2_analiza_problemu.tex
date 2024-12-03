@@ -1,7 +1,27 @@
 \chapter{ANALIZA PROBLEMU}
 \label{chapter:analiza_problemu}
 
-\section{Nawigacja wewnątrz budynku}
+\section{Trasowanie po sklepie}
+
+Sklep można przedstawić jako graf, w którym wierzchołki reprezentują sekcje sklepu, a te sąsiednie połączone są w grafie krwędzią. Sekcje to krótkie fragmenty alejki o długości 1–2 metrów, do których przypisane są konkretne produkty w bazie danych. Dzięki temu podejściu cały sklep można traktować jako graf, a to z kolei pozawala na zastosowanie dobrze znanych algorytmów do znajdowania ścieżek.
+
+Przciętny graf sklepu ma prostą i powtarzalną strukturę: składa się z kilku długich, równoległych alejek, połączonych jedną poziomą alejką na dole i drugą u góry. Wagi krawędzi, są tak na prawdę odzwierciedlonymi wartościami odległości od obu środków sąsiednich sekcji. Są więc one często stałe, a wyjątki pojawiają się głównie na przejściach między alejkami i zakrętach.
+
+Proces trasowania otrzymuje na wejściu listę wierzchołków zmapowaną z listy zakupów użytkownika. System nawigacji musi znaleźć najkrótszą drogę w grafie, zaczynając od aktualnej pozycji użytkownika (dostarczanej przez system pozycjonowania) i przechodząc przez wszystkie wierzchołki z listy.
+
+\subsection{Podobieństwa i różnice z problemem komiwojażera (TSP)}
+
+Na pierwszy rzut oka nasz mechanizm może kojarzyć się problem komiwojażera (\textit{Traveling Salesman Problem, TSP}), w którym zadaniem jest odwiedzenie każdego punktu na grafie dokładnie raz i powrót do punktu startowego. Jak wskazano w pracy Gutin i Punnen (2002): „Problem komiwojażera jest jednym z najbardziej znanych problemów optymalizacji kombinatorycznej, a jego rozwiązanie wymaga innowacyjnych podejść ze względu na jego złożoność” \cite{Gutin2002}. Na szczęście, te drobne różnice sprawiają, że problem trasowania po sklepie jest znacznie prostszy:
+\begin{itemize}
+    \item W trasowaniu po sklepie krawędzie i wierzchołki mogą być odwiedzane wielokrotnie, jeśli wymaga tego optymalna trasa.
+    \item Nie ma konieczności powrotu do punktu początkowego, co znacząco upraszcza problem.
+    \item Graf sklepu ma bardzo regularną strukturę i często stałe wagi krawędzi, co pozwala na duże optymalizacje.
+\end{itemize}
+
+\subsection{Wnioski}
+
+Specyfika grafu sklepu oraz brak potrzeby dokładnego odwzorowania problemu TSP umożliwia wykorzystanie prostszych algorytmów, takich jak algorytm Dijkstry z powodzeniem. Dodatkowo przy dłuższych listach z produktami można zastosować heurystyki, takie jak algorytm 2-opt, które dodatkowo potrafi poporawić trasę. Jak podkreślił Croes (1958): „Algorytm 2-opt oferuje prostą, ale skuteczną metodę poprawy tras dla problemów trasowania w grafach, co czyni go odpowiednim w praktycznych zastosowaniach” \cite{Croes1958}.
+
 
 \section{Przetwarzanie języka naturalnego}
 
