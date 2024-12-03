@@ -1,40 +1,46 @@
 \selectlanguage *[]{polish}
-\contentsline {chapter}{Wykaz skrótów}{2}{}%
-\contentsline {chapter}{\numberline {1}WPROWADZENIE}{3}{}%
-\contentsline {section}{\numberline {1.1}Motywacja}{3}{}%
-\contentsline {subsection}{\numberline {1.1.1}Wykluczenie społeczne}{3}{}%
-\contentsline {subsection}{\numberline {1.1.2}Dynamiczny rozwój rynku aplikacji mobilnych}{3}{}%
-\contentsline {subsection}{\numberline {1.1.3}Brak gotowych rozwiązań}{4}{}%
-\contentsline {section}{\numberline {1.2}Cel pracy}{4}{}%
-\contentsline {subsection}{\numberline {1.2.1}Inspiracja}{4}{}%
-\contentsline {subsubsection}{Chęć pomocy}{4}{}%
-\contentsline {chapter}{\numberline {2}ANALIZA PROBLEMU}{5}{}%
-\contentsline {section}{\numberline {2.1}Nawigacja wewnątrz budynku}{5}{}%
-\contentsline {section}{\numberline {2.2}Przetwarzanie języka naturalnego}{5}{}%
-\contentsline {chapter}{\numberline {3}PROPOZYCJA ROZWIĄZANIA PROBLEMU}{6}{}%
-\contentsline {chapter}{\numberline {4}OPIS ROZWIĄZANIA}{7}{}%
-\contentsline {section}{\numberline {4.1}Architektura systemu}{7}{}%
-\contentsline {section}{\numberline {4.2}Baza danych}{8}{}%
-\contentsline {subsection}{\numberline {4.2.1}Opis bazy danych}{8}{}%
-\contentsline {subsection}{\numberline {4.2.2}Szczegółowy opis tabel}{9}{}%
-\contentsline {subsubsection}{Tabela stores}{9}{}%
-\contentsline {subsubsection}{Tabela sections}{9}{}%
-\contentsline {subsubsection}{Tabela categories}{9}{}%
-\contentsline {subsubsection}{Tabela units}{10}{}%
-\contentsline {subsubsection}{Tabela products}{10}{}%
-\contentsline {subsubsection}{Tabela users}{10}{}%
-\contentsline {subsubsection}{Tabela carts}{11}{}%
-\contentsline {subsubsection}{Tabela cart\_items}{11}{}%
-\contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{12}{}%
-\contentsline {section}{\numberline {5.1}Aplikacja wit.ai}{12}{}%
-\contentsline {subsection}{\numberline {5.1.1}Intencje i encje}{12}{}%
-\contentsline {subsection}{\numberline {5.1.2}Kreator}{13}{}%
-\contentsline {subsubsection}{Akcje}{14}{}%
-\contentsline {subsubsection}{Decision}{14}{}%
-\contentsline {subsubsection}{Context}{14}{}%
-\contentsline {subsubsection}{Input}{14}{}%
-\contentsline {subsubsection}{Response}{15}{}%
-\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{16}{}%
-\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{17}{}%
-\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{18}{}%
-\contentsline {chapter}{\numberline {9}LITERATURA}{19}{}%
+\contentsline {chapter}{Wykaz skrótów}{3}{}%
+\contentsline {chapter}{\numberline {1}WPROWADZENIE}{4}{}%
+\contentsline {section}{\numberline {1.1}Motywacja}{4}{}%
+\contentsline {subsection}{\numberline {1.1.1}Wykluczenie społeczne}{4}{}%
+\contentsline {subsection}{\numberline {1.1.2}Dynamiczny rozwój rynku aplikacji mobilnych}{4}{}%
+\contentsline {subsection}{\numberline {1.1.3}Brak gotowych rozwiązań}{5}{}%
+\contentsline {section}{\numberline {1.2}Cel pracy}{5}{}%
+\contentsline {subsection}{\numberline {1.2.1}Inspiracja}{5}{}%
+\contentsline {subsubsection}{Chęć pomocy}{5}{}%
+\contentsline {chapter}{\numberline {2}ANALIZA PROBLEMU}{6}{}%
+\contentsline {section}{\numberline {2.1}Nawigacja wewnątrz budynku}{6}{}%
+\contentsline {section}{\numberline {2.2}Przetwarzanie języka naturalnego}{6}{}%
+\contentsline {chapter}{\numberline {3}PROPOZYCJA ROZWIĄZANIA PROBLEMU}{7}{}%
+\contentsline {chapter}{\numberline {4}OPIS ROZWIĄZANIA}{8}{}%
+\contentsline {section}{\numberline {4.1}Architektura systemu}{8}{}%
+\contentsline {section}{\numberline {4.2}Baza danych}{9}{}%
+\contentsline {subsection}{\numberline {4.2.1}Opis bazy danych}{9}{}%
+\contentsline {subsection}{\numberline {4.2.2}Szczegółowy opis tabel}{10}{}%
+\contentsline {subsubsection}{Tabela stores}{10}{}%
+\contentsline {subsubsection}{Tabela sections}{10}{}%
+\contentsline {subsubsection}{Tabela categories}{10}{}%
+\contentsline {subsubsection}{Tabela units}{11}{}%
+\contentsline {subsubsection}{Tabela products}{11}{}%
+\contentsline {subsubsection}{Tabela users}{11}{}%
+\contentsline {subsubsection}{Tabela carts}{12}{}%
+\contentsline {subsubsection}{Tabela cart\_items}{12}{}%
+\contentsline {section}{\numberline {4.3}Interfejs użytkownika}{13}{}%
+\contentsline {subsection}{\numberline {4.3.1}Opis dostępnych widoków}{13}{}%
+\contentsline {subsubsection}{Strona tytułowa}{13}{}%
+\contentsline {subsubsection}{Ekran logowania}{14}{}%
+\contentsline {subsection}{\numberline {4.3.2}Szczegółowe omówienie implementacji}{14}{}%
+\contentsline {subsubsection}{Strona tytułowa}{14}{}%
+\contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{15}{}%
+\contentsline {section}{\numberline {5.1}Aplikacja wit.ai}{15}{}%
+\contentsline {subsection}{\numberline {5.1.1}Intencje i encje}{15}{}%
+\contentsline {subsection}{\numberline {5.1.2}Kreator}{16}{}%
+\contentsline {subsubsection}{Akcje}{17}{}%
+\contentsline {subsubsection}{Decision}{17}{}%
+\contentsline {subsubsection}{Context}{17}{}%
+\contentsline {subsubsection}{Input}{17}{}%
+\contentsline {subsubsection}{Response}{18}{}%
+\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{19}{}%
+\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{20}{}%
+\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{21}{}%
+\contentsline {chapter}{\numberline {9}LITERATURA}{22}{}%
