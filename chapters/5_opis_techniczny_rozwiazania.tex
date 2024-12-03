@@ -78,3 +78,13 @@ Moduł \textit{Input} pozwala na pobranie danych wejściowych. Jest on wykorzyst
 
 \subsubsection{Response}
 Moduł \textit{Response} pozwala na zdefiniowanie odpowiedzi, która ma zostać zwrócona do użytkownika. W odpowiedzi można wykorzystać zmienne zdefiniowane w kontekście akcji. Można zwrócić tekst, obraz, dźwięk, link, czy dowolny inny format. Oprócz tego, można również zwrócić nazwę funkcji, która ma zostać wykonana po zakończeniu akcji.
+
+
+\subsection{Testowanie i publikacja}
+Po zdefiniowaniu akcji, aplikacja wit.ai pozwala na przetestowanie modelu językowego. W tym celu można wpisać dowolną frazę, a aplikacja zwróci intencję oraz encje, które rozpoznała. Po zakończeniu testowania, model językowy można opublikować. Po opublikowaniu modelu, aplikacja wit.ai generuje token, który pozwala na integrację modelu z dowolną aplikacją. Token ten jest wykorzystywany w aplikacji mobilnej, aby komunikować się z modelem językowym.
+
+
+\section{Serwer}
+Serwer jest odpowiedzialny za przetwarzanie żądań użytkownika, a także za komunikację z bazą danych. Serwer został zaimplementowany w języku JavaScript, z wykorzystaniem struktury (ang. \textit{framework}) Express.js. Express.js to minimalistyczny framework, który pozwala na tworzenie aplikacji internetowych w języku JavaScript. Serwer nasłuchuje na zapytania HTTP, a następnie przetwarza je i zwraca odpowiedź. Serwer komunikuje się z bazą danych PostgreSQL. 
+
+\subsection{Struktura serwera}
