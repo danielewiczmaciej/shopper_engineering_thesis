@@ -111,20 +111,27 @@ tekst
 
 \subsubsection{Strona tytułowa}
 
-\begin{center}
-\includegraphics[width=0.4\textwidth]{images/front/home_page.png}
-\end{center}
+\begin{center} \includegraphics[width=0.4\textwidth]{images/front/home_page.png} \end{center}
 
-Strona tytułowa aplikacji pełni funkcję ekranu startowego, witając użytkownika logiem oraz hasłem zachęcającym do korzystania z aplikacji. Ponadto, widnieje  na niej przycisk "Get Started", który umożliwia przejście do kolejnych widoków. Jeśli użytkownik był zalogowany, w ciągu ostatnich 7 dni, aplikacja przekierowuje go do widoku logowania. W przeciwnym wypadku trafia on do ekranu profilu. Całość utrzymana jest w przyjaznej stylistyce, z dominującym odcieniem zieleni oraz spójną paletą kolorów, wygenerowaną przez narzędzie DALL·E 3 od OpenAI.
+Strona tytułowa aplikacji pełni funkcję ekranu startowego, witając odbiorcę logiem oraz hasłem zachęcającym do korzystania z aplikacji. Widnieje na niej przycisk "Get Started", który umożliwia przejście do kolejnych widoków. Jeśli eksploatator był zalogowany w ciągu ostatnich 7 dni, aplikacja przekierowuje go do widoku logowania. W przeciwnym wypadku trafia on do ekranu profilu. Całość utrzymana jest w przyjaznej stylistyce, z dominującym odcieniem zieleni oraz spójną paletą kolorów, wygenerowaną przez narzędzie DALL·E 3 od OpenAI.
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{images/front/theme.png}
-\end{center}
+\begin{center} \includegraphics[width=0.6\textwidth]{images/front/theme.png} \end{center}
 
 \subsubsection{Ekran logowania}
 
-text
+\begin{center} \includegraphics[width=0.4\textwidth]{images/front/login_page.png} \end{center}
+
+Ekran logowania umożliwia odbiorcy uwierzytelnienie w aplikacji poprzez wprowadzenie adresu e-mail oraz hasła. Jego głównym celem jest weryfikacja tożsamości eksploatatora oraz przekierowanie do dalszych widoków w zależności od wyniku logowania. Górną część widoku stanowi nagłówek "Sign In", który podkreśla cel ekranu. Środkową część zajmuje formularz składający się z dwóch pól tekstowych: jednego przeznaczonego do wprowadzania adresu e-mail, a drugiego do hasła, z cechą ukrywania wprowadzanych znaków. Naciśnięcie przycisku "Login" uruchamia logikę, która weryfikuje tożsamość odbiorcy na podstawie danych wprowadzonych w polach tekstowych. Ponadto, widok zawiera link "Don't have an account? Sign up!", umożliwiający przejście do widoku rejestracji. Dolną część ekranu zajmuje pasek nawigacyjny z ikonami, które przenoszą do kolejnych podstron – mapy sklepów, profilu odbiorcy, kategorii produktów wybranego sklepu oraz strony tytułowej. Tylko ta ostatnia jest dostępna dla niezalogowanych użytkowników.
+
+\subsubsection{Ekran rejestracji}
+
+\begin{center} \includegraphics[width=0.4\textwidth]{images/front/register_page.png} \end{center}
+
+Ekran rejestracji umożliwia nowym odbiorcom założenie konta, co jest niezbędne do korzystania z funkcji wymagających uwierzytelnienia, takich jak dodawanie produktów do koszyka czy przeglądanie sklepów na mapie. Formularz rejestracyjny składa się z kilku pól:
+
+\begin{itemize} \item Firstname i Lastname – wymagane minimum trzech znaków, by dane były wystarczająco szczegółowe. \item Email – odbiorca podaje swój adres e-mail, który jest weryfikowany pod kątem poprawności formatu (obecność znaku "@" oraz domeny). \item Password i Repeat password – hasło musi mieć co najmniej osiem znaków i być identyczne w obu polach. Dodatkowo, tekst wprowadzony w tych polach jest ukrywany, aby zapewnić prywatność. \end{itemize}
+
+Po wypełnieniu formularza, należy wcisnąć guzik "Register", po którym odbywa się walidacja danych. W przypadku spełnienia warunków wpisanych pól, nowy użytkownik, wraz z koszykiem jest rejestrowany w bazie danych. Po zakończeniu rejestracji następuje automatyczne zalogowanie, a imię oraz ID są zapisywane w lokalnej pamięci urządzenia, w bezpieczny sposób, aby dane nie trafiły w niepowołane ręce. Pozwala to na sprawne obslużenie mechanizmu sesji oraz dostępu do koszyka jego właściciela. Następnie następuje przekierowanie do ekranu kategorii produktów wybranego sklepu. Jeśli dane są nieprawidłowe, wyświetlane są stosowne komunikaty, informujące o błędach, takich jak niewłaściwy format e-maila, zbyt krótkie hasło czy jego niezgodność. Osoby posiadające już konto mogą skorzystać z linku "Already have an account? Sign in!", znajdującego się pod formularzem, aby przejść do ekranu logowania. Dolną część ekranu zajmuje pasek nawigacyjny, który zawiera przyciski prowadzące do kolejnych sekcji aplikacji. Pierwszy z nich przekierowuje do widoku mapy sklepów. Kolejny przekierowuje na stronę główną – jest to jedyny dostępny dla niezalogowanych odbiorców. Trzeci zawiera ikonę koszyka, w którym użytkownicy mogą przeglądać swoje produkty, a czwarty prowadzi do profilu odbiorcy, gdzie można zarządzać danymi konta.
 
 \subsection{Szczegółowe omówienie implementacji}
-
 \subsubsection{Strona tytułowa}

@@ -29,18 +29,19 @@
 \contentsline {subsection}{\numberline {4.3.1}Opis dostępnych widoków}{13}{}%
 \contentsline {subsubsection}{Strona tytułowa}{13}{}%
 \contentsline {subsubsection}{Ekran logowania}{14}{}%
-\contentsline {subsection}{\numberline {4.3.2}Szczegółowe omówienie implementacji}{14}{}%
-\contentsline {subsubsection}{Strona tytułowa}{14}{}%
-\contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{15}{}%
-\contentsline {section}{\numberline {5.1}Aplikacja wit.ai}{15}{}%
-\contentsline {subsection}{\numberline {5.1.1}Intencje i encje}{15}{}%
-\contentsline {subsection}{\numberline {5.1.2}Kreator}{16}{}%
-\contentsline {subsubsection}{Akcje}{17}{}%
-\contentsline {subsubsection}{Decision}{17}{}%
-\contentsline {subsubsection}{Context}{17}{}%
-\contentsline {subsubsection}{Input}{17}{}%
-\contentsline {subsubsection}{Response}{18}{}%
-\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{19}{}%
-\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{20}{}%
-\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{21}{}%
-\contentsline {chapter}{\numberline {9}LITERATURA}{22}{}%
+\contentsline {subsubsection}{Ekran rejestracji}{15}{}%
+\contentsline {subsection}{\numberline {4.3.2}Szczegółowe omówienie implementacji}{16}{}%
+\contentsline {subsubsection}{Strona tytułowa}{16}{}%
+\contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{17}{}%
+\contentsline {section}{\numberline {5.1}Aplikacja wit.ai}{17}{}%
+\contentsline {subsection}{\numberline {5.1.1}Intencje i encje}{17}{}%
+\contentsline {subsection}{\numberline {5.1.2}Kreator}{18}{}%
+\contentsline {subsubsection}{Akcje}{19}{}%
+\contentsline {subsubsection}{Decision}{19}{}%
+\contentsline {subsubsection}{Context}{19}{}%
+\contentsline {subsubsection}{Input}{19}{}%
+\contentsline {subsubsection}{Response}{20}{}%
+\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{21}{}%
+\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{22}{}%
+\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{23}{}%
+\contentsline {chapter}{\numberline {9}LITERATURA}{24}{}%
