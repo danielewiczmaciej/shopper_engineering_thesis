@@ -88,3 +88,63 @@ Po zdefiniowaniu akcji, aplikacja wit.ai pozwala na przetestowanie modelu język
 Serwer jest odpowiedzialny za przetwarzanie żądań użytkownika, a także za komunikację z bazą danych. Serwer został zaimplementowany w języku JavaScript, z wykorzystaniem struktury (ang. \textit{framework}) Express.js. Express.js to minimalistyczny framework, który pozwala na tworzenie aplikacji internetowych w języku JavaScript. Serwer nasłuchuje na zapytania HTTP, a następnie przetwarza je i zwraca odpowiedź. Serwer komunikuje się z bazą danych PostgreSQL. 
 
 \subsection{Struktura serwera}
+
+\begin{samepage}
+\scriptsize
+\dirtree{%
+.1 Shopper/.
+.2 node\_modules/.
+.2 src/.
+.3 api/.
+.4 auth/.
+.5 auth.router.js.
+.4 cartItems/.
+.5 cartItems.controller.js.
+.5 cartItems.router.js.
+.5 cartItems.service.js.
+.4 carts/.
+.5 cart.controller.js.
+.5 cart.router.js.
+.5 cart.service.js.
+.4 categories/.
+.5 category.controller.js.
+.5 category.router.js.
+.5 category.service.js.
+.4 products/.
+.5 product.controller.js.
+.5 product.router.js.
+.5 product.service.js.
+.4 sections/.
+.5 section.controller.js.
+.5 section.router.js.
+.5 section.service.js.
+.4 stores/.
+.5 store.controller.js.
+.5 store.router.js.
+.5 store.service.js.
+.4 units/.
+.5 unit.controller.js.
+.5 unit.router.js.
+.5 unit.service.js.
+.4 users/.
+.5 user.controller.js.
+.5 user.router.js.
+.5 user.service.js.
+.3 db/.
+.4 migrations/.
+.4 seeds/.
+.4 connect.js.
+.3 error/.
+.4 error-handler.js.
+.4 error-with-status.js.
+.3 middleware/.
+.4 auth.middleware.js.
+.3 ecosystem.config.cjs.
+.3 server.js.
+.2 .env.
+.2 .gitignore.
+.2 package\_lock.json
+.2 package.json.
+.2 README.md.
+}
+\end{samepage}
