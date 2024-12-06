@@ -9,9 +9,32 @@
 \usepackage{polyglossia} % Language support for xelatex/lualatex
 \usepackage{dirtree}
 \usepackage[a4paper, margin=1in]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
 \setmainlanguage{polish}
 \usepackage{fontspec}
 \setmainfont{Arial}
+
+\lstset{
+  basicstyle=\ttfamily\small, % Font size and type
+  keywordstyle=\color{blue}, % Keywords color
+  stringstyle=\color{orange}, % Strings color
+  commentstyle=\color{gray}, % Comments color
+  frame=single, % Frame around the code
+  numbers=left, % Line numbers
+  numberstyle=\tiny\color{gray}, % Line number style
+  breaklines=true, % Automatic line breaking
+  backgroundcolor=\color{lightgray!20}, % Background color
+}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, class, const, continue, debugger, default, delete, do, else, export, extends, finally, for, function, if, import, in, instanceof, let, new, return, super, switch, this, throw, try, typeof, var, void, while, with, yield},
+  sensitive=true,
+  morecomment=[l]{//}, % Single-line comments
+  morecomment=[s]{/*}{*/}, % Block comments
+  morestring=[b]", % Strings in double quotes
+  morestring=[b]',
+}
 
 \begin{document}
 

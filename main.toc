@@ -45,7 +45,13 @@
 \contentsline {subsection}{\numberline {5.1.3}Testowanie i publikacja}{15}{subsection.5.1.3}%
 \contentsline {section}{\numberline {5.2}Serwer}{15}{section.5.2}%
 \contentsline {subsection}{\numberline {5.2.1}Struktura serwera}{15}{subsection.5.2.1}%
-\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{17}{chapter.6}%
-\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{18}{chapter.7}%
-\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{19}{chapter.8}%
-\contentsline {chapter}{\numberline {9}LITERATURA}{20}{chapter.9}%
+\contentsline {subsubsection}{Router}{15}{section*.20}%
+\contentsline {subsubsection}{Controller}{16}{section*.21}%
+\contentsline {subsubsection}{Service}{17}{section*.22}%
+\contentsline {section}{\numberline {5.3}CRUD}{18}{section.5.3}%
+\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{19}{chapter.6}%
+\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{20}{chapter.7}%
+\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{21}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Przyszły rozwój aplikacji}{21}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Panel Administratora}{21}{subsection.8.1.1}%
+\contentsline {chapter}{\numberline {9}LITERATURA}{22}{chapter.9}%
