@@ -4,45 +4,58 @@
 \contentsline {section}{\numberline {1.1}Motywacja}{4}{section.1.1}%
 \contentsline {subsection}{\numberline {1.1.1}Wykluczenie społeczne}{4}{subsection.1.1.1}%
 \contentsline {subsection}{\numberline {1.1.2}Dynamiczny rozwój rynku aplikacji mobilnych}{4}{subsection.1.1.2}%
-\contentsline {subsection}{\numberline {1.1.3}Brak gotowych rozwiązań}{5}{subsection.1.1.3}%
-\contentsline {section}{\numberline {1.2}Cel pracy}{5}{section.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Brak gotowych rozwiązań}{4}{subsection.1.1.3}%
+\contentsline {section}{\numberline {1.2}Cel pracy}{4}{section.1.2}%
 \contentsline {subsection}{\numberline {1.2.1}Inspiracja}{5}{subsection.1.2.1}%
 \contentsline {subsubsection}{Chęć pomocy}{5}{section*.3}%
 \contentsline {chapter}{\numberline {2}ANALIZA PROBLEMU}{6}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Trasowanie po sklepie}{6}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Podobieństwa i różnice z problemem komiwojażera (TSP)}{6}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Wnioski}{7}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.2}Wnioski}{6}{subsection.2.1.2}%
 \contentsline {section}{\numberline {2.2}Przetwarzanie języka naturalnego}{7}{section.2.2}%
 \contentsline {chapter}{\numberline {3}PROPOZYCJA ROZWIĄZANIA PROBLEMU}{8}{chapter.3}%
 \contentsline {chapter}{\numberline {4}OPIS ROZWIĄZANIA}{9}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Architektura systemu}{9}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Baza danych}{10}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Opis bazy danych}{10}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Szczegółowy opis tabel}{11}{subsection.4.2.2}%
-\contentsline {subsubsection}{Tabela stores}{11}{section*.4}%
+\contentsline {subsection}{\numberline {4.2.2}Szczegółowy opis tabel}{10}{subsection.4.2.2}%
+\contentsline {subsubsection}{Tabela stores}{10}{section*.4}%
 \contentsline {subsubsection}{Tabela sections}{11}{section*.5}%
 \contentsline {subsubsection}{Tabela categories}{11}{section*.6}%
-\contentsline {subsubsection}{Tabela units}{12}{section*.7}%
-\contentsline {subsubsection}{Tabela products}{12}{section*.8}%
-\contentsline {subsubsection}{Tabela users}{12}{section*.9}%
-\contentsline {subsubsection}{Tabela carts}{13}{section*.10}%
-\contentsline {subsubsection}{Tabela cart\_items}{13}{section*.11}%
-\contentsline {section}{\numberline {4.3}Interfejs użytkownika}{14}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Opis dostępnych widoków}{14}{subsection.4.3.1}%
-\contentsline {subsubsection}{Strona tytułowa}{14}{section*.12}%
-\contentsline {subsubsection}{Ekran logowania}{15}{section*.13}%
-\contentsline {subsection}{\numberline {4.3.2}Szczegółowe omówienie implementacji}{15}{subsection.4.3.2}%
-\contentsline {subsubsection}{Strona tytułowa}{15}{section*.14}%
-\contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{16}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Aplikacja wit.ai}{16}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Intencje i encje}{16}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Kreator}{17}{subsection.5.1.2}%
-\contentsline {subsubsection}{Akcje}{18}{section*.15}%
-\contentsline {subsubsection}{Decision}{18}{section*.16}%
-\contentsline {subsubsection}{Context}{18}{section*.17}%
-\contentsline {subsubsection}{Input}{18}{section*.18}%
-\contentsline {subsubsection}{Response}{19}{section*.19}%
-\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{20}{chapter.6}%
-\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{21}{chapter.7}%
-\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{22}{chapter.8}%
-\contentsline {chapter}{\numberline {9}LITERATURA}{23}{chapter.9}%
+\contentsline {subsubsection}{Tabela units}{11}{section*.7}%
+\contentsline {subsubsection}{Tabela products}{11}{section*.8}%
+\contentsline {subsubsection}{Tabela users}{11}{section*.9}%
+\contentsline {subsubsection}{Tabela carts}{12}{section*.10}%
+\contentsline {subsubsection}{Tabela cart\_items}{12}{section*.11}%
+\contentsline {section}{\numberline {4.3}Interfejs użytkownika}{12}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Opis dostępnych widoków}{12}{subsection.4.3.1}%
+\contentsline {subsubsection}{Strona tytułowa}{12}{section*.12}%
+\contentsline {subsubsection}{Ekran logowania}{13}{section*.13}%
+\contentsline {subsection}{\numberline {4.3.2}Szczegółowe omówienie implementacji}{13}{subsection.4.3.2}%
+\contentsline {subsubsection}{Strona tytułowa}{13}{section*.14}%
+\contentsline {section}{\numberline {4.4}Serwer aplikacji}{13}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}JavaScript}{13}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Node.js}{13}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Express.js}{14}{subsection.4.4.3}%
+\contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{15}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Aplikacja wit.ai}{15}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Intencje i encje}{15}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Kreator}{16}{subsection.5.1.2}%
+\contentsline {subsubsection}{Akcje}{16}{section*.15}%
+\contentsline {subsubsection}{Decision}{16}{section*.16}%
+\contentsline {subsubsection}{Context}{16}{section*.17}%
+\contentsline {subsubsection}{Input}{17}{section*.18}%
+\contentsline {subsubsection}{Response}{17}{section*.19}%
+\contentsline {subsection}{\numberline {5.1.3}Testowanie i publikacja}{17}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Serwer}{17}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Struktura serwera}{17}{subsection.5.2.1}%
+\contentsline {subsubsection}{Router}{17}{section*.20}%
+\contentsline {subsubsection}{Controller}{18}{section*.21}%
+\contentsline {subsubsection}{Service}{19}{section*.22}%
+\contentsline {section}{\numberline {5.3}CRUD}{20}{section.5.3}%
+\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{21}{chapter.6}%
+\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{22}{chapter.7}%
+\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{23}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Przyszły rozwój aplikacji}{23}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Panel Administratora}{23}{subsection.8.1.1}%
+\contentsline {chapter}{\numberline {9}LITERATURA}{24}{chapter.9}%
