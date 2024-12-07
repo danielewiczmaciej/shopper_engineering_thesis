@@ -116,22 +116,82 @@ tekst
 
 \subsubsection{Strona tytułowa}
 
-\begin{center}
-\includegraphics[width=0.4\textwidth]{images/front/home_page.png}
-\end{center}
+\begin{center} \includegraphics[width=0.4\textwidth]{images/front/home_page.png} \end{center}
 
-Strona tytułowa aplikacji pełni funkcję ekranu startowego, witając użytkownika logiem oraz hasłem zachęcającym do korzystania z aplikacji. Ponadto, widnieje  na niej przycisk "Get Started", który umożliwia przejście do kolejnych widoków. Jeśli użytkownik był zalogowany, w ciągu ostatnich 7 dni, aplikacja przekierowuje go do widoku logowania. W przeciwnym wypadku trafia on do ekranu profilu. Całość utrzymana jest w przyjaznej stylistyce, z dominującym odcieniem zieleni oraz spójną paletą kolorów, wygenerowaną przez narzędzie DALL·E 3 od OpenAI.
+Strona tytułowa aplikacji pełni funkcję ekranu startowego, witając odbiorcę logiem oraz hasłem zachęcającym do korzystania z aplikacji. Widnieje na niej przycisk "Get Started", który umożliwia przejście do kolejnych widoków. Jeśli eksploatator był zalogowany w ciągu ostatnich 7 dni, aplikacja przekierowuje go do widoku logowania. W przeciwnym wypadku trafia on do ekranu profilu. Całość utrzymana jest w przyjaznej stylistyce, z dominującym odcieniem zieleni oraz spójną paletą kolorów, wygenerowaną przez narzędzie DALL·E 3 od OpenAI.
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{images/front/theme.png}
-\end{center}
+\begin{center} \includegraphics[width=0.6\textwidth]{images/front/theme.png} \end{center}
 
 \subsubsection{Ekran logowania}
 
-text
+\begin{center} \includegraphics[width=0.4\textwidth]{images/front/login_page.png} \end{center}
+
+Ekran logowania umożliwia odbiorcy uwierzytelnienie w aplikacji poprzez wprowadzenie adresu e-mail oraz hasła. Jego głównym celem jest weryfikacja tożsamości eksploatatora oraz przekierowanie do dalszych widoków w zależności od wyniku logowania. Górną część widoku stanowi nagłówek "Sign In", który podkreśla cel ekranu. Środkową część zajmuje formularz składający się z dwóch pól tekstowych: jednego przeznaczonego do wprowadzania adresu e-mail, a drugiego do hasła, z cechą ukrywania wprowadzanych znaków. Naciśnięcie przycisku "Login" uruchamia logikę, która weryfikuje tożsamość odbiorcy na podstawie danych wprowadzonych w polach tekstowych. Ponadto, widok zawiera link "Don't have an account? Sign up!", umożliwiający przejście do widoku rejestracji. Dolną część ekranu zajmuje pasek nawigacyjny z ikonami, które przenoszą do kolejnych podstron – mapy sklepów, profilu odbiorcy, kategorii produktów wybranego sklepu oraz strony tytułowej. Tylko ta ostatnia jest dostępna dla niezalogowanych użytkowników.
+
+\subsubsection{Rejestracja}
+
+\begin{center} \includegraphics[width=0.4\textwidth]{images/front/register_page.png} \end{center}
+
+Ekran rejestracji umożliwia nowym odbiorcom założenie konta, co jest niezbędne do korzystania z funkcji wymagających uwierzytelnienia, takich jak dodawanie produktów do koszyka czy przeglądanie sklepów na mapie. Formularz rejestracyjny składa się z kilku pól:
+
+\begin{itemize} \item Firstname i Lastname – wymagane minimum trzech znaków, by dane były wystarczająco szczegółowe. \item Email – odbiorca podaje swój adres e-mail, który jest weryfikowany pod kątem poprawności formatu (obecność znaku "@" oraz domeny). \item Password i Repeat password – hasło musi mieć co najmniej osiem znaków i być identyczne w obu polach. Dodatkowo, tekst wprowadzony w tych polach jest ukrywany, aby zapewnić prywatność. \end{itemize}
+
+Po wypełnieniu formularza, należy wcisnąć guzik "Register", po którym odbywa się walidacja danych. W przypadku spełnienia warunków wpisanych pól, nowy użytkownik, wraz z koszykiem jest rejestrowany w bazie danych. Po zakończeniu rejestracji następuje automatyczne zalogowanie, a imię oraz ID są zapisywane w lokalnej pamięci urządzenia, w bezpieczny sposób, aby dane nie trafiły w niepowołane ręce. Pozwala to na sprawne obslużenie mechanizmu sesji oraz dostępu do koszyka jego właściciela. Następnie następuje przekierowanie do ekranu kategorii produktów wybranego sklepu. Jeśli dane są nieprawidłowe, wyświetlane są stosowne komunikaty, informujące o błędach, takich jak niewłaściwy format e-maila, zbyt krótkie hasło czy jego niezgodność. Osoby posiadające już konto mogą skorzystać z linku "Already have an account? Sign in!", znajdującego się pod formularzem, aby przejść do ekranu logowania. Dolną część ekranu zajmuje pasek nawigacyjny, który zawiera przyciski prowadzące do kolejnych sekcji aplikacji. Pierwszy z nich przekierowuje do widoku mapy sklepów. Kolejny przekierowuje na stronę główną – jest to jedyny dostępny dla niezalogowanych odbiorców. Trzeci zawiera ikonę koszyka, w którym użytkownicy mogą przeglądać swoje produkty, a czwarty prowadzi do profilu odbiorcy, gdzie można zarządzać danymi konta.
+
+\subsubsection{Kategorie produktów}
+\begin{center} 
+    \includegraphics[width=0.4\textwidth]{images/front/categories_page.png} 
+    \includegraphics[width=0.4\textwidth]{images/front/categories_filtered.png} 
+\end{center}
+
+Ekran kategorii stanowi pierwszy krok do przeglądania dostępnych produktów w wybranym sklepie. Centralnym elementem tego widoku jest siatka kategorii, umożliwiająca użytkownikowi intuicyjne poruszanie się po różnych grupach produktów. W górnej części widoku znajduje się pasek wyszukiwania, składający się z pola tekstowego oraz ikony lupy, umożliwiający szybkie filtrowanie kategorii na podstawie wprowadzonego tekstu. Wprowadzenie frazy w pole wyszukiwania automatycznie ogranicza widoczne wyniki, wyświetlając jedynie pasujące grupy produktów. Każdy kafelek siatki zawiera nazwę kategorii, a jego kliknięcie przekierowuje użytkownika do widoku produktów należących do wybranej kategorii. Siatkę można przewijać w pionie, aby odkrywać kolejne kafelki dostępne z listy. Dolną część ekranu zajmuje pasek nawigacyjny, który umożliwia szybki dostęp do innych kluczowych widoków aplikacji, takich jak mapa sklepów, profil użytkownika, koszyk oraz strona tytułowa. Widok zawiera również przeciągany dymek czatu, który pozwala na szybki kontakt z obsługą klienta. Jest on towarzyszem większości ekranów aplikacji, przez co został mu poświęcony osobny artykuł w sekcji o numerze x.x.x.
+
+\subsubsection{Ekran produktów}
+\begin{center} 
+    \includegraphics[width=0.4\textwidth]{images/front/products_page.png}  
+\end{center}
+
+Ekran produktów pozwala użytkownikowi na przeglądanie i dodawanie do koszyka artykułów należących do wybranej kategorii. Na samej górze widoku znajduje się pasek wyszukiwania, umożliwiający szybkie filtrowanie produktów po ich nazwie. Pasek zawiera pole tekstowe oraz ikonę lupy. Wprowadzenie tekstu w tym polu automatycznie zawęża widok, prezentując jedynie pasujące wyniki. Poniżej znajduje się przewijalna siatka produktów, w której każdy kafelek zawiera nazwę produktu, cenę oraz symbol jednostki miary. Dodatkowo dla każdego produktu dostępne są przyciski „+” i „–”, umożliwiające zwiększanie lub zmniejszanie ilości produktu, jaką użytkownik chce dodać do koszyka. Wartość wprowadzana przez kupującego jest automatycznie walidowana. Walidacja polega na sprawdzeniu, czy wprowadzony symbol jest liczbą całkowitą. Wartości mniejsze od zera nie są akceptowane. Pod każdym kafelkiem produktu znajduje się przycisk „Add”, który dodaje wybraną ilość artykułu do koszyka gościa. Po naciśnięciu przycisku aplikacja odpowiednio weryfikuje możliwość dokonania zakupu poprzez sprawdzenie ilości produktu w magazynie. W przypadku błędnych danych, takich jak ilość większa niż dostępna, użytkownik otrzymuje odpowiedni komunikat w postaci alertu. Dół ekranu zdobi pasek nawigacyjny, który umożliwia powrót do ekranu kategorii, sprawdzenie stanu koszyka, przejście do profilu użytkownika czy strony głównej.
+
+\begin{center} 
+    \includegraphics[width=0.4\textwidth]{images/front/products_amount.png}  
+    \includegraphics[width=0.4\textwidth]{images/front/products_added.png}  
+\end{center}
+
+\subsubsection{Koszyk użytkownika}
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{images/front/cart_page.png}
+    \includegraphics[width=0.4\textwidth]{images/front/cart_filtered.png}
+\end{center}
+
+
+Ekran koszyka pozwala użytkownikowi zarządzać produktami dodanymi do koszyka oraz przygotować się do finalizacji zakupów. 
+
+W górnej części ekranu znajduje się pasek wyszukiwania, umożliwiający filtrowanie produktów według nazwy. Użytkownik może wprowadzić frazę w polu tekstowym, aby zawęzić listę wyświetlanych produktów, co znacznie ułatwia nawigację w przypadku dużej liczby elementów. 
+
+Listę produktów w koszyku prezentuje przewijalna siatka, mieszcząca się pod paskiem wyszukiwania.
+
+Każdy element listy produktów w koszyku zawiera następujące informacje:
+\begin{itemize}
+    \item Nazwę produktu.
+    \item Cenę jednostkową.
+    \item Ilość produktu w koszyku, wyrażoną w odpowiedniej jednostce miary (np. sztuki, kilogramy).
+    \item Łączną cenę dla danej pozycji, obliczoną jako iloczyn ceny jednostkowej i ilości.
+\end{itemize}
+
+W przypadku chęci usunięcia produktu z koszyka, użytkownik posiada możliwość kliknięcia na ikonkę kosza na śmieci danego produktu. Aplikacja automatycznie aktualizuje widok koszyka po każdej zmianie.
+
+Dolną część ekranu zajmuje pasek nawigacyjny, który umożliwia szybkie przejście do kolejnych widoków aplikacji. Należą do nich: generowanie kodu qr, mapa nawigująca po sklepie, profil użytkownika oraz powrót do poprzedniego ekranu.
+
+\subsubsection{Generowanie kodu qr}
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{images/front/qr_page.png}
+    \includegraphics[width=0.4\textwidth]{images/front/qr_empty.png}
+\end{center}
+
+Po przejściu na ten ekran, pobierana jest lista produktów z koszyka danego kupującego. Dane na temat produktów zostają zawarte w wygenerowanym kodzie, który wyświetla się na środku ekranu po załadowaniu listy. W przypadku, gdy koszyk jest pusty, wyświetlany jest komunikat zachęcający do jego uzupełnienia. Użytkownik ma możliwość zeskanowania kodu qr za pomocą czytnika danegos klepu, co pozwala na szybkie zinterowanie danych z aplikacją kasy samoobsługowej i nabicia zakupów na paragon. Za integrację kodu ze swoją aplikacją odpowiedzialny jest sam sklep. Aby wyjść z ekranu, należy nacisnąć symbol ptaszka, który przenosi użytkownika z powrotem do ekranu produktów.
 
 \subsection{Szczegółowe omówienie implementacji}
-
 \subsubsection{Strona tytułowa}
 
 
