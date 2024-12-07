@@ -146,7 +146,7 @@ Po wypełnieniu formularza, należy wcisnąć guzik "Register", po którym odbyw
 
 Ekran kategorii stanowi pierwszy krok do przeglądania dostępnych produktów w wybranym sklepie. Centralnym elementem tego widoku jest siatka kategorii, umożliwiająca użytkownikowi intuicyjne poruszanie się po różnych grupach produktów. W górnej części widoku znajduje się pasek wyszukiwania, składający się z pola tekstowego oraz ikony lupy, umożliwiający szybkie filtrowanie kategorii na podstawie wprowadzonego tekstu. Wprowadzenie frazy w pole wyszukiwania automatycznie ogranicza widoczne wyniki, wyświetlając jedynie pasujące grupy produktów. Każdy kafelek siatki zawiera nazwę kategorii, a jego kliknięcie przekierowuje użytkownika do widoku produktów należących do wybranej kategorii. Siatkę można przewijać w pionie, aby odkrywać kolejne kafelki dostępne z listy. Dolną część ekranu zajmuje pasek nawigacyjny, który umożliwia szybki dostęp do innych kluczowych widoków aplikacji, takich jak mapa sklepów, profil użytkownika, koszyk oraz strona tytułowa. Widok zawiera również przeciągany dymek czatu, który pozwala na szybki kontakt z obsługą klienta. Jest on towarzyszem większości ekranów aplikacji, przez co został mu poświęcony osobny artykuł w sekcji o numerze x.x.x.
 
-\subsubsection{Koszyk użytkownika}
+\subsubsection{Ekran produktów}
 \begin{center} 
     \includegraphics[width=0.4\textwidth]{images/front/products_page.png}  
 \end{center}
@@ -157,6 +157,31 @@ Ekran produktów pozwala użytkownikowi na przeglądanie i dodawanie do koszyka 
     \includegraphics[width=0.4\textwidth]{images/front/products_amount.png}  
     \includegraphics[width=0.4\textwidth]{images/front/products_added.png}  
 \end{center}
+
+\subsubsection{Koszyk użytkownika}
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{images/front/cart_page.png}
+    \includegraphics[width=0.4\textwidth]{images/front/cart_filtered.png}
+\end{center}
+
+
+Ekran koszyka pozwala użytkownikowi zarządzać produktami dodanymi do koszyka oraz przygotować się do finalizacji zakupów. 
+
+W górnej części ekranu znajduje się pasek wyszukiwania, umożliwiający filtrowanie produktów według nazwy. Użytkownik może wprowadzić frazę w polu tekstowym, aby zawęzić listę wyświetlanych produktów, co znacznie ułatwia nawigację w przypadku dużej liczby elementów. 
+
+Listę produktów w koszyku prezentuje przewijalna siatka, mieszcząca się pod paskiem wyszukiwania.
+
+Każdy element listy produktów w koszyku zawiera następujące informacje:
+\begin{itemize}
+    \item Nazwę produktu.
+    \item Cenę jednostkową.
+    \item Ilość produktu w koszyku, wyrażoną w odpowiedniej jednostce miary (np. sztuki, kilogramy).
+    \item Łączną cenę dla danej pozycji, obliczoną jako iloczyn ceny jednostkowej i ilości.
+\end{itemize}
+
+W przypadku chęci usunięcia produktu z koszyka, użytkownik posiada możliwość kliknięcia na ikonkę kosza na śmieci danego produktu. Aplikacja automatycznie aktualizuje widok koszyka po każdej zmianie.
+
+Dolną część ekranu zajmuje pasek nawigacyjny, który umożliwia szybkie przejście do kolejnych widoków aplikacji. Należą do nich: generowanie kodu qr, mapa nawigująca po sklepie, profil użytkownika oraz powrót do poprzedniego ekranu.
 
 \subsubsection{Generowanie kodu qr}
 \begin{center}

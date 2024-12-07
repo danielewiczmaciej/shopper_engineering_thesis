@@ -31,31 +31,36 @@
 \contentsline {subsection}{\numberline {4.3.1}Opis dostępnych widoków}{12}{subsection.4.3.1}%
 \contentsline {subsubsection}{Strona tytułowa}{12}{section*.12}%
 \contentsline {subsubsection}{Ekran logowania}{13}{section*.13}%
-\contentsline {subsection}{\numberline {4.3.2}Szczegółowe omówienie implementacji}{13}{subsection.4.3.2}%
-\contentsline {subsubsection}{Strona tytułowa}{13}{section*.14}%
-\contentsline {section}{\numberline {4.4}Serwer aplikacji}{13}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}JavaScript}{13}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Node.js}{13}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Express.js}{14}{subsection.4.4.3}%
-\contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{15}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Aplikacja wit.ai}{15}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Intencje i encje}{15}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Kreator}{16}{subsection.5.1.2}%
-\contentsline {subsubsection}{Akcje}{16}{section*.15}%
-\contentsline {subsubsection}{Decision}{16}{section*.16}%
-\contentsline {subsubsection}{Context}{16}{section*.17}%
-\contentsline {subsubsection}{Input}{17}{section*.18}%
-\contentsline {subsubsection}{Response}{17}{section*.19}%
-\contentsline {subsection}{\numberline {5.1.3}Testowanie i publikacja}{17}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Serwer}{17}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Struktura serwera}{17}{subsection.5.2.1}%
-\contentsline {subsubsection}{Router}{17}{section*.20}%
-\contentsline {subsubsection}{Controller}{18}{section*.21}%
-\contentsline {subsubsection}{Service}{19}{section*.22}%
-\contentsline {section}{\numberline {5.3}CRUD}{20}{section.5.3}%
-\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{21}{chapter.6}%
-\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{22}{chapter.7}%
-\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{23}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Przyszły rozwój aplikacji}{23}{section.8.1}%
-\contentsline {subsection}{\numberline {8.1.1}Panel Administratora}{23}{subsection.8.1.1}%
-\contentsline {chapter}{\numberline {9}LITERATURA}{24}{chapter.9}%
+\contentsline {subsubsection}{Rejestracja}{14}{section*.14}%
+\contentsline {subsubsection}{Kategorie produktów}{15}{section*.15}%
+\contentsline {subsubsection}{Ekran produktów}{16}{section*.16}%
+\contentsline {subsubsection}{Koszyk użytkownika}{18}{section*.17}%
+\contentsline {subsubsection}{Generowanie kodu qr}{19}{section*.18}%
+\contentsline {subsection}{\numberline {4.3.2}Szczegółowe omówienie implementacji}{19}{subsection.4.3.2}%
+\contentsline {subsubsection}{Strona tytułowa}{19}{section*.19}%
+\contentsline {section}{\numberline {4.4}Serwer aplikacji}{19}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}JavaScript}{20}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Node.js}{20}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Express.js}{20}{subsection.4.4.3}%
+\contentsline {chapter}{\numberline {5}OPIS TECHNICZNY}{21}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Aplikacja wit.ai}{21}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Intencje i encje}{21}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Kreator}{22}{subsection.5.1.2}%
+\contentsline {subsubsection}{Akcje}{22}{section*.20}%
+\contentsline {subsubsection}{Decision}{22}{section*.21}%
+\contentsline {subsubsection}{Context}{22}{section*.22}%
+\contentsline {subsubsection}{Input}{23}{section*.23}%
+\contentsline {subsubsection}{Response}{23}{section*.24}%
+\contentsline {subsection}{\numberline {5.1.3}Testowanie i publikacja}{23}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Serwer}{23}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Struktura serwera}{23}{subsection.5.2.1}%
+\contentsline {subsubsection}{Router}{23}{section*.25}%
+\contentsline {subsubsection}{Controller}{24}{section*.26}%
+\contentsline {subsubsection}{Service}{25}{section*.27}%
+\contentsline {section}{\numberline {5.3}CRUD}{26}{section.5.3}%
+\contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{27}{chapter.6}%
+\contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{28}{chapter.7}%
+\contentsline {chapter}{\numberline {8}PODSUMOWANIE}{29}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Przyszły rozwój aplikacji}{29}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Panel Administratora}{29}{subsection.8.1.1}%
+\contentsline {chapter}{\numberline {9}LITERATURA}{30}{chapter.9}%
