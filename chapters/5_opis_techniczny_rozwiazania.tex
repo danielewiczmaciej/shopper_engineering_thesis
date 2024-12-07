@@ -85,7 +85,6 @@ Po zdefiniowaniu akcji, aplikacja wit.ai pozwala na przetestowanie modelu język
 
 
 \section{Serwer}
-Serwer jest odpowiedzialny za przetwarzanie żądań użytkownika, a także za komunikację z bazą danych. Serwer został zaimplementowany w języku JavaScript, z wykorzystaniem struktury (ang. \textit{framework}) Express.js. Express.js to minimalistyczny framework, który pozwala na tworzenie aplikacji internetowych w języku JavaScript. Serwer nasłuchuje na zapytania HTTP, a następnie przetwarza je i zwraca odpowiedź. Serwer komunikuje się z bazą danych PostgreSQL. 
 
 \subsection{Struktura serwera}
 Na serwerze zaimplementowano kilka modułów, które są odpowiedzialne za przetwarzanie żądań użytkownika. Każdy moduł odpowiada za obsługę jednego zasobu, takiego jak użytkownik, produkt, czy koszyk. Każdy moduł składa się z trzech plików:
@@ -207,7 +206,7 @@ Service jest odpowiedzialny za dostęp do bazy danych. Każda metoda serwisu odp
 \end{figure}
 
 \section{CRUD}
-CRUD to skrót od angielskich słów Create, Read, Update, Delete. Jest to zestaw podstawowych operacji, które można wykonać na bazie danych. W ramach projektu zaimplementowano operacje CRUD dla wszystkich encji występujących w systemie. Każda z tych operacji jest obsługiwana przez serwer, który komunikuje się z bazą danych.
+CRUD to skrót od angielskich słów Create, Read, Update, Delete. Jest to zestaw podstawowych operacji, które można wykonać na bazie danych. Operacje te mają na celu zapewnienie spójności danych w przestrzeni bazy danych i serwera. W ramach projektu zaimplementowano operacje CRUD dla wszystkich encji występujących w systemie. Każda encja posiada swoje metody CRUD, które są odpowiedzialne za dodawanie, odczytywanie, aktualizowanie i usuwanie danych z bazy danych. 
 % \begin{samepage}
 % \tiny
 % \dirtree{%
