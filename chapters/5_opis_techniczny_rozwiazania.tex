@@ -83,6 +83,8 @@ Moduł \textit{Response} pozwala na zdefiniowanie odpowiedzi, która ma zostać 
 \subsection{Testowanie i publikacja}
 Po zdefiniowaniu akcji, aplikacja wit.ai pozwala na przetestowanie modelu językowego. W tym celu można wpisać dowolną frazę, a aplikacja zwróci intencję oraz encje, które rozpoznała. Po zakończeniu testowania, model językowy można opublikować. Po opublikowaniu modelu, aplikacja wit.ai generuje token, który pozwala na integrację modelu z dowolną aplikacją. Token ten jest wykorzystywany w aplikacji mobilnej, aby komunikować się z modelem językowym.
 
+\subsection{integracja z aplikacją mobilną}
+Aplikacja wit.ai pozwala na integrację z dowolną aplikacją mobilną. W tym celu należy wygenerować token, który pozwala na komunikację z modelem językowym. Token ten jest wykorzystywany w aplikacji mobilnej, aby wysyłać zapytania do modelu językowego. Po wysłaniu zapytania, model językowy zwraca intencję oraz encje, które rozpoznał. Oprócz tego, w określonych przypadkach zwracan jest też nazwa funkcji wraz z argumentami, którą należy wywołać po otrzymaniu odpowiedzi. Aplikacja mobilna na podstawie tych danych wykonuje odpowiednie akcje i odpowiada użytkownikowi w czacie.
 
 \section{Serwer}
 
@@ -95,7 +97,54 @@ Na serwerze zaimplementowano kilka modułów, które są odpowiedzialne za przet
 \end{itemize}
 
 Oprócz modułów, na serwerze zaimplementowano również oprogramowanie pośredniczące (ang. \textit{middleware}), które jest odpowiedzialne za przetwarzanie żądań przed przekazaniem ich do modułów. Middleware w tym przypadku jest wykorzystywane do autoryzacji użytkownika.
-Poza wyżej wymienionymi, serwer zawiera równięz kod potrzebny do migracji lub ponownego postawienia bazy danych.
+Poza wyżej wymienionymi, serwer zawiera równięz kod potrzebny do migracji lub ponownego postawienia bazy danych. 
+
+\subsubsection{Drzewo katalogów}
+
+\begin{samepage}
+\tiny
+\dirtree{%
+.1 Shopper/.
+.2 node\_modules/.
+.2 src/.
+.3 api/.
+.4 auth/.
+.5 auth.router.js.
+.4 cartItems/.
+.4 carts/.
+.4 categories/.
+.4 products/.
+.4 sections/.
+.4 stores/.
+.4 units/.
+.4 users/.
+.3 db/.
+.4 migrations/.
+.4 seeds/.
+.4 connect.js.
+.3 error/.
+.4 error-handler.js.
+.4 error-with-status.js.
+.3 middleware/.
+.4 auth.middleware.js.
+.3 ecosystem.config.cjs.
+.3 server.js.
+.2 .env.
+.2 .gitignore.
+.2 package\_lock.json
+.2 package.json.
+.2 README.md.
+}
+\end{samepage}
+
+W celu przejrzystego przedstawienia struktury serwera, powyższe drzewo katalogów nie przedstawia w plików każdego modułu. Aby dochować kompletości dokumentacji, należy uzupełnić, że nazewnictwo plików w każdym z modułów jest zgodne z poniższym wzorcem.
+
+\dirtree{%
+.1 \{nazwamodułu\}/.
+.2 \{nazwamodułu\}.router.js.
+.2 \{nazwamodułu\}.controller.js.
+.2 \{nazwamodułu\}.service.js.
+}
 
 \subsubsection{Router}
 Router jest odpowiedzialny za definiowanie ścieżek API. Każda ścieżka API odpowiada jednej akcji, która ma zostać wykonana. Router przekazuje żądanie do kontrolera, który jest odpowiedzialny za przetworzenie żądania. Przykładowa definicja ścieżki API w pliku router przedstawiona jest na listingu \ref{lst:router}.
@@ -205,64 +254,5 @@ Service jest odpowiedzialny za dostęp do bazy danych. Każda metoda serwisu odp
 \end{lstlisting}
 \end{figure}
 
-\section{CRUD}
+\subsection{CRUD}
 CRUD to skrót od angielskich słów Create, Read, Update, Delete. Jest to zestaw podstawowych operacji, które można wykonać na bazie danych. Operacje te mają na celu zapewnienie spójności danych w przestrzeni bazy danych i serwera. W ramach projektu zaimplementowano operacje CRUD dla wszystkich encji występujących w systemie. Każda encja posiada swoje metody CRUD, które są odpowiedzialne za dodawanie, odczytywanie, aktualizowanie i usuwanie danych z bazy danych. 
-% \begin{samepage}
-% \tiny
-% \dirtree{%
-% .1 Shopper/.
-% .2 node\_modules/.
-% .2 src/.
-% .3 api/.
-% .4 auth/.
-% .5 auth.router.js.
-% .4 cartItems/.
-% .5 cartItems.controller.js.
-% .5 cartItems.router.js.
-% .5 cartItems.service.js.
-% .4 carts/.
-% .5 cart.controller.js.
-% .5 cart.router.js.
-% .5 cart.service.js.
-% .4 categories/.
-% .5 category.controller.js.
-% .5 category.router.js.
-% .5 category.service.js.
-% .4 products/.
-% .5 product.controller.js.
-% .5 product.router.js.
-% .5 product.service.js.
-% .4 sections/.
-% .5 section.controller.js.
-% .5 section.router.js.
-% .5 section.service.js.
-% .4 stores/.
-% .5 store.controller.js.
-% .5 store.router.js.
-% .5 store.service.js.
-% .4 units/.
-% .5 unit.controller.js.
-% .5 unit.router.js.
-% .5 unit.service.js.
-% .4 users/.
-% .5 user.controller.js.
-% .5 user.router.js.
-% .5 user.service.js.
-% .3 db/.
-% .4 migrations/.
-% .4 seeds/.
-% .4 connect.js.
-% .3 error/.
-% .4 error-handler.js.
-% .4 error-with-status.js.
-% .3 middleware/.
-% .4 auth.middleware.js.
-% .3 ecosystem.config.cjs.
-% .3 server.js.
-% .2 .env.
-% .2 .gitignore.
-% .2 package\_lock.json
-% .2 package.json.
-% .2 README.md.
-% }
-% \end{samepage}

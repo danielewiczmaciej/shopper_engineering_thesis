@@ -5,9 +5,9 @@
 \contentsline {subsection}{\numberline {1.1.1}Wykluczenie społeczne}{4}{subsection.1.1.1}%
 \contentsline {subsection}{\numberline {1.1.2}Dynamiczny rozwój rynku aplikacji mobilnych}{4}{subsection.1.1.2}%
 \contentsline {subsection}{\numberline {1.1.3}Brak gotowych rozwiązań}{4}{subsection.1.1.3}%
-\contentsline {section}{\numberline {1.2}Cel pracy}{4}{section.1.2}%
+\contentsline {section}{\numberline {1.2}Cel pracy}{5}{section.1.2}%
 \contentsline {subsection}{\numberline {1.2.1}Inspiracja}{5}{subsection.1.2.1}%
-\contentsline {subsubsection}{Chęć pomocy}{5}{section*.3}%
+\contentsline {subsubsection}{Sklepy samoobsługowe}{5}{section*.3}%
 \contentsline {chapter}{\numberline {2}ANALIZA PROBLEMU}{6}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Trasowanie po sklepie}{6}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Podobieństwa i różnice z problemem komiwojażera (TSP)}{6}{subsection.2.1.1}%
@@ -52,15 +52,21 @@
 \contentsline {subsubsection}{Input}{23}{section*.23}%
 \contentsline {subsubsection}{Response}{23}{section*.24}%
 \contentsline {subsection}{\numberline {5.1.3}Testowanie i publikacja}{23}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}integracja z aplikacją mobilną}{23}{subsection.5.1.4}%
 \contentsline {section}{\numberline {5.2}Serwer}{23}{section.5.2}%
 \contentsline {subsection}{\numberline {5.2.1}Struktura serwera}{23}{subsection.5.2.1}%
-\contentsline {subsubsection}{Router}{23}{section*.25}%
-\contentsline {subsubsection}{Controller}{24}{section*.26}%
-\contentsline {subsubsection}{Service}{25}{section*.27}%
-\contentsline {section}{\numberline {5.3}CRUD}{26}{section.5.3}%
+\contentsline {subsubsection}{Drzewo katalogów}{23}{section*.25}%
+\contentsline {subsubsection}{Router}{24}{section*.26}%
+\contentsline {subsubsection}{Controller}{24}{section*.27}%
+\contentsline {subsubsection}{Service}{25}{section*.28}%
+\contentsline {subsection}{\numberline {5.2.2}CRUD}{26}{subsection.5.2.2}%
 \contentsline {chapter}{\numberline {6}INSTRUKCJA UŻYTKOWANIA}{27}{chapter.6}%
 \contentsline {chapter}{\numberline {7}WYNIKI TESTÓW}{28}{chapter.7}%
 \contentsline {chapter}{\numberline {8}PODSUMOWANIE}{29}{chapter.8}%
 \contentsline {section}{\numberline {8.1}Przyszły rozwój aplikacji}{29}{section.8.1}%
 \contentsline {subsection}{\numberline {8.1.1}Panel Administratora}{29}{subsection.8.1.1}%
-\contentsline {chapter}{\numberline {9}LITERATURA}{30}{chapter.9}%
+\contentsline {subsection}{\numberline {8.1.2}Rozwinięcie modelu językowego}{29}{subsection.8.1.2}%
+\contentsline {subsection}{\numberline {8.1.3}Rozwój aplikacji mobilnej}{30}{subsection.8.1.3}%
+\contentsline {subsubsection}{Inwentaż}{30}{section*.29}%
+\contentsline {subsubsection}{Planer zakupów i posiłków}{30}{section*.30}%
+\contentsline {chapter}{\numberline {9}LITERATURA}{31}{chapter.9}%

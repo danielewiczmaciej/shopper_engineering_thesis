@@ -8,12 +8,22 @@ Na przestrzeni ostatnich kilku dekad miał miejsce gwałtowny rozwój technologi
 \subsection{Wykluczenie społeczne}
 
 W obecnych czasach, internet jest dostępny w każdym miejscu na Ziemi. Przyczyniło się to do zwiększenia świadomości społecznej na temat inkluzywności. Produkty wypuszczane obecnie na rynek, starają się być dostępne dla każdego. Niesety to samo nie dotyczy rozwiązań i produktów dostępnych teraz na rynku. Jednym z sektorów, gdzie nie widać postępu w dostępności dla osób niepełnosprawnych jest sektor sprzedaży detalicznej. Osoby z wadami wzroku, słuchu lub ruchu nie mogą liczyć na wiele udogodnień w trakcie robienia zakupów.
+W związku z powyższym, główną motywacją stojącą za zrealizowaniem tego projektu jest chęć stworzenia aplikacji, która usprawni robienie zakupów osobom niepełnosprawnym. Jej założeniem jest ułatwienie robienia zakupów do tego stopnia, że osoba mająca problemy z poruszaniem się, widzeniem lub kontaktem z innymi ludźmi, mogłaby zrobić zakupy bez pomocy innej osoby. Znacznie wpłynełoby to nie tylko na komfort użytkownika, ale też odbiłoby się pozytywnie na wizerunku marki sklepu, który posiada taką aplikację.
 
 \subsection{Dynamiczny rozwój rynku aplikacji mobilnych}
 
 Smartfony (ang. \textit{Smartphone}) są dziś w kieszeni każdego. W związku z tym, można zauważyć dynamiczny rozwój rynku aplikacji mobilnych. Firmy i deweloperzy starają się odpowiedzieć na coraz bardziej wygórowane potrzeby konsumentów.
 
 \subsection{Brak gotowych rozwiązań}
+
+Dogłębna analiza rynku nie wykazała istnienia gotowych rozwiązań, które spełniałyby wszystkie wymagania postawione przed aplikacją. W związku z tym, postanowiono stworzyć własne rozwiązanie, które spełniałoby wszystkie wymagania. W trakcie analizy, przebadano rynek pod kątem aplikacji posiadających następujące funkcje:
+\begin{itemize}
+    \item Interfejs służący do nawigacji po sklepie
+    \item Baza danych ze sklepami, wraz z ich lokalizacją i rozkładem produktów
+    \item Asystent AI pomagający w obsłudze aplikacji
+    \item Interfejs głosowy pozwalający na obsługę aplikacji przez osobę niedowidzącą
+    \item System zgrywania koszyka do kodu QR w celu szybszego zakończenia zakupów
+\end{itemize}
 
 \section{Cel pracy}
 
@@ -35,4 +45,10 @@ Aplikacja spełniająca powyższe wymagania ma za zadanie nie tylko usprawnić r
 
 \subsection{Inspiracja}
 
-\subsubsection{Chęć pomocy}
+\subsubsection{Sklepy samoobsługowe}
+Na rynku istnieją już sklepy, które nie wymagają obsługi przez kasjera. Klient samodzielnie skanuje produkty i płaci za nie przy wyjściu. Przykładem takiego sklepu jest Amazon Go, lub Żabka Nano. Oba powyższe projekty działają na podobnej zasadzie.
+Przed wejściem do sklepu klient musi zeskanować kod QR ze swojej aplikacji mobilnej (z przypisaną kartą płatniczą), lub przyłożyć kartę do czytnika. Po zakończeniu autoryzacji drzwi się otwierają (Żabka Nano) lub otwiera się bramka (Amazon Go). W całym sklepie na suficie umieszczone są kamery.
+Ich zadaniem jest monitorowanie każdego z produktów. Kiedy klient zdejmuje produkt z półki, kamera rejestruje ten fakt. Kiedy klient odłoży produkt z powrotem na półkę, kamera rejestruje również to rejestruje. Po zakończeniu zakupów, klient wychodzi ze sklepu. System automatycznie oblicza wartość zakupów i ściąga odpowiednią kwotę z konta lub karty klienta.
+
+Taki model sklepu zainspirował jeden z elementów aplikacji wytworzonej w ramach tej pracy. Jest to system skanowania koszyka do kodu QR, który pozwala na szybsze zakończenie zakupów. 
+
