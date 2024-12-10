@@ -1,4 +1,4 @@
-\begin{thebibliography}{6}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -18,6 +18,14 @@ G.~A. Croes.
 \newblock A method for solving traveling-salesman problems.
 \newblock \emph{Operations Research}, 6\penalty0 (6):\penalty0 791--812, 1958.
 \newblock URL \url{https://www.jstor.org/stable/167074}.
+
+\bibitem[{DSD TECH}(n.d.)]{hm10datasheet}
+{DSD TECH}.
+\newblock {DSD TECH HM-10 Datasheet}.
+\newblock
+  \url{https://people.ece.cornell.edu/land/courses/ece4760/PIC32/uart/HM10/DSD%20TECH%20HM-10%20datasheet.pdf},
+  n.d.
+\newblock [Accessed: 2024-12-10].
 
 \bibitem[Flanagan(2011)]{flanagan2011javascript}
 David Flanagan.
