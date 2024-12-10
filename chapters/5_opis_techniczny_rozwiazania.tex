@@ -169,8 +169,10 @@ userRouter.delete('/:id', userController.delete);
 \end{lstlisting}
 \end{figure}
 
+Powyższy przykład przedstawia definicję ścieżki API, która jest odpowiedzialna za obsługę żądań związanych z użytkownikami. Każda ścieżka API odpowiada jednej akcji, która ma zostać wykonana. W przypadku powodzenia, router przekazuje żądanie do kontrolera. W przypadku niepowodzenia, router przekazuje błąd do middleware, który jest odpowiedzialny za obsługę błędów.
+
 \subsubsection{Controller}
-Controller jest odpowiedzialny za przetwarzanie żądań. Każda metoda kontrolera odpowiada jednej akcji, która ma zostać wykonana. Kontroler przekazuje żądanie do serwisu, który jest odpowiedzialny za dostęp do bazy danych. Przykładowa definicja kontrolera przedstawiona jest na listingu \ref{lst:controller}.
+Kontroler (ang. \textit{Controller}) jest odpowiedzialny za przetwarzanie żądań. Każda metoda kontrolera odpowiada jednej akcji, która ma zostać wykonana. Kontroler przekazuje żądanie do serwisu, który jest odpowiedzialny za dostęp do bazy danych. Przykładowa definicja kontrolera przedstawiona jest na listingu \ref{lst:controller}.
 
 
 \begin{figure}[H]
@@ -232,6 +234,9 @@ export const userController = {
 };        
 \end{lstlisting}
 \end{figure}
+
+Powyższy przykład przedstawia definicję kontrolera, który jest odpowiedzialny za obsługę żądań związanych z użytkownikami. Każda metoda kontrolera odpowiada jednej akcji, która ma zostać wykonana. W przypadku powodzenia, kontroler zwraca odpowiedź. W przypadku niepowodzenia, kontroler przekazuje błąd do middleware, który jest odpowiedzialny za obsługę błędów.
+
 \subsubsection{Service}
 Service jest odpowiedzialny za dostęp do bazy danych. Każda metoda serwisu odpowiada jednej akcji, która ma zostać wykonana. Serwis przekazuje żądanie do bazy danych, a następnie zwraca wynik do kontrolera. Przykładowa definicja funkcji serwisu przedstawiona jest na listingu \ref{lst:service}.
 
@@ -254,5 +259,38 @@ Service jest odpowiedzialny za dostęp do bazy danych. Każda metoda serwisu odp
 \end{lstlisting}
 \end{figure}
 
+Powyższy przykład przedstawia funkcję serwisu, która dodaje nowego użytkownika do bazy danych. Funkcja ta przyjmuje obiekt \textit{newUser}, który zawiera dane nowego użytkownika. Następnie funkcja ta wykonuje zapytanie do bazy danych, które dodaje nowego użytkownika. W przypadku niepowodzenia, funkcja zwraca błąd 400. W przypadku powodzenia, funkcja zwraca wiadomość o sukcesie.
+
+
 \subsection{CRUD}
 CRUD to skrót od angielskich słów Create, Read, Update, Delete. Jest to zestaw podstawowych operacji, które można wykonać na bazie danych. Operacje te mają na celu zapewnienie spójności danych w przestrzeni bazy danych i serwera. W ramach projektu zaimplementowano operacje CRUD dla wszystkich encji występujących w systemie. Każda encja posiada swoje metody CRUD, które są odpowiedzialne za dodawanie, odczytywanie, aktualizowanie i usuwanie danych z bazy danych. 
+
+\subsection{Autoryzacja}
+Autoryzacja to proces weryfikacji tożsamości użytkownika, który w pierwszej kolejności musi zarejestrować się w systemie, aby uzyskać dostęp do aplikacji. W ramach projektu zaimplementowano autoryzację opartą na tokenach JWT. Po zalogowaniu użytkownika generowany jest token JWT, który jest zapisywany w pamięci podręcznej przeglądarki. Token ten jest przesyłany w nagłówku HTTP przy każdej interakcji z serwerem. Serwer weryfikuje poprawność tokena i na tej podstawie zwraca odpowiedź. W przypadku nieprawidłowego tokena żądanie jest odrzucane, a serwer zwraca odpowiedni błąd.
+
+Na serwerze, plikiem odpowiedzialnym za autoryzację jest \textit{auth.middleware.js}. W pliku tym zdefiniowane są funkcje, które są odpowiedzialne za weryfikację tokena JWT. W przypadku nieprawidłowego tokena, serwer zwraca odpowiedni błąd. Na listingu \ref{lst:auth} przedstawiono zawartość pliku \textit{auth.middleware.js}.
+
+\begin{figure}[H]
+\begin{lstlisting}[language=JavaScript, caption=Przykładowa definicja autoryzacji, label=lst:auth]
+import jwt from 'jsonwebtoken';
+import { ErrorWithStatus } from '../error/error-with-status.js';
+
+export const authMiddleware = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    throw new ErrorWithStatus('Authentication required', 401);
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    throw new ErrorWithStatus('Invalid token', 401);
+  }
+};
+\end{lstlisting}
+\end{figure}
+
+Po otrzymaniu żądania, serwer weryfikuje token JWT używając funkcji \textit{jwt.verify()}. W przypadku poprawnego tokena, serwer zwraca odpowiedź. Jeśli w żadaniu nie ma tokena, serwer zwraca błąd 401. W przypadku nieprawidłowego tokena, serwer również zwraca błąd 401.

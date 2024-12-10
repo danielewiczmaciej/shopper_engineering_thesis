@@ -1,6 +1,19 @@
 \chapter{PODSUMOWANIE}
 \label{chapter:podsumowanie}
 
+\section{Napotkane wyzwania}
+
+Podczas pracy nad projektem napotkano kilka wyzwań, które utrudniły proces implementacji. Poniżej przedstawiono najważniejsze z nich.
+
+\subsection{Obsługa nadajników BLE}
+Dla każdego członka projektu, technologia Bluetooth Low Energy była nowością. W związku z tym, konieczne było zapoznanie się z dokumentacją techniczną oraz zasadami działania tej technologii. W trakcie implementacji, napotkano kilka problemów związanych z obsługą nadajników BLE, które wymagały głębszej analizy i zrozumienia zasad działania tej technologii.
+Pierwszą przeszkodą było zasilenie nadajnika. Jako, że urządzenie ma jedynie piny VCC, GND, TX i RX, konieczne było zasilanie nadajnika z zewnętrznego źródła. W tym celu wypożyczono sprzęt w postaci płytek stykowych, przewodów połączeniowych oraz urządzenia Raspberry Pi. Następnie podłączono nadajnik do Raspberry Pi. 
+Zasilone urządzenie należało następnie wyszukać wśród dostępnych urządzeń bluetooth. Do zidentyfikowania sygnału i obsługi urządzenia, użyto dokumentu technicznego opisującego interfejs nadajnika. \cite{hm10datasheet}
+
+\subsection{Praca w zespole}
+Kolejnym z wyzwań, które napotkano już na początku projektu była organizacja pracy zespołowej. Każdy członek zespołu miał swoje zadanie do wykonania, lecz wytwarzane komponenty były zależne od kodu innych członków zespołu. W związku z tym, konieczne było zapewnienie ciągłej komunikacji w zespole.
+W tym celu ustanowiono cotygodniowe spotkanie mające na celu omówienie postępów w pracy, a także rozwiązanie napotkanych problemów. W trakcie spotkań omawiano również plany na kolejny tydzień, a także ustalano priorytety zadań. Takie podejście pozwoliło na efektywną pracę zespołową i na osiągnięcie celu projektu.
+
 \section{Przyszły rozwój aplikacji}
 
 Po zakończeniu pracy nad projektem w ramach pracy inżynierskiej, aplikacja jest gotowa do wdrożenia. W ramach przyszłego rozwoju aplikacji można by było zaimplementować kilka dodatkowych funkcjonalności, które rozszerzyłyby możliwości aplikacji. Poniżej przedstawiono kilka z nich.
@@ -13,7 +26,6 @@ Należy rozróżnić panel administratora dostępny dla managera sklepu, od pane
     \item Zarządzanie użytkownikami w zakresie sklepu
     \item Możliwość zgłośenia problemu z aplikacją
 \end{itemize}
-
 Panel dostępny dla administratora systemu rozszerzałby powyższy panel o dodatkowe funkcje, takie jak:
 \begin{itemize}
     \item Zarządzanie użytkownikami w zakresie całego systemu
@@ -43,3 +55,17 @@ Na tej podstawie, aplikacja generowałaby listę produktów, których brakuje w 
 \subsubsection{Planer zakupów i posiłków}
 
 Następnym możliwym rozszerzeniem jest planer zakupów. W ramach planera, użytkownik mógłby ustalić posiłki, które chciałby zjeść w tym tygodniu. W tym celu aplikacja musiałaby być rozszerzona o funkcję sprawdzania składników poszczególnych posiłków. Na tej podstawie, aplikacja generowałaby listę zakupów, która zawierałaby produkty, które są potrzebne do przygotowania posiłków na cały tydzień.
+
+\section{Wnioski}
+
+\subsection{Osiągnięte cele}
+
+W ramach pracy inżynierskiej udało się zrealizować wszystkie cele postawione przed projektem. Aplikacja spełnia wszystkie wymagania funkcjonalne, które zostały zdefiniowane na początku projektu. W związku z tym, można uznać, że projekt zakończył się sukcesem.
+
+\subsection{Wartość praktyczna}
+
+Aplikacja ma duże znaczenie praktyczne zarówno dla użytkowników indywidualnych, jak i dla właścicieli sklepów. Umożliwiając łatwiejsze i bardziej efektywne zakupy, aplikacja przyczynia się do zwiększenia komfortu klientów, szczególnie tych, którzy borykają się z ograniczeniami ruchowymi, wzrokowymi lub innymi problemami zdrowotnymi. Funkcja nawigacji po sklepie z wykorzystaniem algorytmów optymalizacyjnych pozwala zaoszczędzić czas i zmniejszyć stres związany z wyszukiwaniem produktów w dużych placówkach. Dodatkowo, dzięki funkcji generowania kodów QR, proces finalizacji zakupów został znacznie uproszczony, co jest korzystne zarówno dla klientów, jak i dla sklepów, które mogą ograniczyć kolejki i usprawnić działanie kas samoobsługowych.
+
+Dla branży handlowej aplikacja stanowi innowacyjne rozwiązanie, które może przyciągnąć nowych klientów, poprawić wizerunek firmy i zwiększyć jej konkurencyjność. Rozwiązanie to jest szczególnie cenne w kontekście współczesnych trendów, takich jak personalizacja usług czy dążenie do inkluzywności. Możliwość integracji aplikacji z istniejącymi systemami sklepowymi, jak również jej potencjał do działania w wielu sklepach, a nie tylko w jednej sieci, zwiększa elastyczność wdrożenia.
+
+Oprócz zastosowań komercyjnych, aplikacja może znaleźć zastosowanie w programach społecznych wspierających osoby z niepełnosprawnościami, zwiększając ich samodzielność i komfort życia. Dzięki temu projekt wpisuje się w ideę społecznej odpowiedzialności biznesu (CSR) i może stanowić wzór dla innych rozwiązań technologicznych dążących do integracji i wsparcia osób wykluczonych.
