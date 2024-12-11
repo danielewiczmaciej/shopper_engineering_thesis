@@ -83,8 +83,60 @@ Moduł \textit{Response} pozwala na zdefiniowanie odpowiedzi, która ma zostać 
 \subsection{Testowanie i publikacja}
 Po zdefiniowaniu akcji, aplikacja wit.ai pozwala na przetestowanie modelu językowego. W tym celu można wpisać dowolną frazę, a aplikacja zwróci intencję oraz encje, które rozpoznała. Po zakończeniu testowania, model językowy można opublikować. Po opublikowaniu modelu, aplikacja wit.ai generuje token, który pozwala na integrację modelu z dowolną aplikacją. Token ten jest wykorzystywany w aplikacji mobilnej, aby komunikować się z modelem językowym.
 
-\subsection{integracja z aplikacją mobilną}
+\subsection{Integracja z aplikacją mobilną}
 Aplikacja wit.ai pozwala na integrację z dowolną aplikacją mobilną. W tym celu należy wygenerować token, który pozwala na komunikację z modelem językowym. Token ten jest wykorzystywany w aplikacji mobilnej, aby wysyłać zapytania do modelu językowego. Po wysłaniu zapytania, model językowy zwraca intencję oraz encje, które rozpoznał. Oprócz tego, w określonych przypadkach zwracan jest też nazwa funkcji wraz z argumentami, którą należy wywołać po otrzymaniu odpowiedzi. Aplikacja mobilna na podstawie tych danych wykonuje odpowiednie akcje i odpowiada użytkownikowi w czacie.
+
+\subsection{HTTP API}
+Wit.ai udostępnia wiele funkcji za pomocą HTTP API. API to pozwala na integrację modelu językowego z dowolną aplikacją. API pozwala na trenowanie, testowanie, publikowanie, oraz integrację modelu z aplikacją mobilną. Do obsługi czatu w aplikacji wykorzystano metodę POST /event. Metoda ta zwraca zaktualizowaną mapę kontekstu po wykonaniu wdrożonego przepływu Composer dla podanej mapy kontekstu oraz opcjonalnego zapytania użytkownika. Może również zwrócić treść odpowiedzi przeznaczoną dla użytkownika oraz wskazanie akcji do wykonania. \cite{witai_http_api} Na listingu \ref{lst:wit_ai_http_api_request} przedstawiono przykładowe zapytanie HTTP API.
+Na listingu \ref{lst:wit_ai_http_api_response} przedstawiono przykładową odpowiedź HTTP API.
+
+\begin{figure}[H]
+\begin{lstlisting}[language=bash, caption=Przykładowe zapytanie HTTP API, label=lst:wit_ai_http_api_request]
+    curl -XPOST \
+    -H 'Authorization: Bearer $TOKEN' \
+    'https://api.wit.ai/event?v=20241211&session_id=prod5i&tag=1.0&context_map=%7B%7D' \
+    -d '{"type":"message","message":"where is the nearest lidl?"}'  
+\end{lstlisting}
+\end{figure}
+\label{lst:wit_ai_http_api_request}
+
+\begin{figure}[H]
+\begin{lstlisting}[language=javascript, caption=Przykładowe zapytanie HTTP API, label=lst:wit_ai_http_api_request]
+{
+  "context_map": {
+    "store_entity": [
+      {
+        "body": "lidl",
+        "confidence": 1,
+        "end": 25,
+        "entities": {},
+        "id": "955144219872453",
+        "name": "store",
+        "role": "store",
+        "start": 21,
+        "type": "value",
+        "value": "Lidl"
+      }
+    ]
+  },
+  "is_final": true,
+  "response": {
+    "text": "Here are the nearest Lidl stores"
+  },
+  "type": "FULL_COMPOSER"
+}
+\end{lstlisting}
+\end{figure}
+\label{lst:wit_ai_http_api_response}
+
+W odpowiedzi można znaleźć następujące pola:
+\begin{itemize}
+    \item \textit{context\_map} - mapa kontekstu,
+    \item \textit{is\_final} - flaga określająca, czy odpowiedź jest ostateczna,
+    \item \textit{response} - odpowiedź dla użytkownika,
+    \item \textit{type} - typ odpowiedzi.
+\end{itemize}
+W polu \textit{response}, może znaleźć się jeszcze pole \textit{action} które określa jaką akcję należy wykonać po otrzymaniu odpowiedzi.
 
 \section{Serwer}
 
@@ -1629,3 +1681,103 @@ Produkty w koszyku mogą zostać przefiltrowane na podstawie wpisanego zapytania
 Każdy produkt w koszyku posiada przycisk umożliwiający jego usunięcie. Po kliknięciu na ikonę kosza (\texttt{Feather}) wywoływana jest funkcja \texttt{removeFromCart}, która usuwa wybrany produkt z koszyka zarówno w bazie danych, jak i w stanie aplikacji.
 
 \subsubsection{Profil użytkownika}
+\subsection{Baza danych}
+
+\subsubsection{Inicjalizacja bazy danych}
+
+W przypadku tworzenia nowego środowiska konieczna jest inicjalizacja nowej bazy danych. W tym celu powstał plik \textit{init\_tables.sql}, który zawiera skrypt tworzący nową bazę danych. Skrypt ten tworzy nową bazę danych oraz tabele. Na listingu \ref{lst:init_tables} przedstawiono zawartość pliku \textit{init\_tables.sql}.
+
+\begin{figure}[H]
+\begin{lstlisting}[language=SQL, caption=Przykładowa definicja inicjalizacji bazy danych, label=lst:init_tables]
+DROP TABLE IF EXISTS stores CASCADE;
+DROP TABLE IF EXISTS cart_items CASCADE;
+DROP TABLE IF EXISTS carts CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS units CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS sections CASCADE;
+
+CREATE TABLE stores (
+    store_id SERIAL PRIMARY KEY,
+    store_name VARCHAR(255) NOT NULL,
+    latitude VARCHAR(255) NOT NULL,
+    longitude VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE sections (
+    section_id SERIAL PRIMARY KEY,
+    section_name VARCHAR(255) NOT NULL,
+    store_id INT REFERENCES stores(store_id) ON DELETE CASCADE
+);
+
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL,
+    section_id INT REFERENCES sections(section_id) ON DELETE CASCADE
+);
+
+CREATE TABLE units (
+    unit_id SERIAL PRIMARY KEY,
+    unit_name VARCHAR(50) NOT NULL,
+    unit_symbol VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE products (
+    product_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    category_id INT REFERENCES categories(category_id) ON DELETE CASCADE,
+    availability VARCHAR(50) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    unit_id INT REFERENCES units(unit_id) ON DELETE CASCADE
+);
+
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE carts (
+    cart_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE cart_items (
+    cart_item_id SERIAL PRIMARY KEY,
+    cart_id INT REFERENCES carts(cart_id) ON DELETE CASCADE,
+    product_id INT REFERENCES products(product_id) ON DELETE CASCADE,
+    quantity INT NOT NULL
+);
+\end{lstlisting}
+\end{figure}
+
+Po utworzeniu bazy danych, konieczne jest dodanie danych do tabel. W tym celu powstał plik \textit{init\_data.sql}, który zawiera skrypt dodający dane do tabel. Na listingu \ref{lst:init_data} przedstawiono część zawartości pliku \textit{init\_data.sql}.
+
+\begin{figure}[H]
+\begin{lstlisting}[language=SQL, caption=Przykładowa definicja inicjalizacji danych, label=lst:init_data]
+DELETE FROM cart_items;
+DELETE FROM carts;
+DELETE FROM users;
+DELETE FROM products;
+DELETE FROM units;
+DELETE FROM categories;
+DELETE FROM sections;
+DELETE FROM stores;
+
+INSERT INTO stores (store_name, latitude, longitude, city) VALUES
+('Downtown Supermarket', '40.7128', '-74.0060', 'Gdansk'),
+('Uptown Grocery', '40.7831', '73.9712', 'Gdansk'),
+('Midtown Market', '40.7549', '73.9840', 'Gdansk'),
+('East Side Shop', '40.7614', '73.9776', 'Gdansk'),
+('West End Store', '40.7736', '73.9566', 'Gdansk');
+
+\end{lstlisting}
+\end{figure}
+Po wywołaniu obu skryptów baza danych jest gotowa do użycia.
