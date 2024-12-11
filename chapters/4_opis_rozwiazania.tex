@@ -112,18 +112,42 @@ tekst
 
 \section{Interfejs użytkownika}
 
-\subsection{Szczegółowe omówienie implementacji}
+\subsection{Wykorzystane technologie}
 
-\subsubsection{Strona tytułowa}
+\subsubsection{Wstęp}
 
-tekst
+Podczas budowy interfejsu użytkownika w projekcie wykorzsytano szereg nowoczesnych technologii oraz bibliotek, które wspólnie tworzą solidną i elastyczną podstawę dla aplikacji mobilnej. Postawiono na popularność rozwiązań i gotowych modułów oraz na możliwość zbudowania projektu na każdej platformie mobilnej. Poniżej przedstawiono szczegóły dotyczące użytych technologii oraz uzasadnienie ich wyboru.
 
-\subsubsection{Strona tytułowa}
+\subsubsection{React Native}
 
-tekst
-\subsubsection{Strona tytułowa}
+React Native jest frameworkiem umożliwiającym tworzenie aplikacji mobilnych na platformy iOS oraz Android przy użyciu jednego kodu w JavaScript lub TypeScript. Dzięki React Native zredukowaliśmy czas i koszty produkcji aplikacji, jednocześnie zachowując natywną wydajność. Co więcej nauka React Native jest stosunkowo prosta, dla osób które pisały aplikacje przeglądarkowe we fremaworku \textit{React}.
 
-tekst
+\subsubsection{Expo}
+
+Expo to platforma usprawniająca rozwój aplikacji w React Native. Zapewnia bogaty zestaw narzędzi, takich jak menedżer pakietów, biblioteki gotowe do użycia i uproszczony proces wdrażania. Wybór Expo pozwolił na przyspieszenie rozwoju aplikacji oraz zwinne uruchamianie jej w trybie developerskim na urządzeniach mobilnych.
+
+\subsubsection{TypeScript}
+
+TypeScript to rozszerzenie \textit{JavaScriptu}, które dodaje statyczne typowanie. Dzięki niemu kod aplikacji jest bardziej przejrzysty i mniej podatny na błędy. TypeScript wspomaga skalowalność projektu oraz ułatwia współpracę między programistami. Dzieki wykorzystaniu tego języka zwiększono jakość kodu oraz uniknięto wielu potencjhnych błędów, wynikających z niepoprawnego typowania zmiennych. 
+
+\subsubsection{Kluczowe biblioteki}
+
+\begin{itemize}
+    \item \textbf{expo-speech-recognition} - Umożliwia rozpoznawanie mowy użytkownika. Użycie tej technologii pozwala na obsługę aplikacji za pomocą poleceń głosowych, co znacząco zwiększa jej dostępność, szczególnie dla osób z trudnościami w obsłudze interfejsu dotykowego. Zastosowanie jej jest kluczowe w udostępnieniu aplikacji dla niewidomych i odbieraniu ich komend głosowych.
+    \item \textbf{expo-speech} - Biblioteka ta pozwala na syntezę mowy w aplikacjach React Native. Dzięki niej aplikacja może przekazywać informacje użytkownikowi za pomocą komunikatów głosowych, co daje szanse osobom niepełnosprawnym na korzystanie z aplikacji.
+    \item \textbf{react-native-ble-plx} - Obsługuje komunikację Bluetooth Low Energy (BLE). Została wybrana ze względu na swoją popularność oraz możliwość integracji z natywnymi modułami Bluetooth, co jest niezbędne w przypadku funkcji wymagających interakcji z urządzeniami zewnętrznymi.
+    \item \textbf{expo-secure-store} - Użycie jej umożliwia bezpieczne przechowywanie danych, takich jak tokeny sesji lub dane uwierzytelniające. Dzięki integracji z Expo oraz wsparciu dla mechanizmów natywnych wybór tej biblioteki zapewnia wysoki poziom ochrony danych użytkownika i pozwala na łatwy dostęp do charakterystycznych zmiennych globalnych.
+    \item \textbf{react-native-svg} - Obsługuje grafiki wektorowe w formacie SVG w aplikacjach React Native. Umożliwia tworzenie dynamicznych, skalowalnych elementów graficznych, takich jak wykresy, ikony czy kody QR, co czyni ją idealnym wyborem w aplikacjach wymagających dużej precyzji graficznej. W kontekście naszej aplikacji pozwala na generowanie map sklepów w prosty sposób.
+    \item \textbf{react-native-qrcode-svg} - Odpowiedzialna za generowanie kodów QR w aplikacjach React Native. Została użyta w projekcie do generowania kodów QR na podstawie produktów w koszyku, co pozwala użytkownikowi na łatwe zeskanowanie i zrealizowanie transakcji w sklepie.
+    \item \textbf{react-native-maps} - Umożliwia wyświetlanie map w aplikacjach React Native. W projekcie odegrała kluczową rolę w tworzeniu widoku mapy sklepu, pozwalając użytkownikowi na wybór najbliższego sklepu z listy dostępnych lokacji, a także umożliwiając wyświetlanie jego lokalizacji na mapie.
+\end{itemize}
+
+\subsubsection{222}
+
+tekst2
+\subsubsection{333}
+
+tekst3
 
 \section{Serwer aplikacji}
 Serwer jest odpowiedzialny za przetwarzanie żądań użytkownika, a także za komunikację z bazą danych. Został zaimplementowany w języku JavaScript przy użyciu platformy Node.js oraz struktury (ang. \textit{framework}) Express.js. Node.js pozwala na uruchamianie JavaScript po stronie serwera, co umożliwia tworzenie wydajnych i skalowalnych aplikacji. Express.js, będący minimalistycznym frameworkiem działającym na Node.js, upraszcza proces budowy aplikacji internetowych. Serwer nasłuchuje na zapytania HTTP, przetwarza je i zwraca odpowiedź, a do komunikacji z bazą danych PostgreSQL wykorzystuje odpowiednie moduły Node.js.
