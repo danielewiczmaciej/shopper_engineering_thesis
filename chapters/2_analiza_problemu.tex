@@ -216,3 +216,80 @@ Budowanie systemów NLP obejmuje analizę na kilku poziomach:
 \end{enumerate}
 
 Natural Language Interfaces (NLI) umożliwiają użytkownikom zadawanie pytań w języku naturalnym, co może być szczególnie przydatne w aplikacjach zakupowych, np. „Gdzie znajdę makaron?” lub „Dodaj do koszyka mleko”. W przypadku aplikacji będącej tematem pracy, NLI zostało wykorzystane również do pomocy w obsłudze aplikacji.
+
+\subsection{Przewaga modeli językowych nad modelami generatywnymi}
+Natural Language Processing (NLP), czyli przetwarzanie języka naturalnego, odgrywa kluczową rolę w budowie nowoczesnych aplikacji zorientowanych na interakcję z użytkownikiem. W porównaniu do bardziej ogólnych modeli generatywnych, takich jak ChatGPT, rozwiązania NLP oferują szereg istotnych przewag, które czynią je bardziej odpowiednimi do zastosowań w określonych domenach.
+
+\subsubsection{Specjalizacja w przetwarzaniu języka}
+NLP zostało zaprojektowane z myślą o analizie, interpretacji i przetwarzaniu języka naturalnego w sposób ukierunkowany. Pozwala to na efektywne rozpoznawanie intencji użytkownika, ekstrakcję kluczowych informacji z tekstu oraz mapowanie tych informacji na konkretne działania w aplikacji. Na przykład w aplikacjach zakupowych system NLP może łatwo rozpoznać zapytanie użytkownika takie jak „Dodaj mleko do listy zakupów” i przypisać je do odpowiedniej akcji. Modele generatywne, choć potężne, mogą być mniej precyzyjne w scenariuszach wymagających określonej interpretacji danych.
+
+\subsubsection{Wydajność i efektywność zasobów}
+Rozwiązania NLP takie jak Wit.ai, są znacznie bardziej zoptymalizowane pod względem zużycia zasobów obliczeniowych w porównaniu do dużych modeli generatywnych, takich jak ChatGPT. W przypadku aplikacji mobilnych lub działających na urządzeniach z ograniczonymi zasobami, NLP pozwala na:
+\begin{itemize}
+    \item szybsze przetwarzanie zapytań użytkownika,
+    \item mniejsze zapotrzebowanie na moc obliczeniową,
+    \item lepszą integrację z lokalnym systemem operacyjnym.
+\end{itemize}
+
+Dzięki temu rozwiązania NLP są bardziej dostępne dla szerokiego grona aplikacji użytkowych, w tym takich, które muszą działać w czasie rzeczywistym.
+
+\subsubsection{Integracja z procesami biznesowymi}
+
+Jednym z kluczowych atutów NLP jest jego zdolność do ścisłej integracji z procesami biznesowymi. Technologie te umożliwiają definiowanie przepływów (flows), które w sposób deterministyczny realizują zadania związane z rozpoznaną intencją użytkownika. W praktyce oznacza to, że intencje wykryte przez NLP mogą być bezpośrednio mapowane na działania, takie jak:
+
+\begin{itemize}
+    \item dodanie produktu do koszyka,
+    \item generowanie przypomnień,
+    \item integracja z innymi systemami.
+\end{itemize}
+W porównaniu, modele generatywne wymagają dodatkowego przetwarzania danych, aby zinterpretować i przekształcić wygenerowaną odpowiedź w działanie aplikacji.
+
+\subsubsection{Kontrola i przewidywalność odpowiedzi}
+
+Rozwiązania NLP charakteryzują się większą przewidywalnością działania. W systemach takich jak Wit.ai intencje i akcje są definiowane w sposób jawny, co pozwala na pełną kontrolę nad procesem odpowiedzi. Modele generatywne, takie jak ChatGPT, generują odpowiedzi na podstawie wzorców w danych, co sprawia, że ich działanie może być mniej przewidywalne. W aplikacjach użytkowych, gdzie kluczowe jest zaufanie użytkownika i spójność działania, deterministyczne podejście NLP jest bardziej pożądane.
+
+\section{Obecne rozwiązania}
+\label{subsec:obecne_rozwiazania}
+
+W ramach analizy biznesowej przebadano aplikacje posiadające następujące funkcje:
+
+\begin{itemize}
+    \item Interfejs służący do nawigacji po sklepie
+    \item Baza danych ze sklepami, wraz z ich lokalizacją i rozkładem produktów
+    \item Asystent AI pomagający w obsłudze aplikacji
+    \item Interfejs głosowy pozwalający na obsługę aplikacji przez osobę niedowidzącą
+    \item System zgrywania koszyka do kodu QR w celu szybszego zakończenia zakupów
+\end{itemize}
+Analiza miała na celu rozpoznanie dostępnych rozwiązań na rynku, które mogłyby być inspiracją dla aplikacji będącej tematem pracy.
+
+
+W tabeli \ref{tab:comparison} przedstawiono znalezione rozwiązania i ich pokrycie funkcjonalne.
+
+\begin{table}[ht]
+\centering
+\scriptsize
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Aplikacja}         & \textbf{Nawigacja po sklepie} & \textbf{Baza danych sklepów} & \textbf{Asystent AI} & \textbf{Interfejs głosowy} & \textbf{Koszyk QR} \\ \hline
+Walmart App                & \cmark                        & \cmark                      &                      &                           &                   \\ \hline
+Target App                 & \cmark                        & \cmark                      &                      &                           &                   \\ \hline
+Amazon Alexa               &                               &                             & \cmark               & \cmark                    &                   \\ \hline
+Carrefour App              &                               &                             &                      &                           & \cmark            \\ \hline
+IKEA Place                 & \cmark                        &                             &                      &                           &                   \\ \hline
+Instacart                  &                               & \cmark                      &                      &                           &                   \\ \hline
+Google Shopping            &                               &                             & \cmark               &                           &                   \\ \hline
+\textbf{Shopper}           & \cmark                        & \cmark                      & \cmark               & \cmark                    & \cmark            \\ \hline
+\end{tabular}
+\caption{Porównanie funkcjonalności aplikacji zakupowych}
+\label{tab:comparison}
+\end{table}
+
+\subsection{Walmart App}
+Aplikacja Walmart App jest najblizszym rozwiązaniem do aplikacji Shopper. Posiada ona interfejs służący do nawigacji po sklepie, bazę danych ze sklepami, wraz z ich lokalizacją i rozkładem produktów. Niestety, nie posiada ona asystenta AI, interfejsu głosowego ani systemu zgrywania koszyka do kodu QR.
+
+\subsection{Asystenci głosowi}
+
+Asystenci głosowi, takie jak Amazon Alexa czy Google Shopping, są rozwiązaniem dla osób, które chcą zrobić zakupy bez użycia rąk. Niestety, nie posiadają one interfejsu służącego do nawigacji po sklepie, bazy danych ze sklepami, wraz z ich lokalizacją i rozkładem produktów ani systemu zgrywania koszyka do kodu QR.
+
+\subsection{Wnioski}
+Jak widać, żadna z aplikacji nie spełnia wszystkich wymagań postawionych przed aplikacją. Ponadto, wszystkie aplikacje poza Instacart i Google Assistant, są rozwiązaniem dla jednego sklepu. Aplikacja Shopper ma na celu nie tylko implementację wszystkich wymagań w ramach jednego projektu, ale też stworzenie aplikacji, która będzie działać w każdym sklepie.
