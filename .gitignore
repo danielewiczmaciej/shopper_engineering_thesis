@@ -11,3 +11,5 @@
 *.pdf
 *.synctex(busy)
 *.blg
+main.lot
+main.lof
