@@ -4,3 +4,12 @@
 /main.log
 *.aux
 *.log
+*.bbl
+*.synctex.gz
+*.out
+*.toc
+*.pdf
+*.synctex(busy)
+*.blg
+*.lot
+*.lof
