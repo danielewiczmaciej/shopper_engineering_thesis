@@ -298,3 +298,147 @@ Dzięki architekturze opartej na zdarzeniach oraz jednowątkowemu modelowi dzia�
 Express.js to minimalistyczny framework dla Node.js, który pozwala na szybkie tworzenie aplikacji internetowych. Dzięki swojej prostocie i elastyczności jest jednym z najpopularniejszych frameworków dla Node.js.
 
 Framework Express.js umożliwia dynamiczny routing, pozwalając programistom na definiowanie wzorców URL i przypisywanie ich do określonej logiki aplikacji. Taka elastyczność ułatwia zarządzanie złożonymi strukturami aplikacji poprzez wiązanie punktów końcowych z odpowiednimi kontrolerami. \cite{peters2017building}
+
+\section{System nawigacji}
+
+\subsection{Wprowadzenie do systemu nawigacji}
+Celem systemu nawigacji jest dostarczenie użytkownikowi (klientowi sklepu) intuicyjnych i precyzyjnych wskazówek pomagających w odnalezieniu poszukiwanych produktów wewnątrz budynku. System łączy w sobie dokładne modelowanie sklepu w formie grafu, pozycjonowanie użytkownika z wykorzystaniem technologii BLE, a także efektywne algorytmy znajdowania i optymalizacji tras. Założeniem jest, aby klient mógł szybko i sprawnie dotrzeć do wszystkich potrzebnych mu produktów, minimalizując czas i dystans pokonany w obrębie sklepu.
+
+Przedstawiona koncepcja opiera się na kilku kluczowych elementach. Po pierwsze, środowisko sklepu modelowane jest jako graf, którego wierzchołkami są sekcje sklepu. Po drugie, użytkownik jest lokalizowany wzdłuż alejki w sposób jednoosiowy, co upraszcza problem pozycjonowania. Po trzecie, trasa wyznaczana jest na podstawie listy docelowych sekcji, a następnie optymalizowana, również w trakcie poruszania się klienta po sklepie. Całość tworzy spójny, interaktywny system nawigacji działający w czasie rzeczywistym.
+
+\subsection{Opis środowiska i infrastruktury sklepu}
+
+\subsubsection{Charakterystyka sklepu i układ alejek}
+Rozważany sklep można przedstawić jako pomieszczenie z kilkoma długimi, równoległymi alejkami, połączonymi na końcach przejściami poprzecznymi. Wzdłuż alejek rozmieszczone są regały z towarami. Przestrzeń ta jest zorganizowana w taki sposób, aby klient mógł łatwo przemieszczać się po regularnych ścieżkach, bez konieczności kluczenia w labiryncie nieuporządkowanych półek.
+
+Na ogół alejki mają podobną długość, a przejścia między nimi są umiejscowione w ustalonych, regularnych miejscach. To znacząco obniża złożoność problmu nawigacji.
+\subsubsection{Lokalizacja i oznaczanie sekcji w alejkach}
+Każda alejka dzielona jest na mniejsze odcinki, zwane sekcjami, z których każda zawiera określoną grupę produktów. Sekcje są numerowane wzdłuż alejki, np. od 1.0 do 8.0, a dodatkowo można wyróżnić połówkowe wartości (1.5, 2.5, ...) w celu precyzyjniejszej lokalizacji. Identyfikatory sekcji są używane do powiązania konkretnych produktów z miejscem w sklepie, w którym się znajdują. Dzięki temu, gdy klient określi listę zakupów, system może przełożyć ją na zbiór sekcji do odwiedzenia.
+
+\subsection{Modelowanie przestrzeni sklepu jako graf}
+
+\subsubsection{Definicja wierzchołków i krawędzi grafu sklepu}
+W modelu grafowym każda sekcja to wierzchołek grafu. Między wierzchołkami istnieją krawędzie reprezentujące możliwość przejścia z jednej sekcji do drugiej. Wagi krawędzi odpowiadają fizycznym odległościom - często są one identyczne w obrębie alejki.
+
+Zwykle alejka jest reprezentowana jako ciąg wierzchołków połączonych liniowo. Jeśli istnieją przejścia poprzeczne między alejkami, to w grafie pojawiają się krawędzie łączące wierzchołki reprezentujące sekcje różnych alejek. Dzięki temu graf odzwierciedla fizyczną strukturę sklepu i umożliwia stosowanie standardowych algorytmów grafowych.
+
+\subsubsection{Reprezentacja sekcji jako węzłów grafu}
+Każda sekcja ma przypisany numer i stanowi osobny węzeł w grafie. W przypadku alejki dzielonej na 8 sekcji, graf może zawierać wierzchołki 1, 2, 3, ... 8, połączone krawędziami reprezentującymi kolejne odcinki alejki. Jeśli do jednej z sekcji można dojść z sąsiedniej alejki, w grafie pojawia się dodatkowa krawędź.
+
+Taka reprezentacja pozwala łatwo rozszerzać i modyfikować układ sklepu. Dodanie nowej sekcji lub zmiana odległości pomiędzy sekcjami sprowadza się do manipulacji wierzchołkami i krawędziami w grafie.
+
+\subsubsection{Ilustracje graficzne: rzut sklepu i odpowiadający mu graf}
+Graficzna prezentacja sklepu polega na narysowaniu rzutów: pierwszego z perspektywy użytkownika (plan sklepu z alejkami i regałami), a drugiego to abstrakcyjny graf z węzłami i krawędziami.  
+W wizualizacji grafu wierzchołki są punktami, a krawędzie – liniami łączącymi te punkty. Dzięki takiemu zestawieniu łatwiej zrozumieć, że spacer klienta po sklepie można traktować jako poruszanie się po grafie, a znajdowanie trasy sprowadza się do prostych obliczeń na strukturze danych.
+
+\subsection{Pozycjonowanie użytkownika – podejścia, algorytmy i optymalizacje}
+
+\subsubsection{Wcześniejsze próby i porzucone podejścia}
+Przed opracowaniem finalnego rozwiązania jednoosiowego pozycjonowania, przeprowadzono szereg eksperymentów z innymi technikami. Niestety, z różnych powodów nie spełniły one wymagań co do dokładności, stabilności i responsywności systemu.
+
+\paragraph{Fingerprinting}
+Pierwszą z prób było zastosowanie techniki fingerprintingu. Polega ona na tworzeniu szczegółowej mapy wartości RSSI dla różnych punktów w sklepie, a następnie porównywaniu aktualnych pomiarów z tą mapą referencyjną. Mimo początkowych nadziei, fingerprinting okazał się bardzo niestabilny. Szumy sygnałowe były na tyle silne, że trudno było uzyskać powtarzalne i spójne wyniki. W efekcie, pozycjonowanie było nieprecyzyjne, a różnice nawet kilku metrów zdarzały się często. Taka niedokładność sprawiała, że metoda była bezużyteczna w praktyce i została porzucona.
+
+\paragraph{Dodatkowe filtracje i predykcje (x,y)}
+Kolejną próbą było rozbudowanie filtracji Kalmana o model dwuwymiarowy (x, y), aby nie tylko wygładzać RSSI, ale też predykować ruch użytkownika w pełnej płaszczyźnie sklepu. Ten pomysł faktycznie zwiększył stabilność pomiarów i ich przewidywalność, ale odbyło się to kosztem wydajności i responsywności. System stał się mocno spowolniony, a długotrwała predykcja powodowała, że reagował z opóźnieniem na faktyczne zmiany położenia użytkownika, „uparcie” trzymając się wyuczonego modelu. W praktyce użytkownik poruszał się, a system nie nadążał z aktualizacją jego pozycji. Ostatecznie uznano, że takie podejście jest nieefektywne i zrezygnowano z niego.
+
+\paragraph{Trilateracja}
+Próbowano również wykorzystać klasyczną trilaterację, polegającą na wyznaczaniu pozycji w oparciu o odległości do trzech nadajników rozmieszczonych w znanych punktach sklepu. Niestety, w środowisku sklepowym odbicia, tłumienia i interferencje sygnału powodowały, że obliczenia były bardzo niestabilne. Natomiast głównym problemem była znaczna niedokładność wyników. Nie udało się osiągnąć satysfakcjonującej jakości, więc trilateracja również została zarzucona.
+
+\paragraph{Metoda centroidów}
+Kolejnym testowanym sposobem była metoda centroidów, w której pozycję użytkownika określa się jako środek ciężkości położeń najbliższych nadajników. Chociaż podejście jest proste i szybkie, w testach okazało się, że wyniki były niezwykle niestabilne. Nawet przy braku ruchu użytkownika, estymowana pozycja potrafiła „skakać” losowo o znaczące wartości. Metoda nie zapewniała więc żadnej użytecznej stabilności.
+
+\subsubsection{Wprowadzenie do jednoosiowego pozycjonowania w alejce}
+Tradycyjne systemy pozycjonowania wewnętrznego często próbują określić pełną pozycję (x, y) użytkownika wewnątrz budynku. W naszym rozwiązaniu upraszczamy ten problem, skupiając się wyłącznie na jednym wymiarze – pozycji wzdłuż alejki. Obserwacja jest taka, że klient porusza się głównie wzdłuż linii alejek, a dostęp do towarów z jednej strony jest na tyle ograniczony, że nie ma potrzeby znać dokładnego położenia w dwóch wymiarach.
+
+Dzięki temu zamiast skomplikowanych algorytmów dwuwymiarowych, stosujemy jednoosiowe pozycjonowanie, traktując alejkę jak oś liczbową, na której poszczególne sekcje i ich granice są reprezentowane przez wartości liczbowe.
+\subsubsection{Rozmieszczenie nadajników BLE i koncepcja punktów odniesienia}
+Do pozycjonowania wykorzystujemy sieć nadajników BLE (beaconów) rozmieszczonych wzdłuż alejki w stałych odstępach. Podstawowe punkty odniesienia to całkowite wartości odpowiadające początkom sekcji (np. 1.0, 2.0, 3.0, ...), zaś dodatkowe nadajniki umieszczone są w połowie sekcji (np. 1.5, 2.5, 3.5, ...) dla uzyskania większej precyzji.
+
+Takie zagęszczenie punktów odniesienia sprawia, że pomiar sygnału z kilku nadajników jednocześnie pozwala nie tylko określić, w której sekcji jest klient, ale również dokładniejsze położenie w jej obrębie. Zamiast wskazać sekcję nr 2, system może ustalić, że użytkownik jest np. w 37% jej długości.
+\subsubsection{Szacowanie odległości na podstawie RSSI}
+Podstawą pozycjonowania jest pomiar siły sygnału RSSI emitowanego przez nadajniki BLE. RSSI maleje wraz ze wzrostem odległości, co pozwala na estymację dystansu. Przyjmując prosty model logarytmiczny, można odwrócić zależność i wyliczyć przybliżoną odległość \( d \) od nadajnika na podstawie zmierzonej wartości RSSI.
+
+\[
+\text{RSSI}(d) = \text{RSSI}_{\text{ref}} - 10 \cdot n \cdot \log_{10}(d) \quad \Rightarrow \quad d = 10^{\frac{\text{RSSI}_{\text{ref}} - \text{RSSI}(d)}{10 \cdot n}}
+\]
+
+Parametry \(\text{RSSI}_{\text{ref}}\) oraz \( n \) (wykładnik strat propagacyjnych) dobiera się doświadczalnie. Tak uzyskane wartości odległości są jednak zaszumione, więc przed wykorzystaniem ich do obliczenia pozycji konieczne jest wygładzanie pomiarów.
+
+\subsubsection{Zastosowanie filtru Kalmana do stabilizacji pomiarów}
+Aby zredukować szum i fluktuacje w pomiarach RSSI, stosujemy filtr Kalmana. Pozwala on łączyć aktualne pomiary z predykcją stanu, co skutkuje płynniejszym i stabilniejszym odczytem odległości.
+
+Filtr Kalmana iteracyjnie:
+\begin{itemize}
+    \item Przewiduje wartość RSSI na podstawie poprzedniej estymacji.
+    \item Koryguje przewidywanie, uwzględniając nowy pomiar.
+\end{itemize}
+
+Dzięki temu wartości odległości uzyskane z RSSI są mniej podatne na chwilowe zaburzenia, co przekłada się na dokładniejsze pozycjonowanie.
+
+\subsubsection{Obliczanie pozycji użytkownika w czasie rzeczywistym}
+Po przefiltrowaniu odległości do nadajników obliczamy pozycję klienta jako ważoną średnią ich znanych położeń. Wagi definiujemy odwrotnie proporcjonalnie do kwadratu odległości:
+
+\[
+w_i = \frac{1}{d_i^2}, \quad \hat{P} = \frac{\sum_i (w_i \cdot p_i)}{\sum_i w_i}
+\]
+
+gdzie \( p_i \) to pozycja nadajnika, a \( d_i \) obliczona odległość. W ten sposób nadajniki najbliższe mają większy wpływ na wynik, zapewniając bardziej precyzyjne określenie miejsca użytkownika.
+
+\subsubsection{Interpretacja pozycji – przejście od sekcji dyskretnych do wartości rzeczywistych}
+Uzyskana pozycja \(\hat{P}\) może być liczbą zmiennoprzecinkową, np. 2.37486, co oznacza, że użytkownik znajduje się pomiędzy początkami sekcji 2.0 i 3.0, bliżej końca sekcji 2. Takie ciągłe podejście zwiększa czytelność i precyzję, umożliwiając wyświetlenie użytkownikowi płynnie przesuwającej się kropki na mapie alejki.
+
+\subsection{Wyznaczanie ścieżki i wykorzystanie pozycji użytkownika}
+
+\subsubsection{Mapowanie listy produktów na sekcje}
+Pierwszym krokiem do wyznaczenia trasy jest przełożenie listy zakupów na konkretne sekcje sklepu. Każdy produkt w bazie danych jest przypisany do określonej sekcji. Gdy użytkownik poda listę interesujących go towarów, system odczytuje te informacje i tworzy zbiór docelowych sekcji, które należy odwiedzić.
+
+Na przykład, jeśli produkty to \{mleko, jogurt, masło\}, a wszystkie znajdują się w sekcji 7, docelowy zestaw to \{7\}. Jeśli produkty są rozproszone w różnych częściach sklepu, np. sekcja 3, 7 i 10, to system musi wziąć pod uwagę wizytę w każdej z tych sekcji.
+
+\subsubsection{Algorytmy znajdowania najkrótszych ścieżek (Dijkstra, 2-opt i inne)}
+Wyznaczenie optymalnej trasy, która obejmuje przejście przez wszystkie wybrane sekcje sklepu (wynikające z listy zakupów), jest wyzwaniem zbliżonym do problemu komiwojażera. Mimo to, w naszym podejściu stosujemy prostszy i bardziej praktyczny algorytm wieloetapowy, oparty na połączeniu metody znajdowania najkrótszych ścieżek (Dijkstry) oraz heurystyki optymalizacyjnej (2-opt).
+
+\paragraph{Krok 1: Iteracyjne wyznaczanie trasy przy użyciu algorytmu Dijkstry}
+Na początku dysponujemy listą sekcji, które użytkownik musi odwiedzić, oraz jego bieżącą pozycją startową w sklepie. Proces budowania trasy przebiega iteracyjnie:
+\begin{enumerate}
+    \item Uruchamiamy algorytm Dijkstry, biorąc za punkt startowy aktualną pozycję użytkownika. Dijkstra oblicza najkrótsze ścieżki do wszystkich wierzchołków (sekcji) w grafie.
+    \item Spośród jeszcze nieodwiedzonych docelowych sekcji wybieramy tę, która jest najbliższa (czyli ma najmniejszy dystans wg Dijkstry). W ten sposób dokonujemy „chciwego” (\emph{greedy}) wyboru kolejnej sekcji do odwiedzenia.
+    \item Odtwarzamy ścieżkę do wybranej sekcji (za pomocą informacji uzyskanych z algorytmu Dijkstry) i dołączamy ją do naszej powstającej trasy.
+    \item Aktualizujemy pozycję startową na tę właśnie odwiedzoną sekcję i usuwamy ją ze zbioru pozostałych do odwiedzenia.
+\end{enumerate}
+
+Te kroki powtarzane są do momentu, aż odwiedzimy wszystkie sekcje z listy zakupów. W efekcie otrzymujemy trasę, która zawiera wszystkie wymagane punkty, choć kolejność ich odwiedzania została ustalona w sposób chciwy (zawsze wybierając najbliższy jeszcze nieodwiedzony cel).
+
+\paragraph{Krok 2: Heurystyczna optymalizacja trasy (2-opt)}
+Otrzymana w powyższy sposób trasa może nie być globalnie optymalna, jednak stanowi dobrą bazę wyjściową do dalszej optymalizacji. W kolejnym etapie stosujemy heurystykę 2-opt, polegającą na iteracyjnym sprawdzaniu, czy odwrócenie fragmentów trasy (zamiana kolejności przejść między kilkoma punktami) nie skróci jej całkowitej długości. Jeśli taka zmiana jest korzystna, trasa zostaje zaktualizowana. Proces ten jest powtarzany, dopóki nie można już znaleźć dalszej poprawy.
+
+\paragraph{Zalety takiego podejścia}
+Połączenie algorytmu Dijkstry i heurystyki 2-opt oferuje kilka korzyści:
+\begin{itemize}
+    \item Uproszczenie problemu: Zamiast bezpośrednio rozwiązywać trudne zagadnienie komiwojażera, rozbijamy je na sekwencję prostszych podproblemów wyboru najbliższego celu.
+    \item Efektywność obliczeniowa: Dijkstra pozwala szybko i dokładnie ustalić najkrótsze ścieżki do kolejnych celów, a chciwy wybór upraszcza proces generowania trasy.
+    \item Poprawa jakości wyniku: Zastosowanie 2-opt pozwala skrócić wstępnie znalezioną trasę, zbliżając ją do lokalnego optimum bez konieczności kosztownego przeszukiwania wszystkich możliwych permutacji.
+\end{itemize}
+
+W ten sposób system nawigacji potrafi sprawnie poprowadzić użytkownika przez cały sklep, zachowując równowagę pomiędzy prostotą obliczeń, a jakością uzyskanej trasy.
+
+\subsection{Integracja pozycjonowania i trasowania}
+
+\subsubsection{Dynamiczne dostosowywanie trasy do pozycji użytkownika}
+Integracja informacji o bieżącej pozycji użytkownika z wyznaczoną trasą pozwala na elastyczne reagowanie na zmiany w środowisku sklepu i preferencjach klienta. Jeżeli użytkownik w trakcie zakupów zboczy z wyznaczonej ścieżki, pominie którąś z zaplanowanych sekcji lub zdecyduje się na odwiedzenie innego produktu, system może w dowolnym momencie ponownie wyznaczyć trasę, uwzględniając nową pozycję oraz aktualną listę celów.
+
+Takie podejście sprawia, że nawigacja staje się w pełni interaktywna i dopasowana do bieżących potrzeb użytkownika. Aktualizacja trasy zachodzi cyklicznie (w stałych odstępach czasu) lub w reakcji na znaczne zmiany położenia klienta bądź modyfikacje listy produktów. Dzięki temu klienci otrzymują wskazówki oparte na aktualnym kontekście, co zwiększa komfort zakupów oraz poprawia efektywność poruszania się po sklepie.
+
+\subsubsection{Wykorzystanie informacji o ruchu użytkownika do korekcji błędów pozycjonowania}
+Informacje o tym, jak użytkownik się przemieszcza, mogą pomóc w poprawie dokładności pozycjonowania. Jeśli pomiar RSSI lub filtr Kalmana zasugerują nagły skok pozycji w nielogicznym kierunku, system może sprawdzić, czy na grafie istnieje taka możliwość ruchu. Jeżeli nie, skok można uznać za błąd pomiaru i skorygować pozycję użytkownika.
+
+W ten sposób trasa i pozycjonowanie wzajemnie się wspierają. Trasa nadaje kontekst położeniu klienta, a położenie klienta pomaga wykrywać anomalie i błędy w pomiarach. W efekcie system staje się bardziej odporny na zakłócenia środowiskowe i zapewnia użytkownikowi lepsze, bardziej spójne doświadczenie nawigacyjne.
+
+\subsection{Podsumowanie}
+Przedstawiony system nawigacji wewnątrz sklepu integruje różnorodne elementy:
+\begin{itemize}
+    \item Modelowanie przestrzeni sklepu jako grafu, ułatwiające wyznaczanie ścieżek.
+    \item Jednoosiowe pozycjonowanie użytkownika z wykorzystaniem nadajników BLE i filtracji pomiarów filtrem Kalmana, zapewniające stabilne i precyzyjne określenie miejsca w alejce.
+    \item Algorytmy wyznaczania i optymalizacji ścieżek (Dijkstra, 2-opt) oraz mechanizmy dynamicznego dostosowywania trasy do aktualnej pozycji i zachowania użytkownika.
+    \item Integracja pozycjonowania i trasowania, pozwalająca wykrywać i korygować ewentualne błędy pomiarowe, a także elastycznie reagować na zmiany w środowisku sklepu.
+\end{itemize}
