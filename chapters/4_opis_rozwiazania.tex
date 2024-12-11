@@ -110,100 +110,34 @@ Relacje pomiędzy tabelami są realizowane za pomocą kluczy obcych, z zastosowa
 
 \section{Interfejs użytkownika}
 
-\subsection{Opis dostępnych widoków}
+\subsection{Wykorzystane technologie}
 
-\subsubsection{Strona tytułowa}
+\subsubsection{Wstęp}
 
-Strona tytułowa aplikacji pełni funkcję ekranu startowego, witając odbiorcę logiem oraz hasłem zachęcającym do korzystania z aplikacji. Widnieje na niej przycisk \textit{Get Started}, który umożliwia przejście do kolejnych widoków. Jeśli eksploatator był zalogowany w ciągu ostatnich 7 dni, aplikacja przekierowuje go do widoku logowania. W przeciwnym wypadku trafia on do ekranu profilu. 
+Podczas budowy interfejsu użytkownika w projekcie wykorzsytano szereg nowoczesnych technologii oraz bibliotek, które wspólnie tworzą solidną i elastyczną podstawę dla aplikacji mobilnej. Postawiono na popularność rozwiązań i gotowych modułów oraz na możliwość zbudowania projektu na każdej platformie mobilnej. Poniżej przedstawiono szczegóły dotyczące użytych technologii oraz uzasadnienie ich wyboru.
 
-\begin{center} \includegraphics[width=0.3\textwidth]{images/front/home_page.png} \end{center}
+\subsubsection{React Native}
 
+React Native jest frameworkiem umożliwiającym tworzenie aplikacji mobilnych na platformy iOS oraz Android przy użyciu jednego kodu w JavaScript lub TypeScript. Dzięki React Native zredukowaliśmy czas i koszty produkcji aplikacji, jednocześnie zachowując natywną wydajność. Co więcej nauka React Native jest stosunkowo prosta, dla osób które pisały aplikacje przeglądarkowe we fremaworku \textit{React}.
 
-Całość utrzymana jest w przyjaznej stylistyce, z dominującym odcieniem zieleni oraz spójną paletą kolorów, wygenerowaną przez narzędzie DALL·E 3 od OpenAI.
+\subsubsection{Expo}
 
-\begin{center} \includegraphics[width=0.3\textwidth]{images/front/theme.png} \end{center}
+Expo to platforma usprawniająca rozwój aplikacji w React Native. Zapewnia bogaty zestaw narzędzi, takich jak menedżer pakietów, biblioteki gotowe do użycia i uproszczony proces wdrażania. Wybór Expo pozwolił na przyspieszenie rozwoju aplikacji oraz zwinne uruchamianie jej w trybie developerskim na urządzeniach mobilnych.
 
-\subsubsection{Ekran logowania}
+\subsubsection{TypeScript}
 
-Ekran logowania umożliwia odbiorcy uwierzytelnienie w aplikacji, poprzez wprowadzenie adresu e-mail oraz hasła. Jego głównym celem jest weryfikacja tożsamości eksploatatora oraz przekierowanie do dalszych widoków w zależności od wyniku logowania. 
+TypeScript to rozszerzenie \textit{JavaScriptu}, które dodaje statyczne typowanie. Dzięki niemu kod aplikacji jest bardziej przejrzysty i mniej podatny na błędy. TypeScript wspomaga skalowalność projektu oraz ułatwia współpracę między programistami. Dzieki wykorzystaniu tego języka zwiększono jakość kodu oraz uniknięto wielu potencjhnych błędów, wynikających z niepoprawnego typowania zmiennych. 
 
-\begin{center} 
-    \includegraphics[width=0.3\textwidth]{images/front/login_page.png} 
-\end{center}
+\subsubsection{Kluczowe biblioteki}
 
-Górną część widoku stanowi nagłówek \textit{Sign In}, który podkreśla cel ekranu. Tuż pod nim znajduje się formularz składający się z dwóch pól tekstowych: jednego przeznaczonego do wprowadzania adresu e-mail, a drugiego do hasła, z cechą ukrywania wprowadzanych znaków. Naciśnięcie przycisku \textit{Login} uruchamia logikę, która weryfikuje tożsamość odbiorcy na podstawie danych wprowadzonych w polach tekstowych. W przypadku niepowodzenia gość otrzymuje odpowiedni komunikat, informujący o niepoprawnym e-mailu lub haśle. Dla nowych kupujących, widok zapewnia przejście do ekranu rejestracji, poprzez kliknięcie w link \textit{Don't have an account? Sign up!}. 
-
-Dolną część ekranu zajmuje pasek nawigacyjny z ikonami, które przenoszą do kolejnych podstron: mapy sklepów, profilu odbiorcy, kategorii produktów wybranego sklepu oraz strony tytułowej. Tylko ta ostatnia jest dostępna dla niezalogowanych użytkowników.
-
-\begin{center} 
-    \includegraphics[width=0.3\textwidth]{images/front/login_invalid.png} 
-    \includegraphics[width=0.3\textwidth]{images/front/login_not_signed.png} 
-\end{center}
-
-\subsubsection{Rejestracja użytkownika}
-
-Ekran rejestracji umożliwia nowym odbiorcom założenie konta, co jest niezbędne do korzystania z funkcji wymagających uwierzytelnienia, takich jak dodawanie produktów do koszyka czy przeglądanie sklepów na mapie. Formularz rejestracyjny składa się z kilku pól:
-\begin{itemize} \item \textit{Firstname} i \textit{Lastname} – wymagane minimum trzech znaków, by dane były wystarczająco szczegółowe. \item \textit{Email} – odbiorca podaje swój adres e-mail, który jest weryfikowany pod kątem poprawności formatu (obecność znaku \textit{@} oraz domeny). \item \textit{Password} i \textit{Repeat password} – hasło musi mieć co najmniej osiem znaków i być identyczne w obu polach. Dodatkowo, tekst wprowadzony w tych polach jest ukrywany, aby zapewnić prywatność. \end{itemize}
-
-\begin{center} 
-    \includegraphics[width=0.3\textwidth]{images/front/register_page.png}
-\end{center}
-
-Po wypełnieniu formularza, należy wcisnąć guzik \textit{Register}, po którym odbywa się walidacja danych. W przypadku spełnienia warunków wpisanych pól, nowy użytkownik, wraz z koszykiem jest rejestrowany w bazie danych. Po zakończeniu rejestracji następuje automatyczne zalogowanie, a imię oraz ID są zapisywane w lokalnej pamięci urządzenia, w bezpieczny sposób, aby dane nie trafiły w niepowołane ręce. Pozwala to na sprawne obslużenie mechanizmu sesji oraz dostępu do koszyka jego właściciela. Następuje po tym przekierowanie do ekranu kategorii produktów wybranego sklepu. Jeśli dane są nieprawidłowe, wyświetlane są stosowne komunikaty, informujące o błędach, takich jak niewłaściwy format e-maila, zbyt krótkie hasło czy jego niezgodność. Osoby posiadające już konto mogą skorzystać z linku \textit{Already have an account? Sign in!}, znajdującego się pod formularzem, aby przejść do ekranu logowania. 
-
-Dolną część ekranu zajmuje pasek nawigacyjny, który zawiera przyciski prowadzące do kolejnych sekcji aplikacji. Pierwszy z nich przekierowuje do widoku mapy sklepów. Kolejny przekierowuje na stronę główną – jest to jedyny dostępny dla niezalogowanych odbiorców. Trzeci zawiera ikonę koszyka, w którym użytkownicy mogą przeglądać swoje produkty, a czwarty prowadzi do profilu odbiorcy, gdzie można zarządzać danymi konta.
-
-\begin{center} 
-    \includegraphics[width=0.3\textwidth]{images/front/register_invalid.png}
-\end{center}
-
-\subsubsection{Kategorie produktów}
-
-Ekran kategorii stanowi pierwszy krok do przeglądania dostępnych produktów w wybranym sklepie. Centralnym elementem tego widoku jest siatka kategorii, umożliwiająca użytkownikowi intuicyjne poruszanie się po różnych grupach produktów. 
-
-\begin{center} 
-    \includegraphics[width=0.3\textwidth]{images/front/categories_page.png} 
-\end{center}
-
-W górnej części widoku znajduje się pasek wyszukiwania, składający się z pola tekstowego oraz ikony lupy, umożliwiający szybkie filtrowanie kategorii na podstawie wprowadzonego tekstu. Wprowadzenie frazy w pole wyszukiwania automatycznie ogranicza widoczne wyniki, wyświetlając jedynie pasujące grupy produktów. Każdy kafelek siatki zawiera nazwę kategorii, a jego kliknięcie przekierowuje użytkownika do widoku produktów należących do wybranej kategorii. Siatkę można przewijać w pionie, aby odkrywać kolejne kafelki dostępne z listy. 
-
-Dolną część ekranu zajmuje pasek nawigacyjny, który umożliwia szybki dostęp do innych kluczowych widoków aplikacji, takich jak mapa sklepów, profil użytkownika, koszyk oraz strona tytułowa. Widok zawiera również przeciągany dymek czatu, który pozwala na szybki kontakt z obsługą klienta. Jest on towarzyszem większości ekranów aplikacji, przez co został mu poświęcony osobny artykuł w sekcji o numerze \textit{x.x.x}.
-
-\begin{center} 
-    \includegraphics[width=0.3\textwidth]{images/front/categories_filtered.png} 
-\end{center}
-
-\subsubsection{Ekran produktów}
-
-Ekran produktów pozwala użytkownikowi na przeglądanie i dodawanie do koszyka artykułów należących do wybranej kategorii. 
-
-\begin{center} 
-    \includegraphics[width=0.3\textwidth]{images/front/products_page.png}  
-\end{center}
-
-Na samej górze widoku znajduje się pasek wyszukiwania, umożliwiający szybkie filtrowanie produktów po ich nazwie. Pasek zawiera pole tekstowe oraz ikonę lupy. Wprowadzenie tekstu w tym polu automatycznie zawęża widok, prezentując jedynie pasujące wyniki. Poniżej znajduje się przewijalna siatka produktów, w której każdy kafelek zawiera nazwę produktu, cenę oraz symbol jednostki miary. Dodatkowo dla każdego produktu dostępne są przyciski \textit{+} i \textit{–}, umożliwiające zwiększanie lub zmniejszanie ilości produktu, jaką użytkownik chce dodać do koszyka. Wartość wprowadzana przez kupującego jest automatycznie walidowana. Walidacja polega na sprawdzeniu, czy wprowadzony symbol jest liczbą całkowitą. Wartości mniejsze od zera nie są akceptowane. Pod każdym kafelkiem produktu znajduje się przycisk \textit{Add}, który dodaje wybraną ilość artykułu do koszyka gościa. Po naciśnięciu przycisku aplikacja odpowiednio weryfikuje możliwość dokonania zakupu poprzez sprawdzenie ilości produktu w magazynie. W przypadku błędnych danych, takich jak ilość większa niż dostępna, użytkownik otrzymuje odpowiedni komunikat w postaci alertu. 
-
-Dół ekranu zdobi pasek nawigacyjny, który umożliwia powrót do ekranu kategorii, sprawdzenie stanu koszyka, przejście do profilu użytkownika czy strony głównej.
-
-\begin{center} 
-    \includegraphics[width=0.3\textwidth]{images/front/products_amount.png}  
-    \includegraphics[width=0.3\textwidth]{images/front/products_added.png}  
-\end{center}
-
-\subsubsection{Koszyk użytkownika}
-
-Ekran koszyka pozwala użytkownikowi zarządzać produktami dodanymi do koszyka oraz przygotować się do finalizacji zakupów. 
-
-\begin{center}
-    \includegraphics[width=0.3\textwidth]{images/front/cart_page.png}
-\end{center}
-
-W górnej części ekranu znajduje się pasek wyszukiwania, umożliwiający filtrowanie produktów według nazwy. Użytkownik może wprowadzić frazę w polu tekstowym, aby zawęzić listę wyświetlanych produktów, co znacznie ułatwia nawigację w przypadku dużej liczby elementów. Listę produktów w koszyku prezentuje przewijalna siatka, mieszcząca się pod paskiem wyszukiwania. Każdy element listy produktów w koszyku zawiera następujące informacje:
 \begin{itemize}
-    \item Nazwę produktu.
-    \item Cenę jednostkową.
-    \item Ilość produktu w koszyku, wyrażoną w odpowiedniej jednostce miary (np. sztuki, kilogramy).
-    \item Łączną cenę dla danej pozycji, obliczoną jako iloczyn ceny jednostkowej i ilości.
+    \item \textbf{expo-speech-recognition} - Umożliwia rozpoznawanie mowy użytkownika. Użycie tej technologii pozwala na obsługę aplikacji za pomocą poleceń głosowych, co znacząco zwiększa jej dostępność, szczególnie dla osób z trudnościami w obsłudze interfejsu dotykowego. Zastosowanie jej jest kluczowe w udostępnieniu aplikacji dla niewidomych i odbieraniu ich komend głosowych.
+    \item \textbf{expo-speech} - Biblioteka ta pozwala na syntezę mowy w aplikacjach React Native. Dzięki niej aplikacja może przekazywać informacje użytkownikowi za pomocą komunikatów głosowych, co daje szanse osobom niepełnosprawnym na korzystanie z aplikacji.
+    \item \textbf{react-native-ble-plx} - Obsługuje komunikację Bluetooth Low Energy (BLE). Została wybrana ze względu na swoją popularność oraz możliwość integracji z natywnymi modułami Bluetooth, co jest niezbędne w przypadku funkcji wymagających interakcji z urządzeniami zewnętrznymi.
+    \item \textbf{expo-secure-store} - Użycie jej umożliwia bezpieczne przechowywanie danych, takich jak tokeny sesji lub dane uwierzytelniające. Dzięki integracji z Expo oraz wsparciu dla mechanizmów natywnych wybór tej biblioteki zapewnia wysoki poziom ochrony danych użytkownika i pozwala na łatwy dostęp do charakterystycznych zmiennych globalnych.
+    \item \textbf{react-native-svg} - Obsługuje grafiki wektorowe w formacie SVG w aplikacjach React Native. Umożliwia tworzenie dynamicznych, skalowalnych elementów graficznych, takich jak wykresy, ikony czy kody QR, co czyni ją idealnym wyborem w aplikacjach wymagających dużej precyzji graficznej. W kontekście naszej aplikacji pozwala na generowanie map sklepów w prosty sposób.
+    \item \textbf{react-native-qrcode-svg} - Odpowiedzialna za generowanie kodów QR w aplikacjach React Native. Została użyta w projekcie do generowania kodów QR na podstawie produktów w koszyku, co pozwala użytkownikowi na łatwe zeskanowanie i zrealizowanie transakcji w sklepie.
+    \item \textbf{react-native-maps} - Umożliwia wyświetlanie map w aplikacjach React Native. W projekcie odegrała kluczową rolę w tworzeniu widoku mapy sklepu, pozwalając użytkownikowi na wybór najbliższego sklepu z listy dostępnych lokacji, a także umożliwiając wyświetlanie jego lokalizacji na mapie.
 \end{itemize}
 
 W przypadku chęci usunięcia produktu z koszyka, użytkownik posiada możliwość kliknięcia na ikonkę kosza na śmieci danego produktu. Aplikacja automatycznie aktualizuje widok koszyka po każdej zmianie.

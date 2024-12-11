@@ -198,6 +198,48 @@ Podejście sekcyjne minimalizuje wymagania obliczeniowe i redukuje liczbę nadaj
 \subsection{Wnioski}
 Analiza wskazuje, że podejście sekcyjne, wspierane przez filtr Kalmana, oferuje kompromis między precyzją a wydajnością w środowiskach takich jak sklepy. Redukcja wymagań dotyczących dokładności lokalizacji pozwala na znaczące obniżenie kosztów wdrożenia i utrzymania systemu IPS.
 
+\section{Voice'n'Speech - obsługa niewidomych}
+\subsection{Wprowadzenie do problematyki interfejsów głosowych dla osób niewidomych}
+
+Wykorzystanie interfejsów głosowych (ang. \textit{Voice User Interface, VUI}) oraz technologii rozpoznawania i syntezy mowy odgrywa kluczową rolę w zwiększaniu dostępności aplikacji dla osób niewidomych lub niedowidzących. W dobie smartfonów i przenośnych urządzeń mobilnych, obsługa aplikacji wyłącznie za pomocą dotyku i wzroku może stanowić poważną barierę. Dzięki rozszerzeniu interakcji o komendy głosowe, użytkownik ma możliwość pełnej kontroli nad aplikacją, od momentu logowania, przez nawigację po różnych widokach i funkcjach, aż po wysyłanie poleceń oraz wprowadzanie informacji, takich jak hasła czy dane kontaktowe.
+
+Jak zauważają Brewster i in. (2002) oraz Miesenberger i in. (2008), integracja interfejsów głosowych z systemami informacyjnymi pozwala osobom z ograniczeniami wzroku na samodzielne i efektywne korzystanie z usług, bez konieczności pomocy osób trzecich \cite{Brewster2002,Miesenberger2008}.
+
+\subsection{Uniwersalność obsługi głosowej: od logowania po wysyłanie poleceń}
+
+Kluczowym założeniem jest umożliwienie obsługi całej aplikacji wyłącznie głosem. Oznacza to, że użytkownik niewidomy powinien móc:
+
+\begin{itemize} \item \textbf{Logować się do aplikacji głosem}: Podawanie adresu e-mail, hasła i potwierdzanie danych bez potrzeby używania klawiatury. System może prosić o powtórzenie hasła lub potwierdzenie poprawności wprowadzonych danych, odczytując je na głos i czekając na komendę „tak” lub „nie”. \item \textbf{Nawigować po interfejsie i klikać przyciski komendami głosowymi}: Zamiast „dotknięcia” ekranu w określonym miejscu, użytkownik może powiedzieć „kliknij przycisk logowania”, „przejdź do kategorii”, „otwórz koszyk” czy „dodaj produkt do koszyka”. Interfejs musi rozpoznawać nazwy elementów widocznych na ekranie i mapować je na konkretne działania. \item \textbf{Wprowadzać i edytować dane w polach tekstowych}: Podanie nazw produktów, ilości sztuk, adresów, czy haseł odbywa się poprzez komendy głosowe. System powinien wspierać korekty – gdy użytkownik powie „zmień ilość na trzy” lub „usuń produkt pomarańcze z listy”, aplikacja powinna zareagować zgodnie z intencją. \item \textbf{Wysyłać zadania i polecenia biznesowe}: Na przykład: „Znajdź najbliższy sklep”, „Pokaż dostępne kategorie”, „Dodaj mleko do koszyka”, „Wygeneruj kod QR z moich zakupów” czy „Przejdź do ekranu nawigacji po sklepie”. Dzięki NLP i integracji z backendem, takie polecenia mogą być natychmiast realizowane. \end{itemize}
+
+Taka pełna kontrola głosowa nie tylko zwiększa dostępność dla niewidomych, ale także poprawia wygodę korzystania z aplikacji dla wszystkich użytkowników.
+
+\subsection{Wyzwania techniczne i środowiskowe}
+
+Wdrożenie obsługi całego interfejsu aplikacji za pomocą głosu, w szczególności w kontekście niewidomych, napotyka wiele wyzwań:
+
+\begin{itemize} \item \textbf{Hałaśliwe środowisko}: W sklepie panuje gwar, co utrudnia rozpoznawanie mowy (ASR, \textit{Automatic Speech Recognition}). Należy stosować zaawansowane algorytmy filtracji szumu, redukcji echa i separacji sygnałów, aby zwiększyć dokładność rozpoznawania komend. \item \textbf{Precyzyjna komunikacja dwukierunkowa}: System powinien nie tylko rozumieć użytkownika, ale także w czytelny sposób zwracać informacje. Komunikaty TTS (\textit{Text-to-Speech}) muszą być zwięzłe, jednoznaczne i dostosowane do kontekstu. Aplikacja może zadawać pytania kontrolne (np. „Czy wprowadzić hasło: [literowanie znaków]? Powiedz 'tak' lub 'nie'.”), by uniknąć błędów. \item \textbf{Dynamiczne dopasowanie do zmian interfejsu}: Aplikacja często wyświetla nowe przyciski i pola po przejściu między widokami. System głosowy musi znać aktualny stan interfejsu, aby użytkownik mógł efektywnie „klikać” i „przechodzić” do elementów, które aktualnie są widoczne. Oznacza to konieczność integracji z warstwą prezentacji UI, aby każda zmiana na ekranie była odwzorowana w modelu obsługi głosowej. \end{itemize}
+
+\subsection{Rola NLP, ASR i TTS w pełnej obsłudze głosowej aplikacji}
+
+Aby zapewnić pełną obsługę aplikacji dla niewidomych, potrzebne jest odpowiednie zaplecze technologiczne:
+
+\begin{itemize} \item \textbf{ASR (Automatic Speech Recognition)}: Pozwala na konwersję wypowiedzi użytkownika na tekst. Zaawansowane modele rozpoznawania mowy, zdolne do pracy w głośnym środowisku, są niezbędne do poprawnego interpretowania komend. \item \textbf{NLP (Natural Language Processing)}: Przetwarza tekst wynikowy z ASR, rozpoznając intencje użytkownika. Dzięki temu aplikacja rozumie, czy hasło jest wprowadzane, czy użytkownik chce przejść do określonej kategorii produktów, czy może dodać produkt do koszyka. \item \textbf{TTS (Text-to-Speech)}: Generuje głosowe komunikaty zwrotne do użytkownika. W przypadku osób niewidomych kluczowe jest, aby TTS precyzyjnie i wyraźnie zakomunikował co dzieje się w aplikacji, np. „Wprowadź hasło literując je znak po znaku” lub „Produkt mleko dodany do koszyka”. \end{itemize}
+
+W połączeniu z logiką biznesową aplikacji, takie rozwiązanie pozwala na niemal całkowite wyeliminowanie potrzeby użycia interfejsu dotykowego dla osób niewidomych.
+
+\subsection{Personalizacja i adaptacja interfejsu głosowego}
+
+Indywidualne preferencje użytkowników niewidomych są różne – jedni wolą dłuższe komunikaty, inni krótsze. Niektórzy lepiej radzą sobie z literowaniem haseł, inni wolą wprowadzać je sylabami. System powinien umożliwiać personalizację:
+
+\begin{itemize} \item Dostosowanie prędkości, barwy i głośności TTS. \item Wybór formy potwierdzania danych (np. odpowiedź „tak/nie”, potwierdzanie każdej litery hasła lub całego hasła na końcu). \item Możliwość pominięcia pewnych komunikatów pomocniczych dla zaawansowanych użytkowników, którzy znają już interfejs. \end{itemize}
+
+Personalizacja zwiększa komfort obsługi, skraca czas potrzebny na wykonanie zadań i poprawia ogólne doświadczenie z aplikacją.
+
+\subsection{Integracja z innymi modułami i wnioski}
+
+Pełna obsługa głosowa dla osób niewidomych nie może funkcjonować w oderwaniu od pozostałych komponentów aplikacji. Integracja z systemem IPS oraz trasowania pozwala na wydawanie komend „Nawiguj do kategorii nabiał” lub „Gdzie jest kasa?”, a aplikacja – korzystając z wewnętrznego pozycjonowania – kieruje użytkownika krok po kroku, mówiąc: „Za dwa metry skręć w prawo”. Podobnie, integracja z bazą danych i logiką koszyka umożliwia komendy takie jak „Dodaj trzy litry mleka do koszyka” czy „Usuń ostatnio dodany produkt”.
+
+Wdrożenie kompletnej obsługi głosowej, obejmującej logowanie, wprowadzanie haseł, klikanie elementów interfejsu i wysyłanie zadań, to kluczowy krok na drodze do pełnej dostępności aplikacji dla osób niewidomych. Choć jest to wyzwanie techniczne i projektowe, nowoczesne technologie ASR, NLP i TTS w połączeniu z przemyślaną architekturą interfejsu pozwalają osiągnąć cel: maksymalną samodzielność użytkownika, niezależnie od jego ograniczeń wzrokowych.
 
 \section{Przetwarzanie języka naturalnego}
 
