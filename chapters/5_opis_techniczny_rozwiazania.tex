@@ -1325,7 +1325,111 @@ Aby dodać produkt do koszyka, kupujący musi wybrać ilość i kliknąć przyci
 
 \subsubsection{Generowanie kodu QR}
 
+\subsubsection{Ekran generowania kodu QR}
 
+Ekran generowania kodu QR umożliwia użytkownikowi wygenerowanie kodu QR, który zawiera identyfikatory produktów znajdujących się w koszyku.
+
+\begin{lstlisting}[language=JavaScript, caption=Ekran produktów implementacja, label=lst:service]
+  export default function Code() { 
+    const navigation = useNavigation(); 
+    const router = useRouter();
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [cartProducts, setCartProducts] = useState<Product[]>([]);
+    const getAppData = useGetAppData();
+    const handleRouteChange = useHandleRouteChange();
+    const { traverseFlow } = useVoiceFlow();
+
+    useLayoutEffect(() => {
+      navigation.setOptions({
+        headerShown: false,
+      });
+    }, [navigation]);
+
+    useEffect(() => {
+      const fetchCartItems = async () => {
+        try {
+          const carts = await fetch('http://172.20.10.3:3000' + `/carts`);
+          const cartsData = await carts.json();
+          const userId = await getAppData('userId');
+          const userCart = cartsData.find((cart: CartModel) => cart.user_id === userId);
+
+          if (userCart) {
+            const response = await fetch('http://172.20.10.3:3000' + `/cart-items`);
+            const data = await response.json();
+            const userCartItems = data.filter((cartItem: CartItem) => cartItem.cart_id === userCart.cart_id);
+            setCartItems(userCartItems);
+          }
+        } catch (error) {
+          console.error('Error fetching cart items:', error);
+        }
+      };
+
+      const fetchCartProducts = async () => {
+        try {
+          const productsResponse = await fetch('http://172.20.10.3:3000' + `/products`);
+          const productsData = await productsResponse.json();
+          const filteredProducts = cartItems.map((cartItem: CartItem) => {
+            return productsData.find((product: Product) => product.product_id === cartItem.product_id);
+          });
+
+          setCartProducts(filteredProducts);
+        } catch (error) {
+          console.error('Error fetching products:', error);
+        }
+      };
+
+      fetchCartItems();
+      fetchCartProducts();
+    }, [cartItems]);
+
+    useEffect(() => {
+      startVoiceFlow();
+    }, []);
+
+    const startVoiceFlow = async () => {
+      const flow = codeScreenFlow(handleRouteChange);
+      await traverseFlow(flow, 'intro');
+    };
+
+    function getProductsIds() {
+      const productIds: number[] = [];
+
+      cartProducts.forEach((cartProduct: Product) => {
+        productIds.push(cartProduct.product_id);
+      });
+
+      return productIds;
+    }
+
+    return (
+      <View style={styles.container}>
+        <ChatBubble />
+        <TouchableOpacity style={styles.backButtonContainer} onPress={() => handleRouteChange(Screens.Cart)}>
+          <MaterialIcons name="arrow-back-ios" size={32} color="#013b3d" />
+        </TouchableOpacity>
+        {cartProducts.length > 0 ? (
+          <View style={styles.codeContainer}>
+            <View style={styles.codeBorder}>
+              <QRCode value={JSON.stringify(getProductsIds())} size={250} />
+            </View>
+          </View>
+        ) : (
+          <View style={styles.codeContainer}>
+            <Text style={styles.noProductsText}></Text>
+          </View>
+        )}
+      </View>
+    );
+}
+\end{lstlisting}
+
+Ekran generowania kodu QR inicjalizuje się poprzez ukrycie nagłówka nawigacji za pomocą funkcji \texttt{useLayoutEffect}, co zapewnia pełnoekranowy interfejs aplikacji.
+
+Po załadowaniu komponentu, funkcje \texttt{fetchCartItems} oraz \texttt{fetchCartProducts} pobierają dane o przedmiotach w koszyku użytkownika i odpowiadających im produktach z backendu. \texttt{fetchCartItems} wyszukuje koszyk powiązany z użytkownikiem, a \texttt{fetchCartProducts} filtruje produkty według przedmiotów znajdujących się w tym koszyku. Dane te są następnie przechowywane w stanie komponentu i wyświetlane na ekranie.
+
+Ekran zawiera również chat-bubble, umożliwiającą użytkownikowi interakcję z botem oraz przycisk powrotu, który umożliwia nawigację z powrotem do ekranu koszyka. Jeśli koszyk zawiera produkty, generowany jest kod QR zawierający identyfikatory tych produktów. W przeciwnym razie, wyświetlany jest pusty widok.
+
+Przepływ głosowy dla tego ekranu jest inicjowany w funkcji \texttt{startVoiceFlow}, która wykorzystuje funkcję \texttt{traverseFlow} do uruchomienia przepływu głosowego i przedstawienia użytkownikowi odpowiedniego wprowadzenia.
 
 \subsubsection{Mapa sklepów}
 
@@ -1628,4 +1732,186 @@ Produkty w koszyku mogą zostać przefiltrowane na podstawie wpisanego zapytania
 
 Każdy produkt w koszyku posiada przycisk umożliwiający jego usunięcie. Po kliknięciu na ikonę kosza (\texttt{Feather}) wywoływana jest funkcja \texttt{removeFromCart}, która usuwa wybrany produkt z koszyka zarówno w bazie danych, jak i w stanie aplikacji.
 
+\subsubsection{Ekran nawigacji}
+
+Ekran Nawigacji w aplikacji jest zaprojektowany w taki sposób, aby umożliwić użytkownikowi łatwe śledzenie jego lokalizacji i nawigację między różnymi sekcjami aplikacji. Centralnym elementem ekranu jest mapa, która pokazuje bieżącą lokalizację użytkownika. Mapa jest renderowana przez komponent \texttt{EtiMap}, będący wcześniej zaprojektowaną mapą SVG. Przyjmuje on jako parametr \texttt{currentLocation} — współrzędne lokalizacji użytkownika. Lokalizacja ta jest aktualizowana dzięki subskrypcji na usłudze \texttt{PositionService}, która na bieżąco przekazuje zmiany lokalizacji do komponentu. Dzięki temu mapa dynamicznie reaguje na zmiany w pozycji użytkownika, co zapewnia płynne śledzenie w czasie rzeczywistym.
+
+\begin{lstlisting}[language=JavaScript, caption=Koszyk użytkownika implementacja, label=lst:service]
+  export default function Navigation() {
+    const { devices, isScanning, scanDevices } = useBluetoothService();
+    const [currentLocation, setCurrentLocation] = useState<number | null>(null);
+    const navigation = useNavigation();
+    const router = useRouter();
+    const handleRouteChange = useHandleRouteChange();
+    const getAppData = useGetAppData();
+  
+    useLayoutEffect(() => {
+      navigation.setOptions({
+        headerShown: false,
+      });
+    }, [navigation]);
+  
+    useEffect(() => {
+      scanDevices();
+  
+      const subscription = positionService.currentLocation$.subscribe(
+        (location) => {
+          setCurrentLocation(location);
+        },
+        (error) => {
+          console.error('Error in PositionService subscription:', error);
+        }
+      );
+  
+      return () => {
+        subscription.unsubscribe();
+      };
+    }, []);
+  
+    return (
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.mapContainer}>
+            <EtiMap currentLocation={currentLocation} />
+          </View>
+        </ScrollView>
+  
+        <View style={styles.navbar}>
+          <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Categories)}>
+            <FontAwesome5 name="th-list" size={32} color="#013b3d" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Code)}>
+            <MaterialCommunityIcons name="qrcode-scan" size={32} color="#013b3d" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Navigation)}>
+            <FontAwesome5 name="flag-checkered" size={32} color="#013b3d" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.User)}>
+            <FontAwesome name="user" size={32} color="#013b3d" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+\end{lstlisting}
+
+
+Klasa \texttt{PositionService} subskrybuje zmiany lokalizacji za pomocą obserwatora \texttt{currentLocation}, który pozwala na otrzymywanie nowych wartości lokalizacji. Funkcja \texttt{useEffect} jest wykorzystywana do uruchomienia procesu skanowania urządzeń Bluetooth za pomocą \texttt{scanDevices()} oraz subskrybowania aktualizacji lokalizacji. Usługa Bluetooth umożliwia skanowanie urządzeń znajdujących się w pobliżu, co może być przydatne w późniejszych funkcjonalnościach aplikacji, ale obecnie działa w tle, dostarczając urządzeniom zewnętrznym dostęp do aplikacji. Po zakończeniu działania komponentu, subskrypcja dla \texttt{PositionService} jest odpowiednio czyszczona, aby zapobiec wyciekom pamięci.
+
 \subsubsection{Profil użytkownika}
+
+Ekran Profilu Użytkownika w aplikacji został zaprojektowany tak, aby zapewnić użytkownikowi intuicyjny interfejs do zarządzania jego kontem oraz możliwość komunikacji z botem w dedykowanej sekcji czatu. Centralnym punktem ekranu jest powitanie użytkownika, którego imię jest dynamicznie pobierane z lokalnych danych aplikacji za pomocą funkcji \texttt{getAppData}. Funkcja ta, wykorzystując \texttt{useEffect}, inicjalizuje pobranie nazwy użytkownika po załadowaniu ekranu i ustawia ją w stanie \texttt{username}.
+
+\begin{lstlisting}[language=JavaScript, caption=Profil użytkownika implementacja, label=lst:service]  
+  export default function User() {
+    const [username, setUsername] = useState('');
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [inputText, setInputText] = useState('');
+    const router = useRouter();
+    const navigation = useNavigation();
+  
+    const getAppData = useGetAppData();
+    const handleRouteChange = useHandleRouteChange();
+    const { traverseFlow } = useVoiceFlow();
+  
+    useLayoutEffect(() => {
+      navigation.setOptions({
+        headerShown: false,
+      });
+    }, [navigation]);
+  
+    useEffect(() => {
+      (async () => {
+        const username = await getAppData('username');
+        setUsername(username);
+        startVoiceFlow();
+      })();
+    }, []);
+  
+    const startVoiceFlow = async () => {
+      const flow = userScreenFlow(handleRouteChange, handleLogout);
+      await traverseFlow(flow, 'intro');
+    };
+  
+    async function handleLogout() {
+      await deleteUserData();
+      await logoutUser();
+      router.push('/');
+    }
+  
+    const logoutUser = async () => {
+      await fetch('http://172.20.10.3:3000' + '/auth/logout');
+    };
+  
+    const deleteUserData = async () => {
+      await SecureStore.deleteItemAsync('username');
+      await SecureStore.deleteItemAsync('userId');
+    };
+  
+    const handleSend = () => {
+      if (inputText.trim() === '') return;
+      setMessages([...messages, { text: inputText, sender: 'user' }]);
+      setInputText('');
+  
+      setTimeout(() => {
+        setMessages((prevMessages) => [...prevMessages, { text: 'To jest odpowiedź bota.', sender: 'bot' }]);
+      }, 1000);
+    };
+  
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.userName}>Hi, {username}!</Text>
+          <TouchableOpacity style={styles.logOutContainer} onPress={handleLogout}>
+            <Text style={styles.logOut}>Log out</Text>
+          </TouchableOpacity>
+        </View>
+  
+        <View style={styles.chatContainer}>
+          <ScrollView style={styles.messagesContainer}>
+            {messages.map((message, index) => (
+              <View key={index} style={[styles.messageBubble, message.sender === 'user' ? styles.userBubble : styles.botBubble]}>
+                <Text style={message.sender === 'user' ? styles.userMessageText : styles.botMessageText}>{message.text}</Text>
+              </View>
+            ))}
+          </ScrollView>
+  
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.textInput}
+              selectionColor={'#e8fefd'}
+              placeholder="Send message..."
+              placeholderTextColor="#e8fefd"
+              value={inputText}
+              onChangeText={setInputText}
+            />
+            <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
+              <FontAwesome5 name="paper-plane" size={18} color="#e8fefd" />
+            </TouchableOpacity>
+          </View>
+        </View>
+  
+        <View style={styles.navbar}>
+          <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Map)}>
+            <FontAwesome5 name="map-marked-alt" size={32} color="#013b3d" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => router.navigate('/')}>
+            <FontAwesome5 name="home" size={32} color="#013b3d" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Cart)}>
+            <FontAwesome5 name="shopping-basket" size={32} color="#013b3d" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Categories)}>
+            <FontAwesome5 name="th-list" size={32} color="#013b3d" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+\end{lstlisting}
+
+W nagłówku ekranu znajduje się tekst powitalny "Hi, \texttt{\{username\}}!", który jest zlokalizowany w górnym, lewym rogu widoku. Obok, w prawym górnym rogu, umieszczono przycisk wylogowania, który wywołuje funkcję \texttt{handleLogout}. Funkcja ta usuwa dane użytkownika z bezpiecznego przechowywania, wywołuje żądanie do backendu w celu zakończenia sesji, a następnie przekierowuje użytkownika na ekran główny.
+
+W centralnej części ekranu znajduje się komponent czatu, który umożliwia interakcję z botem. Czat składa się z listy wiadomości, renderowanych w przewijalnym kontenerze, oraz pola wejściowego do wysyłania nowych wiadomości. Użytkownik może wprowadzić tekst w polu \texttt{TextInput}, a następnie wysłać go za pomocą przycisku reprezentowanego ikoną \texttt{"paper-plane"}. Wiadomości użytkownika są dodawane do stanu \texttt{messages}, a z opóźnieniem jednej sekundy do czatu dodawana jest odpowiedź bota, co symuluje interakcję w czasie rzeczywistym.
+
+Obsługa wiadomości jest realizowana przez funkcję \texttt{handleSend}, która sprawdza, czy pole wejściowe nie jest puste, a następnie aktualizuje listę wiadomości. Wiadomości są renderowane jako dymki czatu, przy czym dymki wiadomości użytkownika i bota różnią się kolorami i stylami, co ułatwia rozróżnienie nadawców.
