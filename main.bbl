@@ -1,4 +1,4 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -44,6 +44,12 @@ Christian Peters.
 \newblock Building rich internet applications with node. js and express. js.
 \newblock \emph{Rich Internet Applications w/HTML and Javascript}, page~15,
   2017.
+
+\bibitem[{Wit.ai}(2024)]{witai_http_api}
+{Wit.ai}.
+\newblock \emph{Wit.ai HTTP API Documentation}, 2024.
+\newblock URL \url{https://wit.ai/docs/http/20240304/}.
+\newblock Accessed: 2024-12-11.
 
 \bibitem[Worsley and Drake(2002)]{worsley2002practical}
 J.~Worsley and J.D. Drake.
