@@ -108,8 +108,6 @@ Relacje pomiędzy tabelami są realizowane za pomocą kluczy obcych, z zastosowa
 \item quantity - INT NOT NULL: Liczba sztuk danego produktu w koszyku.
 \end{itemize}
 
-tekst
-
 \section{Interfejs użytkownika}
 
 \subsection{Opis dostępnych widoków}
@@ -282,11 +280,6 @@ Na górze ekranu znajduje się powitanie użytkownika, wyświetlające jego imi�
 Główną część ekranu zajmuje chatbot, który pozwala na interakcję z użytkownikiem. Działa on w identyczny sposób, co wspomniany we wcześniejszych sekcjach dymek chatu, stąd zostanie on omówiony w osobnym rozdziale.
 
 Dolną część ekranu zajmuje pasek nawigacyjny, który umożliwia przejście do innych sekcji aplikacji. Należą do nich: mapa sklepów, kategorie produktów, koszyk oraz strona tytułowa.
-
-
-\subsection{Szczegółowe omówienie implementacji}
-\subsubsection{Strona tytułowa}
-
 
 \section{Serwer aplikacji}
 Serwer jest odpowiedzialny za przetwarzanie żądań użytkownika, a także za komunikację z bazą danych. Został zaimplementowany w języku JavaScript przy użyciu platformy Node.js oraz struktury (ang. \textit{framework}) Express.js. Node.js pozwala na uruchamianie JavaScript po stronie serwera, co umożliwia tworzenie wydajnych i skalowalnych aplikacji. Express.js, będący minimalistycznym frameworkiem działającym na Node.js, upraszcza proces budowy aplikacji internetowych. Serwer nasłuchuje na zapytania HTTP, przetwarza je i zwraca odpowiedź, a do komunikacji z bazą danych PostgreSQL wykorzystuje odpowiednie moduły Node.js.
