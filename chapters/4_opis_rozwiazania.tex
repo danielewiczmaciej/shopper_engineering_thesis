@@ -262,8 +262,24 @@ Każda sekcja ma przypisany numer i stanowi osobny węzeł w grafie. W przypadku
 Taka reprezentacja pozwala łatwo rozszerzać i modyfikować układ sklepu. Dodanie nowej sekcji lub zmiana odległości pomiędzy sekcjami sprowadza się do manipulacji wierzchołkami i krawędziami w grafie.
 
 \subsubsection{Ilustracje graficzne: rzut sklepu i odpowiadający mu graf}
-Graficzna prezentacja sklepu polega na narysowaniu rzutów: pierwszego z perspektywy użytkownika (plan sklepu z alejkami i regałami), a drugiego to abstrakcyjny graf z węzłami i krawędziami.  
-W wizualizacji grafu wierzchołki są punktami, a krawędzie – liniami łączącymi te punkty. Dzięki takiemu zestawieniu łatwiej zrozumieć, że spacer klienta po sklepie można traktować jako poruszanie się po grafie, a znajdowanie trasy sprowadza się do prostych obliczeń na strukturze danych.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\linewidth}
+\centering
+\includegraphics[width=\textwidth]{images/rzut_sklepu.png}
+\caption{Rzut przykładowego sklepu (źródło: \cite{woeginger2016}).}
+\label{fig:rzut_sklepu}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+\centering
+\includegraphics[width=\textwidth]{images/graf_sklepu.png}
+\caption{Zmapowanie rzutu sklepu na graf.}
+\label{fig:graf_sklepu}
+\end{minipage}
+\end{figure}
+
 
 \subsection{Pozycjonowanie użytkownika – podejścia, algorytmy i optymalizacje}
 
