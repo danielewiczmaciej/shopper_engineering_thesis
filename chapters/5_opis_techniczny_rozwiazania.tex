@@ -350,287 +350,302 @@ Po otrzymaniu żądania, serwer weryfikuje token JWT używając funkcji \textit{
 
 \section{Interfejs użytkownika}
 
-\subsubsection{Funkcje pomocnicze} 
+\subsection{Funkcje pomocnicze} 
 
 W celu zwiększenia czytelności kodu oraz ułatwienia zarządzania stanem aplikacji utworzono kilka funkcji pomocniczych, nazywanych \textit{hooks} w środowisku React. 
 
 Funkcje te są odpowiedzialne za wykonywanie określonych zadań, takich jak pobieranie danych z pamięci lokalnej aplikacji, obsługa nawigacji, skanowanie i łączenie z urządzeniami bluetooth. Dzięki zastosowaniu funkcji pomocniczych kod aplikacji jest bardziej przejrzysty, a powtarzalne operacje są zautomatyzowane:
 
-\begin{itemize}
-  \item \textbf{useSaveAppData} - funkcja odpowiedzialna za zapisywanie danych w pamięci lokalnej aplikacji. Umożliwia zapisanie dowolnych informacji, takich jak dane użytkownika, tokeny sesji, czy inne ustawienia aplikacji. Funkcja ta oferuje również opcję ustawienia daty wygaśnięcia danych, co pozwala na automatyczne usuwanie informacji po określonym czasie. Podobnie jak w przypadku funkcji \textit{useGetAppData}, zapis odbywa się za pomocą \textit{expo-secure-store}, który zapewnia bezpieczeństwo przechowywanych danych.
+\subsubsection{useSaveAppData} 
 
-    \begin{lstlisting}[language=JavaScript, caption=useSaveAppDataHook, label=lst:service]
-      import { useCallback } from 'react';
-      import * as SecureStore from 'expo-secure-store';
-      
-      export const useSaveAppData = () => {
-        const saveDataWithExpiration = useCallback(async (key: string, value: string, expirationDays?: number) => {
-          const now = new Date();
-          const expirationDate = new Date(now.getTime() + (expirationDays ? expirationDays * 24 * 60 * 60 * 1000 : 0));
-    
-          const dataToSave = {
-            value: value,
-            expirationDate: expirationDate.toISOString(),
-          };
-    
-          await SecureStore.setItemAsync(key, JSON.stringify(dataToSave));
-        }, []);
-    
-        return saveDataWithExpiration;
-      };
-    \end{lstlisting}
-    
-  Funkcja przyjmuje trzy argumenty: \textit{key} - klucz, pod którym dane mają zostać zapisane, \textit{value} - wartość, którą chcemy zapisać, oraz \textit{expirationDays} - opcjonalny argument określający liczbę dni, po których dane mają wygasnąć. Jeśli argument \textit{expirationDays} nie jest podany, dane nie mają ustalonej daty wygaśnięcia. 
+Funkcja odpowiedzialna za zapisywanie danych w pamięci lokalnej aplikacji. Umożliwia zapisanie dowolnych informacji, takich jak dane użytkownika, tokeny sesji, czy inne ustawienia aplikacji. Funkcja ta oferuje również opcję ustawienia daty wygaśnięcia danych, co pozwala na automatyczne usuwanie informacji po określonym czasie. Podobnie jak w przypadku funkcji \textit{useGetAppData}, zapis odbywa się za pomocą \textit{expo-secure-store}, który zapewnia bezpieczeństwo przechowywanych danych.
+
+\begin{lstlisting}[language=JavaScript, caption=useSaveAppDataHook, label=lst:service]
+  import { useCallback } from 'react';
+  import * as SecureStore from 'expo-secure-store';
   
-  Funkcja oblicza datę wygaśnięcia danych (jeśli została podana) i zapisuje dane w pamięci lokalnej w postaci obiektu zawierającego zarówno wartość, jak i datę wygaśnięcia. Zapis odbywa się za pomocą funkcji \textit{SecureStore.setItemAsync}.
+  export const useSaveAppData = () => {
+    const saveDataWithExpiration = useCallback(async (key: string, value: string, expirationDays?: number) => {
+      const now = new Date();
+      const expirationDate = new Date(now.getTime() + (expirationDays ? expirationDays * 24 * 60 * 60 * 1000 : 0));
 
-  \item \textbf{useGetAppData} - funkcja odpowiedzialna za pobieranie danych z pamięci lokalnej aplikacji. Umożliwia dostęp do zapisanych danych, takich jak tokeny sesji, dane użytkownika czy ustawienia aplikacji. Wykorzystuje do tego bibliotekę \textit{expo-secure-store}, która dostarcza gotowe rozwiązanie, zapewniające bezpieczeństwo przechowywanych informacji. 
+      const dataToSave = {
+        value: value,
+        expirationDate: expirationDate.toISOString(),
+      };
+
+      await SecureStore.setItemAsync(key, JSON.stringify(dataToSave));
+    }, []);
+
+    return saveDataWithExpiration;
+  };
+\end{lstlisting}
     
-    \begin{lstlisting}[language=JavaScript, caption=useGetAppDataHook, label=lst:service]
-      import { useCallback } from 'react';
-      import * as SecureStore from 'expo-secure-store';
-      
-      export const useGetAppData = () => {
-        const getDataWithExpiration = useCallback(async (key: string) => {
-          const savedData = await SecureStore.getItemAsync(key);
-      
-          if (savedData) {
-            const parsedData = JSON.parse(savedData);
-            const expirationDate = new Date(parsedData.expirationDate);
-            const now = new Date();
-      
-            if (now < expirationDate) {
-              return parsedData.value;
-            } else {
-              await SecureStore.deleteItemAsync(key);
-              return null;
-            }
-          }
-      
+Funkcja przyjmuje trzy argumenty: \textit{key} - klucz, pod którym dane mają zostać zapisane, \textit{value} - wartość, którą chcemy zapisać, oraz \textit{expirationDays} - opcjonalny argument określający liczbę dni, po których dane mają wygasnąć. Jeśli argument \textit{expirationDays} nie jest podany, dane nie mają ustalonej daty wygaśnięcia. 
+
+Funkcja oblicza datę wygaśnięcia danych (jeśli została podana) i zapisuje dane w pamięci lokalnej w postaci obiektu zawierającego zarówno wartość, jak i datę wygaśnięcia. Zapis odbywa się za pomocą funkcji \textit{SecureStore.setItemAsync}.
+
+\subsubsection{useGetAppDataHook}
+
+Funkcja odpowiedzialna za pobieranie danych z pamięci lokalnej aplikacji. Umożliwia dostęp do zapisanych danych, takich jak tokeny sesji, dane użytkownika czy ustawienia aplikacji. Wykorzystuje do tego bibliotekę \textit{expo-secure-store}, która dostarcza gotowe rozwiązanie, zapewniające bezpieczeństwo przechowywanych informacji. 
+    
+\begin{lstlisting}[language=JavaScript, caption=useGetAppDataHook, label=lst:service]
+  import { useCallback } from 'react';
+  import * as SecureStore from 'expo-secure-store';
+  
+  export const useGetAppData = () => {
+    const getDataWithExpiration = useCallback(async (key: string) => {
+      const savedData = await SecureStore.getItemAsync(key);
+  
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        const expirationDate = new Date(parsedData.expirationDate);
+        const now = new Date();
+  
+        if (now < expirationDate) {
+          return parsedData.value;
+        } else {
+          await SecureStore.deleteItemAsync(key);
           return null;
-        }, []);
-      
-        return getDataWithExpiration;
-      };      
-    \end{lstlisting}
-
-  Funkcja otrzymuje jako argument klucz, pod którym zapisane są dane, a następnie sprawdza, czy dane są dostępne i czy nie wygasły. W przypadku wygaśnięcia danych funkcja usuwa je z pamięci lokalnej i zwraca wartość \textit{null}. W przeciwnym wypadku zwraca zdekodowane dane. 
-  
-  Pobieranie i usuwanie danych w pamięci lokalnej aplikacji odbywa się za pomocą asynchronicznych funkcji \textit{SecureStore.getItemAsync} oraz \textit{SecureStore.deleteItemAsync} z wcześniej wspomnianej biblioteki. Aby uzyskać dostęp do danych wystarczy jedynie zaimportować \textit{useGetAppData} i wywołać funkcję z dowolnego miejsca w projekcie, po podaniu klucza, który nas interesuje.
-
-  \item \textbf{useHandleRouteChange} - Funkcja odpowiedzialna za obsługę nawigacji w aplikacji. Umożliwia przenoszenie użytkownika między ekranami.w Funkcja ta sprawdza, czy użytkownik jest zalogowany, weryfikując obecność tokenu użytkownika w pamięci lokalnej za pomocą \textit{expo-secure-store} i w zależności od jego wartości podejmuje akcje.
-      
-    \begin{lstlisting}[language=JavaScript, caption=useHandleRouteChangeHook, label=lst:router]
-      import { useRouter } from 'expo-router';
-      import * as SecureStore from 'expo-secure-store';
-      import { Screens } from '../enum/screens';
-      import { Alert } from 'react-native';
-    
-      export const useHandleRouteChange = () => {
-        const router = useRouter();
-    
-        const handlePress = async (screen: Screens) => {
-          const username = await SecureStore.getItemAsync('username');
-    
-          if (username || screen === Screens.Register || screen === Screens.Login) {
-            router.push(`/screens/${screen}`);
-          } else {
-            Alert.alert('Sign in for full experience');
-          }
-        };
-    
-        return handlePress;
-      };
-  \end{lstlisting}
-      
-  Funkcja \textit{useHandleRouteChange} wykorzystuje hook \textit{useRouter} z biblioteki \textit{expo-router} do zmiany ekranów aplikacji. 
-  
-  Przed przejściem na żądany ekran, funkcja sprawdza, czy w pamięci lokalnej istnieje klucz \textit{username}. Jeżeli użytkownik jest zalogowany, następuje przekierowanie na odpowiedni ekran. W przypadku, gdy użytkownik nie jest zalogowany i próbuje przejść do ekranów wymagających autoryzacji, wyświetlana jest informacja, aby się zalogował. Funkcję można łatwo zaimportować i wykorzystać w dowolnym miejscu aplikacji, przekazując ekran, na który chcemy przenieść użytkownika. Jako parametr przyjmuje ekran, którego typ jest zdefiniowany w pliku \textit{app/enumerate/Screens.ts}. Sugeruje on mieijsce, do którego użytkownik ma zostać przekierowany.
-
-  \item \textbf{useSpeechFlow} - Funkcja odpowiedzialna za obsługę nagrywania i odtwarzania komend głosowych aplikacji. Umożliwia przetwarzanie komunikatów głosowych, rozpoznawanie mowy oraz generowanie odpowiedzi głosowych. Funkcja ta korzysta z dwóch głównych komponentów: \textit{expo-speech}, który umożliwia odtwarzanie komunikatów głosowych, oraz \textit{expo-speech-recognition}, który służy do rozpoznawania mowy.
-
-  \begin{lstlisting}[language=JavaScript, caption=useSpeechFlowHook, label=lst:speechFlow]
-    import * as Speech from 'expo-speech';
-    import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition';
-    import { useState, useRef } from 'react';
-    
-    export const useSpeechFlow = () => {
-      const [transcript, setTranscript] = useState('');
-      const transcriptRef = useRef('');
-      const isFinalRef = useRef(false);
-    
-      useSpeechRecognitionEvent('result', (event) => {
-        if (event.results?.[0]?.transcript) {
-          const newTranscript = event.results[0].transcript.toLowerCase();
-          setTranscript(newTranscript);
-          transcriptRef.current = newTranscript;
-          if (event.isFinal) {
-            isFinalRef.current = true;
-          }
         }
-      });
-    
-      const speak = async (message: string): Promise<void> => {
-        return new Promise((resolve) => {
-          Speech.speak(message, {
-            language: 'en-US',
-            onDone: resolve,
-          });
+      }
+  
+      return null;
+    }, []);
+  
+    return getDataWithExpiration;
+  };      
+\end{lstlisting}
+
+Funkcja otrzymuje jako argument klucz, pod którym zapisane są dane, a następnie sprawdza, czy dane są dostępne i czy nie wygasły. W przypadku wygaśnięcia danych funkcja usuwa je z pamięci lokalnej i zwraca wartość \textit{null}. W przeciwnym wypadku zwraca zdekodowane dane. 
+
+Pobieranie i usuwanie danych w pamięci lokalnej aplikacji odbywa się za pomocą asynchronicznych funkcji \textit{SecureStore.getItemAsync} oraz \textit{SecureStore.deleteItemAsync} z wcześniej wspomnianej biblioteki. Aby uzyskać dostęp do danych wystarczy jedynie zaimportować \textit{useGetAppData} i wywołać funkcję z dowolnego miejsca w projekcie, po podaniu klucza, który nas interesuje.
+
+\subsubsection{useHandleRouteChange} 
+
+Funkcja odpowiedzialna za obsługę nawigacji w aplikacji. Umożliwia przenoszenie użytkownika między ekranami.w Funkcja ta sprawdza, czy użytkownik jest zalogowany, weryfikując obecność tokenu użytkownika w pamięci lokalnej za pomocą \textit{expo-secure-store} i w zależności od jego wartości podejmuje akcje.
+      
+\begin{lstlisting}[language=JavaScript, caption=useHandleRouteChangeHook, label=lst:router]
+  import { useRouter } from 'expo-router';
+  import * as SecureStore from 'expo-secure-store';
+  import { Screens } from '../enum/screens';
+  import { Alert } from 'react-native';
+
+  export const useHandleRouteChange = () => {
+    const router = useRouter();
+
+    const handlePress = async (screen: Screens) => {
+      const username = await SecureStore.getItemAsync('username');
+
+      if (username || screen === Screens.Register || screen === Screens.Login) {
+        router.push(`/screens/${screen}`);
+      } else {
+        Alert.alert('Sign in for full experience');
+      }
+    };
+
+    return handlePress;
+  };
+\end{lstlisting}
+      
+Funkcja \textit{useHandleRouteChange} wykorzystuje hook \textit{useRouter} z biblioteki \textit{expo-router} do zmiany ekranów aplikacji. 
+
+Przed przejściem na żądany ekran, funkcja sprawdza, czy w pamięci lokalnej istnieje klucz \textit{username}. Jeżeli użytkownik jest zalogowany, następuje przekierowanie na odpowiedni ekran. W przypadku, gdy użytkownik nie jest zalogowany i próbuje przejść do ekranów wymagających autoryzacji, wyświetlana jest informacja, aby się zalogował. Funkcję można łatwo zaimportować i wykorzystać w dowolnym miejscu aplikacji, przekazując ekran, na który chcemy przenieść użytkownika. Jako parametr przyjmuje ekran, którego typ jest zdefiniowany w pliku \textit{app/enumerate/Screens.ts}. Sugeruje on mieijsce, do którego użytkownik ma zostać przekierowany.
+
+\subsubsection{useSpeechFlow} 
+
+Funkcja odpowiedzialna za obsługę nagrywania i odtwarzania komend głosowych aplikacji. Umożliwia przetwarzanie komunikatów głosowych, rozpoznawanie mowy oraz generowanie odpowiedzi głosowych. Funkcja ta korzysta z dwóch głównych komponentów: \textit{expo-speech}, który umożliwia odtwarzanie komunikatów głosowych, oraz \textit{expo-speech-recognition}, który służy do rozpoznawania mowy.
+
+\begin{lstlisting}[language=JavaScript, caption=useSpeechFlowHook, label=lst:speechFlow]
+  import * as Speech from 'expo-speech';
+  import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition';
+  import { useState, useRef } from 'react';
+  
+  export const useSpeechFlow = () => {
+    const [transcript, setTranscript] = useState('');
+    const transcriptRef = useRef('');
+    const isFinalRef = useRef(false);
+  
+    useSpeechRecognitionEvent('result', (event) => {
+      if (event.results?.[0]?.transcript) {
+        const newTranscript = event.results[0].transcript.toLowerCase();
+        setTranscript(newTranscript);
+        transcriptRef.current = newTranscript;
+        if (event.isFinal) {
+          isFinalRef.current = true;
+        }
+      }
+    });
+  
+    const speak = async (message: string): Promise<void> => {
+      return new Promise((resolve) => {
+        Speech.speak(message, {
+          language: 'en-US',
+          onDone: resolve,
         });
-      };
-    
-      const listen = async (): Promise<string> => {
-        try {
-          const permission = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
-          if (!permission.granted) {
-            return '';
-          }
-    
-          // Reset previous transcript and flags
-          transcriptRef.current = '';
-          isFinalRef.current = false;
-    
-          await ExpoSpeechRecognitionModule.start({
-            lang: 'en-US',
-            interimResults: false,
-            continuous: false,
-          });
-    
-          return new Promise<string>((resolve) => {
-            const timeoutId = setTimeout(() => {
-              ExpoSpeechRecognitionModule.stop();
-              resolve('');
-            }, 7000);
-    
-            const intervalId = setInterval(() => {
-              if (isFinalRef.current && transcriptRef.current) {
-                clearTimeout(timeoutId);
-                clearInterval(intervalId);
-                ExpoSpeechRecognitionModule.stop();
-                resolve(transcriptRef.current);
-              }
-            }, 100);
-          });
-        } catch {
+      });
+    };
+  
+    const listen = async (): Promise<string> => {
+      try {
+        const permission = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+        if (!permission.granted) {
           return '';
         }
-      };
-    
-      return { speak, listen };
+  
+        // Reset previous transcript and flags
+        transcriptRef.current = '';
+        isFinalRef.current = false;
+  
+        await ExpoSpeechRecognitionModule.start({
+          lang: 'en-US',
+          interimResults: false,
+          continuous: false,
+        });
+  
+        return new Promise<string>((resolve) => {
+          const timeoutId = setTimeout(() => {
+            ExpoSpeechRecognitionModule.stop();
+            resolve('');
+          }, 7000);
+  
+          const intervalId = setInterval(() => {
+            if (isFinalRef.current && transcriptRef.current) {
+              clearTimeout(timeoutId);
+              clearInterval(intervalId);
+              ExpoSpeechRecognitionModule.stop();
+              resolve(transcriptRef.current);
+            }
+          }, 100);
+        });
+      } catch {
+        return '';
+      }
     };
-  \end{lstlisting}
   
-  Funkcja \textit{useSpeechFlow} umożliwia dwa główne działania: nasłuchiwanie i rozpoznawanie mowy użytkownika oraz generowanie odpowiedzi głosowych. Za pomocą funkcji \textit{listen} aplikacja nasłuchuje komendy głosowe użytkownika, zamieniając dźwięk na tekst. Funkcja ta wykorzystuje \textit{expo-speech-recognition}, który aktywuje mikrofon, zbiera próbki dźwięku, a następnie konwertuje je na tekst. Rozpoznawanie mowy odbywa się w sposób asynchroniczny, a wynik jest zwracany po zakończeniu procesu.
+    return { speak, listen };
+  };
+\end{lstlisting}
   
-  Generowanie odpowiedzi głosowych na podstawie tekstu przekazanego jako argument możliwe jest dzięki funkcji \textit{speak}. Wykorzystuje ona do tego bibliotekę \textit{expo-speech}, która pozwala na odtworzenie komunikatu głosowego w aplikacji, z możliwością dostosowania języka, tempa czy tonu.
+Funkcja \textit{useSpeechFlow} umożliwia dwa główne działania: nasłuchiwanie i rozpoznawanie mowy użytkownika oraz generowanie odpowiedzi głosowych. Za pomocą funkcji \textit{listen} aplikacja nasłuchuje komendy głosowe użytkownika, zamieniając dźwięk na tekst. Funkcja ta wykorzystuje \textit{expo-speech-recognition}, który aktywuje mikrofon, zbiera próbki dźwięku, a następnie konwertuje je na tekst. Rozpoznawanie mowy odbywa się w sposób asynchroniczny, a wynik jest zwracany po zakończeniu procesu.
+
+Generowanie odpowiedzi głosowych na podstawie tekstu przekazanego jako argument możliwe jest dzięki funkcji \textit{speak}. Wykorzystuje ona do tego bibliotekę \textit{expo-speech}, która pozwala na odtworzenie komunikatu głosowego w aplikacji, z możliwością dostosowania języka, tempa czy tonu.
+
+\textit{useSpeechFlow} w pełni obsługuje interakcję użytkownika z aplikacją w sposób głosowy, umożliwiając zarówno odbiór komend, jak i udzielanie odpowiedzi w formie mowy, co zwiększa dostępność aplikacji oraz pozwala na lepszą interakcję z użytkownikami, zwłaszcza w kontekście aplikacji przeznaczonych dla osób z ograniczoną zdolnością wzroku.
   
-  \textit{useSpeechFlow} w pełni obsługuje interakcję użytkownika z aplikacją w sposób głosowy, umożliwiając zarówno odbiór komend, jak i udzielanie odpowiedzi w formie mowy, co zwiększa dostępność aplikacji oraz pozwala na lepszą interakcję z użytkownikami, zwłaszcza w kontekście aplikacji przeznaczonych dla osób z ograniczoną zdolnością wzroku.
-  
-      
-  \item \textbf{useVoiceFlow} - Funkcja odpowiedzialna za obsługę komunikacji głosowej w aplikacji, umożliwiająca przeprowadzanie dialogów z użytkownikiem za pomocą poleceń głosowych oraz wykonywanie akcji w zależności od otrzymanych komend. Wykorzystuje funkcję \textit{useSpeechFlow} do obsługi mówienia (speak) i słuchania (listen). Funkcja przechodzi przez określony \textit{flow} (ciąg komunikatów i akcji) na podstawie aktualnego węzła, wykonując określone operacje jak wyświetlanie wiadomości, podejmowanie akcji, lub oczekiwanie na odpowiedź użytkownika.
+\subsubsection{useVoiceFlow}
+
+Funkcja odpowiedzialna za obsługę komunikacji głosowej w aplikacji, umożliwiająca przeprowadzanie dialogów z użytkownikiem za pomocą poleceń głosowych oraz wykonywanie akcji w zależności od otrzymanych komend. Wykorzystuje funkcję \textit{useSpeechFlow} do obsługi mówienia (speak) i słuchania (listen). Funkcja przechodzi przez określony \textit{flow} (ciąg komunikatów i akcji) na podstawie aktualnego węzła, wykonując określone operacje jak wyświetlanie wiadomości, podejmowanie akcji, lub oczekiwanie na odpowiedź użytkownika.
     
-    \begin{lstlisting}[language=JavaScript, caption=useVoiceFlowHook, label=lst:voiceFlow]
-      import { useSpeechFlow } from './useSpeechFlow';
-    
-      export const useVoiceFlow = () => {
-        const { speak, listen } = useSpeechFlow();
-    
-        const traverseFlow = async (flow: any, currentNodeKey: string, context: any = {}, onContextUpdate?: (context: any) => void) => {
-          let currentNodeKeyLocal = currentNodeKey;
-    
-          while (currentNodeKeyLocal) {
-            const currentNode = flow[currentNodeKeyLocal];
-    
-            const message = typeof currentNode.message === 'function' ? currentNode.message(context) : currentNode.message;
-            await speak(message);
-    
-            if (currentNode.action) {
-              const actionResult = await currentNode.action(context);
-    
-              if (typeof actionResult === 'string') {
-                currentNodeKeyLocal = actionResult;
+\begin{lstlisting}[language=JavaScript, caption=useVoiceFlowHook, label=lst:voiceFlow]
+  import { useSpeechFlow } from './useSpeechFlow';
+
+  export const useVoiceFlow = () => {
+    const { speak, listen } = useSpeechFlow();
+
+    const traverseFlow = async (flow: any, currentNodeKey: string, context: any = {}, onContextUpdate?: (context: any) => void) => {
+      let currentNodeKeyLocal = currentNodeKey;
+
+      while (currentNodeKeyLocal) {
+        const currentNode = flow[currentNodeKeyLocal];
+
+        const message = typeof currentNode.message === 'function' ? currentNode.message(context) : currentNode.message;
+        await speak(message);
+
+        if (currentNode.action) {
+          const actionResult = await currentNode.action(context);
+
+          if (typeof actionResult === 'string') {
+            currentNodeKeyLocal = actionResult;
+            continue;
+          }
+
+          break;
+        }
+
+        if (currentNode.repeat) {
+          currentNodeKeyLocal = currentNode.repeat;
+          continue;
+        }
+
+        if (currentNode.options || currentNode.onResponse) {
+          try {
+            const userResponse = await listen();
+
+            if (!userResponse) {
+              if (currentNode.onSilence) {
+                currentNodeKeyLocal = currentNode.onSilence;
                 continue;
+              } else {
+                break;
               }
-    
-              break;
             }
-    
-            if (currentNode.repeat) {
-              currentNodeKeyLocal = currentNode.repeat;
-              continue;
-            }
-    
-            if (currentNode.options || currentNode.onResponse) {
-              try {
-                const userResponse = await listen();
-    
-                if (!userResponse) {
-                  if (currentNode.onSilence) {
-                    currentNodeKeyLocal = currentNode.onSilence;
-                    continue;
-                  } else {
-                    break;
-                  }
-                }
-    
-                const normalizedResponse = userResponse.toLowerCase();
-    
-                if (currentNode.options) {
-                  const matchedOption = currentNode.options.find((option: any) => normalizedResponse.includes(option.command));
-    
-                  if (matchedOption) {
-                    currentNodeKeyLocal = matchedOption.next;
-                    continue;
-                  } else {
-                    if (currentNode.onFailure) {
-                      currentNodeKeyLocal = currentNode.onFailure;
-                      continue;
-                    } else {
-                      break;
-                    }
-                  }
-                } else if (currentNode.onResponse) {
-                  const responseKey = currentNode.onResponseKey || currentNodeKeyLocal;
-                  context[responseKey] = userResponse;
-    
-                  if (onContextUpdate) {
-                    onContextUpdate({ ...context });
-                  }
-    
-                  currentNodeKeyLocal = currentNode.onResponse;
-                  continue;
-                }
-              } catch (error) {
-                if (currentNode.onSilence) {
-                  currentNodeKeyLocal = currentNode.onSilence;
+
+            const normalizedResponse = userResponse.toLowerCase();
+
+            if (currentNode.options) {
+              const matchedOption = currentNode.options.find((option: any) => normalizedResponse.includes(option.command));
+
+              if (matchedOption) {
+                currentNodeKeyLocal = matchedOption.next;
+                continue;
+              } else {
+                if (currentNode.onFailure) {
+                  currentNodeKeyLocal = currentNode.onFailure;
                   continue;
                 } else {
                   break;
                 }
               }
-            } else if (currentNode.next) {
-              currentNodeKeyLocal = currentNode.next;
+            } else if (currentNode.onResponse) {
+              const responseKey = currentNode.onResponseKey || currentNodeKeyLocal;
+              context[responseKey] = userResponse;
+
+              if (onContextUpdate) {
+                onContextUpdate({ ...context });
+              }
+
+              currentNodeKeyLocal = currentNode.onResponse;
+              continue;
+            }
+          } catch (error) {
+            if (currentNode.onSilence) {
+              currentNodeKeyLocal = currentNode.onSilence;
               continue;
             } else {
               break;
             }
           }
-    
-          return context;
-        };
-    
-        return { traverseFlow };
-      };
-    \end{lstlisting}
-    
-    Funkcja \textit{useVoiceFlow} umożliwia przeprowadzanie interakcji głosowych z użytkownikiem, przechodząc przez określony \textit{flow} składający się z węzłów. Każdy węzeł może zawierać wiadomość, akcję, opcje odpowiedzi użytkownika, a także logikę w przypadku braku odpowiedzi lub błędu. Funkcja ta sprawdza odpowiedzi użytkownika, porównując je z dostępnymi opcjami i na podstawie tego przechodzi do kolejnych węzłów lub wykonuje określone akcje. Dzięki temu można tworzyć interaktywne dialogi, w których użytkownik reaguje na pytania aplikacji, a aplikacja dostosowuje się do odpowiedzi, przechodząc do kolejnych etapów konwersacji. 
-    
-    Funkcja \textit{traverseFlow} jest asynchroniczna, co umożliwia płynne przetwarzanie kolejnych kroków dialogu z użytkownikiem, a także dostosowanie kontekstu, który jest przekazywany między węzłami.
-    
-    \item \textbf{useBluetooth} - Funkcja obsługująca komunikację Bluetooth Low Energy (BLE). Umożliwia skanowanie urządzeń, łączenie z nimi oraz przesyłanie i odbieranie danych.
-  
+        } else if (currentNode.next) {
+          currentNodeKeyLocal = currentNode.next;
+          continue;
+        } else {
+          break;
+        }
+      }
 
-\end{itemize}
+      return context;
+    };
+
+    return { traverseFlow };
+  };
+\end{lstlisting}
+    
+Funkcja \textit{useVoiceFlow} umożliwia przeprowadzanie interakcji głosowych z użytkownikiem, przechodząc przez określony \textit{flow} składający się z węzłów. Każdy węzeł może zawierać wiadomość, akcję, opcje odpowiedzi użytkownika, a także logikę w przypadku braku odpowiedzi lub błędu. 
+
+Funkcja ta sprawdza odpowiedzi użytkownika, porównując je z dostępnymi opcjami i na podstawie tego przechodzi do kolejnych węzłów lub wykonuje określone akcje. Dzięki temu można tworzyć interaktywne dialogi, w których użytkownik reaguje na pytania aplikacji, a aplikacja dostosowuje się do odpowiedzi, przechodząc do kolejnych etapów konwersacji. 
+
+Funkcja \textit{traverseFlow} jest asynchroniczna, co umożliwia płynne przetwarzanie kolejnych kroków dialogu z użytkownikiem, a także dostosowanie kontekstu, który jest przekazywany między węzłami.
+
+\subsubsection{useBluetooth} 
+
+Funkcja obsługująca komunikację Bluetooth Low Energy (BLE). Umożliwia skanowanie urządzeń, łączenie z nimi oraz przesyłanie i odbieranie danych.
+
+\subsection{Główne widoki aplikacji}
+
+\subsection{Wstęp}
+
+W niniejszej sekcji przedstawione zostaną szczegółowe informacje na temat widoków w aplikacji. Każdy z podrozdziałów opisuje jeden z kluczowych widoków, wyjaśniając ich funkcjonalność, sposób interakcji z użytkownikiem oraz przepływ nawigacji. Dodatkowo omówione zostaną istotne zależności pomiędzy widokami oraz sposoby ich implementacji, co pozwoli na pełne zrozumienie struktury aplikacji.
 
 \subsubsection{Strona tytułowa}
 
@@ -791,7 +806,7 @@ Po wejściu na ekran inicjalizowany jest przepływ obsługi głosowej (\texttt{s
             </View>
       
             <TouchableOpacity onPress={() => handleRouteChange(Screens.Register)}>
-              <Text style={styles.signupText}>Don't have an account? Sign up!</Text>
+              <Text style={styles.signupText}>Dont have an account? Sign up!</Text>
             </TouchableOpacity>
       
             <View style={styles.navbar}>
@@ -813,7 +828,7 @@ Po wejściu na ekran inicjalizowany jest przepływ obsługi głosowej (\texttt{s
       }
 \end{lstlisting}
 
-W warstwie wizualnej ekran prezentuje dwa pola tekstowe: jedno do wprowadzenia e-maila (\texttt{keyboardType="email-address"}, \texttt{autoCapitalize="none"}), a drugie do wprowadzenia hasła (\texttt{secureTextEntry}). Oba pola są powiązane z lokalnymi stanami komponentu (\texttt{login} i \texttt{password}) za pomocą atrybutu \texttt{value} i funkcji \texttt{onChangeText}. Wprowadzane dane są automatycznie czyszczone z niepotrzebnych spacji przy każdej aktualizacji.
+W warstwie wizualnej ekran prezentuje dwa pola tekstowe: jedno do wprowadzenia e-maila (\textit{keyboardType="email-address"}, \texttt{autoCapitalize="none"}), a drugie do wprowadzenia hasła (\textit{secureTextEntry}). Oba pola są powiązane z lokalnymi stanami komponentu (\textit{login} i \textit{password}) za pomocą atrybutu \textit{value} i funkcji \textit{onChangeText}. Wprowadzane dane są automatycznie czyszczone z niepotrzebnych spacji przy każdej aktualizacji.
 
 Pod formularzem znajduje się przycisk logowania, który wywołuje funkcję \texttt{loginUser}. Funkcja ta przesyła dane logowania do backendu na endpoint \texttt{http://172.20.10.3:3000/auth/login} metodą POST. Jeśli walidacja zakończyła się sukcesem, backend zwraca dane użytkownika, które zostają zapisane w pamięci lokalnej aplikacji przy pomocy hook'a \texttt{useSaveAppData}. Zapisane informacje obejmują imię użytkownika (\texttt{username}) oraz jego identyfikator (\texttt{userId}). Po pomyślnym logowaniu kupujący zostaje przekierowany na ekran kategorii produktów, za pomocą funkcji \texttt{handleRouteChange}.
 
@@ -1021,7 +1036,7 @@ Po załadowaniu widoku, używany jest hook \texttt{useLayoutEffect}, aby wyłąc
 
 Funkcja \texttt{handleRegister} jest odpowiedzialna za cały proces rejestracji użytkownika. Po pierwsze, sprawdza ona, czy dane wprowadzone przez użytkownika spełniają określone wymagania: hasła muszą być co najmniej 8 znaków długie i muszą się zgadzać, adres e-mail musi mieć poprawny format, a imiona oraz nazwiska użytkownika muszą zawierać co najmniej 3 znaki. Jeśli jakiekolwiek z tych warunków nie zostanie spełnione, użytkownik otrzymuje odpowiedni komunikat o błędzie.
 
-Dane są przesyłane na endpoint rejestracji za pomocą metody \texttt{POST} do serwera pod adresem \texttt{http://172.20.10.3:3000/auth/register}. Wysłane dane zawierają adres e-mail, hasło oraz imię i nazwisko użytkownika. Jeśli rejestracja przebiegnie pomyślnie, użytkownik jest przekierowywany do ekranu kategorii, gdzie może przejść do dalszej części aplikacji. W przypadku błędu wyświetlany jest komunikat informujący o problemie.
+Dane są przesyłane na endpoint rejestracji za pomocą metody \textit{POST} do serwera pod adresem \textit{http://172.20.10.3:3000/auth/register}. Wysłane dane zawierają adres e-mail, hasło oraz imię i nazwisko użytkownika. Jeśli rejestracja przebiegnie pomyślnie, użytkownik jest przekierowywany do ekranu kategorii, gdzie może przejść do dalszej części aplikacji. W przypadku błędu wyświetlany jest komunikat informujący o problemie.
 
 Ekran rejestracji zawiera formularz z polami do wprowadzenia danych użytkownika: adresu e-mail, imienia, nazwiska, hasła oraz powtórzonego hasła. Użytkownik ma także możliwość kliknięcia przycisku rejestracji, który aktywuje funkcję \texttt{handleRegister}, sprawdzającą poprawność danych przed ich wysłaniem. Jeśli wszystko jest w porządku, użytkownik zostaje zarejestrowany, a dane są zapisywane w aplikacji. 
 
@@ -1377,8 +1392,6 @@ Ekran zapewnia użytkownikowi zmianę ilości produktów poprzez przyciski "+" i
 Aby dodać produkt do koszyka, kupujący musi wybrać ilość i kliknąć przycisk \texttt{Add}. Funkcja \texttt{addToCart} weryfikuje, czy wybrana ilość jest dostępna w magazynie i czy użytkownik posiada aktywny koszyk. Następnie produkt jest dodawany do koszyka za pomocą zapytania POST wysyłanego do backendu.
 
 \subsubsection{Generowanie kodu QR}
-
-\subsubsection{Ekran generowania kodu QR}
 
 Ekran generowania kodu QR umożliwia użytkownikowi wygenerowanie kodu QR, który zawiera identyfikatory produktów znajdujących się w koszyku.
 
@@ -1858,59 +1871,76 @@ Ekran Profilu Użytkownika w aplikacji został zaprojektowany tak, aby zapewnić
 \begin{lstlisting}[language=JavaScript, caption=Profil użytkownika implementacja, label=lst:service]  
   export default function User() {
     const [username, setUsername] = useState('');
-    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [messages, setMessages] = useState<ChatMessage[]>([{ text: 'Hi! How can I help you?', sender: 'bot' }]);
     const [inputText, setInputText] = useState('');
     const router = useRouter();
     const navigation = useNavigation();
-  
+
     const getAppData = useGetAppData();
     const handleRouteChange = useHandleRouteChange();
-    const { traverseFlow } = useVoiceFlow();
-  
+
     useLayoutEffect(() => {
       navigation.setOptions({
         headerShown: false,
       });
     }, [navigation]);
-  
+
     useEffect(() => {
       (async () => {
         const username = await getAppData('username');
         setUsername(username);
-        startVoiceFlow();
       })();
     }, []);
-  
-    const startVoiceFlow = async () => {
-      const flow = userScreenFlow(handleRouteChange, handleLogout);
-      await traverseFlow(flow, 'intro');
-    };
-  
+
     async function handleLogout() {
       await deleteUserData();
       await logoutUser();
       router.push('/');
     }
-  
+
     const logoutUser = async () => {
-      await fetch('http://172.20.10.3:3000' + '/auth/logout');
+      await fetch('http://localhost:3000/auth/logout');
     };
-  
+
     const deleteUserData = async () => {
       await SecureStore.deleteItemAsync('username');
       await SecureStore.deleteItemAsync('userId');
     };
-  
-    const handleSend = () => {
+
+    const handleSend = async () => {
       if (inputText.trim() === '') return;
       setMessages([...messages, { text: inputText, sender: 'user' }]);
-      setInputText('');
-  
-      setTimeout(() => {
-        setMessages((prevMessages) => [...prevMessages, { text: 'To jest odpowiedź bota.', sender: 'bot' }]);
-      }, 1000);
+
+      try {
+        const response = await fetch('https://api.wit.ai/event?v=20241211&session_id=prod5i&tag=1.0&context_map=%7B%7D', {
+          method: 'POST',
+          headers: {
+            Authorization: 'Bearer T2OB256FI33CZPZDCHTQNEEKTE2RHSPM',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ type: 'message', message: inputText }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch bot response');
+        }
+
+        const data = await response.json();
+        const botReply = data.reply || "I'm sorry. I don't understand."; // Handle missing replies gracefully
+
+        setMessages((prevMessages) => [...prevMessages, { text: botReply, sender: 'bot' }]);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error('Error fetching bot response:', error.message);
+        } else {
+          console.error('Error fetching bot response:', error);
+        }
+        setMessages((prevMessages) => [...prevMessages, { text: 'Error processing your request. Please try again later.', sender: 'bot' }]);
+      } finally {
+        setInputText('');
+      }
     };
-  
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -1919,7 +1949,7 @@ Ekran Profilu Użytkownika w aplikacji został zaprojektowany tak, aby zapewnić
             <Text style={styles.logOut}>Log out</Text>
           </TouchableOpacity>
         </View>
-  
+
         <View style={styles.chatContainer}>
           <ScrollView style={styles.messagesContainer}>
             {messages.map((message, index) => (
@@ -1928,7 +1958,7 @@ Ekran Profilu Użytkownika w aplikacji został zaprojektowany tak, aby zapewnić
               </View>
             ))}
           </ScrollView>
-  
+
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.textInput}
@@ -1943,7 +1973,7 @@ Ekran Profilu Użytkownika w aplikacji został zaprojektowany tak, aby zapewnić
             </TouchableOpacity>
           </View>
         </View>
-  
+
         <View style={styles.navbar}>
           <TouchableOpacity style={styles.navButton} onPress={() => handleRouteChange(Screens.Map)}>
             <FontAwesome5 name="map-marked-alt" size={32} color="#013b3d" />
@@ -1963,11 +1993,12 @@ Ekran Profilu Użytkownika w aplikacji został zaprojektowany tak, aby zapewnić
   }
 \end{lstlisting}
 
-W nagłówku ekranu znajduje się tekst powitalny "Hi, \texttt{\{username\}}!", który jest zlokalizowany w górnym, lewym rogu widoku. Obok, w prawym górnym rogu, umieszczono przycisk wylogowania, który wywołuje funkcję \texttt{handleLogout}. Funkcja ta usuwa dane użytkownika z bezpiecznego przechowywania, wywołuje żądanie do backendu w celu zakończenia sesji, a następnie przekierowuje użytkownika na ekran główny.
+W nagłówku ekranu znajduje się tekst powitalny "Hi, \texttt{{username}}!", który jest dynamicznie generowany na podstawie nazwy użytkownika pobranej z bezpiecznego przechowywania przy użyciu funkcji \texttt{useEffect}. Tekst ten jest umieszczony w lewym, górnym rogu widoku. W prawym górnym rogu znajduje się przycisk wylogowania, który wywołuje funkcję \texttt{handleLogout}. Funkcja ta wykonuje kilka operacji: \begin{itemize} \item Usuwa dane użytkownika (\texttt{username}, \texttt{userId}) z bezpiecznego przechowywania (\texttt{SecureStore.deleteItemAsync}). \item Wysyła żądanie do backendu na endpoint \texttt{/auth/logout} w celu zakończenia sesji. \item Po wykonaniu tych operacji, użytkownik jest przekierowywany na ekran główny (\texttt{router.push('/')}). \end{itemize}
 
-W centralnej części ekranu znajduje się komponent czatu, który umożliwia interakcję z botem. Czat składa się z listy wiadomości, renderowanych w przewijalnym kontenerze, oraz pola wejściowego do wysyłania nowych wiadomości. Użytkownik może wprowadzić tekst w polu \texttt{TextInput}, a następnie wysłać go za pomocą przycisku reprezentowanego ikoną \texttt{"paper-plane"}. Wiadomości użytkownika są dodawane do stanu \texttt{messages}, a z opóźnieniem jednej sekundy do czatu dodawana jest odpowiedź bota, co symuluje interakcję w czasie rzeczywistym.
+W centralnej części ekranu znajduje się komponent czatu, który umożliwia interakcję z botem. Czat składa się z dwóch głównych elementów: \begin{itemize} \item Lista wiadomości renderowana w przewijalnym kontenerze, w którym każda wiadomość jest prezentowana w formie dymka. Dymki są stylizowane inaczej w zależności od nadawcy (użytkownik lub bot), co pozwala łatwo rozróżnić, kto wysłał daną wiadomość. \item Pole tekstowe (\texttt{TextInput}) z przyciskiem wysyłania wiadomości, oznaczonym ikoną \texttt{"paper-plane"}. \end{itemize}
 
-Obsługa wiadomości jest realizowana przez funkcję \texttt{handleSend}, która sprawdza, czy pole wejściowe nie jest puste, a następnie aktualizuje listę wiadomości. Wiadomości są renderowane jako dymki czatu, przy czym dymki wiadomości użytkownika i bota różnią się kolorami i stylami, co ułatwia rozróżnienie nadawców.
+Obsługa wiadomości jest realizowana przez funkcję \texttt{handleSend}, która odpowiada za interakcję z botem. Działanie tej funkcji przebiega następująco: \begin{enumerate} \item Sprawdza, czy tekst w polu wejściowym (\texttt{inputText}) nie jest pusty. Jeśli pole jest puste, funkcja kończy działanie. \item Dodaje wiadomość użytkownika do stanu \texttt{messages} za pomocą metody \texttt{setMessages}, co automatycznie powoduje jej wyświetlenie w interfejsie. \item Wysyła zapytanie POST do zewnętrznego API bota (\texttt{https://api.wit.ai/event}), korzystając z funkcji \texttt{fetch}. Zapytanie zawiera następujące elementy: \begin{itemize} \item Nagłówek \texttt{Authorization}, który zawiera token autoryzacyjny. \item Treść wiadomości w formacie JSON, w której klucz \texttt{"message"} przechowuje wartość wprowadzoną przez użytkownika. \end{itemize} \item Po otrzymaniu odpowiedzi od bota, funkcja przetwarza ją w formacie JSON (\texttt{response.json()}). Jeśli odpowiedź zawiera tekst (\texttt{data.reply}), dodaje ją do stanu \texttt{messages}, co powoduje wyświetlenie odpowiedzi bota w czacie. \item W przypadku błędu (np. brak odpowiedzi od API), w konsoli wyświetlany jest komunikat diagnostyczny, a użytkownik pozostaje bez odpowiedzi. \item Na zakończenie, wartość pola tekstowego \texttt{inputText} jest czyszczona. \end{enumerate}
+
 \section{Baza danych}
 
 \subsection{Inicjalizacja bazy danych}
