@@ -637,9 +637,356 @@ Funkcja ta sprawdza odpowiedzi użytkownika, porównując je z dostępnymi opcja
 
 Funkcja \textit{traverseFlow} jest asynchroniczna, co umożliwia płynne przetwarzanie kolejnych kroków dialogu z użytkownikiem, a także dostosowanie kontekstu, który jest przekazywany między węzłami.
 
-\subsubsection{useBluetooth} 
+\subsection{System nawigacji}
 
-Funkcja obsługująca komunikację Bluetooth Low Energy (BLE). Umożliwia skanowanie urządzeń, łączenie z nimi oraz przesyłanie i odbieranie danych.
+\subsubsection{useBluetoothService}
+
+Funkcja \textit{useBluetoothService} obsługuje kompleksowy proces komunikacji z urządzeniami Bluetooth Low Energy (BLE) w aplikacji. Została zaprojektowana tak, aby zapewnić stabilne i przefiltrowane dane z beaconów, służące do szacowania aktualnej pozycji użytkownika w oparciu o wartości RSSI (Received Signal Strength Indicator). Jej główne zadania to:
+
+\begin{itemize}
+    \item Skanowanie urządzeń BLE i zarządzanie listą dostępnych beaconów,
+    \item Filtrowanie mierzonych wartości RSSI przy wykorzystaniu filtru Kalmana,
+    \item Konwersja RSSI na estymowaną odległość i obliczanie pozycji na podstawie kilku beaconów (triangulacja wagowa),
+    \item Aktualizacja położenia w globalnym kontekście aplikacji, co umożliwia innym komponentom reagowanie na zmiany lokacji użytkownika.
+\end{itemize}
+
+Poniżej przedstawiono wybrane fragmenty kodu wraz z ich szczegółowym omówieniem.
+
+\begin{lstlisting}[language=JavaScript, caption={Inicjalizacja stanu i referencji do wewnętrznych struktur danych}, label={lst:useBluetooth_init}]
+const [devices, setDevices] = useState<ScannedDevice[]>([]);
+const [isScanning, setIsScanning] = useState<boolean>(false);
+const [macToPositionMapping, setMacToPositionMapping] = useState<{ [key: string]: number }>({});
+const [bleDevices, setBleDevices] = useState<BleDevice[]>();
+
+const deviceSetRef = useRef<Set<string>>(new Set());
+const scanIntervalRef = useRef<NodeJS.Timeout | null>(null);
+const macToPositionMappingRef = useRef<{ [key: string]: number }>({});
+const kalmanStateRef = useRef<{ [key: string]: number }>({});
+const kalmanCovarianceRef = useRef<{ [key: string]: number }>({});
+const estimatedDistancesRef = useRef<{ [key: string]: number }>({});
+\end{lstlisting}
+
+W powyższym fragmencie inicjalizowane są kluczowe struktury danych. Przechowywane są m.in. aktualnie zeskanowane urządzenia, stan procesu skanowania oraz mapowania adresów MAC beaconów do sekcji sklepu. Referencje do obiektów takich jak \textit{kalmanStateRef} czy \textit{estimatedDistancesRef} utrzymują stan filtracji i estymacji, co zapewnia dane wejściowe dla dalszych obliczeń.
+
+\begin{lstlisting}[language=JavaScript, caption={Pobieranie mapowania urządzeń BLE do sekcji sklepu}, label={lst:useBluetooth_fetch}]
+useEffect(() => {
+  const fetchBleDevices = async () => {
+    try {
+      const storeId = await getAppData('selectedStoreId');
+      const bleDevicesResponse = await fetch(`http://172.20.10.4:3000/ble_devices/${storeId}`);
+      const bleDevicesData = await bleDevicesResponse.json();
+      setBleDevices(bleDevicesData);
+    } catch (error) {
+      console.error('Error fetching BLE devices:', error instanceof Error ? error.message : 'Unknown error');
+    }
+  };
+  fetchBleDevices();
+}, []);
+\end{lstlisting}
+
+Ten fragment odpowiada za asynchroniczne pobranie listy urządzeń BLE z serwera. Na podstawie identyfikatora sklepu (\textit{storeId}) pobierane jest dopasowanie urządzeń (beaconów) do konkretnych sekcji. Dane te pozwalają później na przeliczenie szacowanej odległości od beaconów na faktyczną pozycję w obrębie sklepu.
+
+\begin{lstlisting}[language=JavaScript, caption={Zastosowanie filtru Kalmana do stabilizacji pomiarów RSSI}, label={lst:useBluetooth_kalman}]
+const applyKalmanFilter = (identifier: string, rssi: number) => {
+  if (rssi < MIN_RSSI_THRESHOLD) return;
+
+  if (kalmanStateRef.current[identifier] === undefined) {
+    kalmanStateRef.current[identifier] = rssi;
+    kalmanCovarianceRef.current[identifier] = 100;
+  }
+
+  const predictedState = kalmanStateRef.current[identifier];
+  const predictedCovariance = kalmanCovarianceRef.current[identifier] + PROCESS_NOISE;
+  const kGain = predictedCovariance / (predictedCovariance + MEASUREMENT_NOISE);
+  const updatedState = predictedState + kGain * (rssi - predictedState);
+  const updatedCovariance = (1 - kGain) * predictedCovariance;
+
+  kalmanStateRef.current[identifier] = updatedState;
+  kalmanCovarianceRef.current[identifier] = updatedCovariance;
+
+  const estimatedDistance = Math.pow(10, (RSSI_REF_1M - updatedState) / (10 * PATH_LOSS_EXPONENT));
+  estimatedDistancesRef.current[identifier] = estimatedDistance;
+  
+  setDevices((prevDevices) =>
+    prevDevices.map((device) =>
+      device.id === identifier
+        ? { ...device, filteredRssi: updatedState }
+        : device
+    )
+  );
+};
+\end{lstlisting}
+
+W powyższym kodzie zastosowano filtr Kalmana w celu stabilizacji wartości RSSI, które mogą być silnie zaszumione. Dzięki odpowiedniemu modelowi szumu procesowego i pomiarowego filtr Kalmana dostarcza bardziej przewidywalne wartości, które następnie przeliczane są na przybliżoną odległość od beaconów. Poprawia to dokładność procesu pozycjonowania.
+
+\begin{lstlisting}[language=JavaScript, caption={Obliczanie pozycji na podstawie odległości do wielu beaconów}, label={lst:useBluetooth_position}]
+const estimatePosition = () => {
+  const estimatedDistances = estimatedDistancesRef.current;
+  const positions = macToPositionMappingRef.current;
+
+  const weightsAndPositions = Object.keys(estimatedDistances)
+    .map((mac) => {
+      const distance = estimatedDistances[mac];
+      const position = positions[mac];
+      if (distance && position !== undefined) {
+        const weight = 1 / Math.pow(distance, 2);
+        return { weight, position };
+      }
+      return null;
+    })
+    .filter((item): item is { weight: number; position: number } => item !== null);
+
+  if (weightsAndPositions.length === 0) return undefined;
+
+  const totalWeight = weightsAndPositions.reduce((sum, item) => sum + item.weight, 0);
+  const weightedPositionSum = weightsAndPositions.reduce(
+    (sum, item) => sum + item.weight * item.position,
+    0
+  );
+
+  const finalPosition = weightedPositionSum / totalWeight;
+  return finalPosition;
+};
+\end{lstlisting}
+
+Tutaj pokazano, w jaki sposób na podstawie estymowanych odległości do beaconów (oraz przypisanych im sekcji) wyliczana jest bieżąca pozycja. Wykorzystywana jest do tego triangulacja wagowa, gdzie wagi są odwrotnie proporcjonalne do kwadratu odległości. Dzięki temu bliższe beacony mają większy wpływ na ostateczny wynik, poprawiając dokładność estymacji lokalizacji użytkownika.
+
+\begin{lstlisting}[language=JavaScript, caption={Inicjalizacja i zatrzymywanie skanowania urządzeń oraz aktualizacja pozycji}, label={lst:useBluetooth_scan}]
+const scanDevices = async () => {
+  if (isScanning) {
+    bleManager.stopDeviceScan();
+    if (scanIntervalRef.current) {
+      clearInterval(scanIntervalRef.current);
+      scanIntervalRef.current = null;
+    }
+    setIsScanning(false);
+    return;
+  }
+
+  scanIntervalRef.current = setInterval(() => {
+    const position = estimatePosition();
+    if (position !== undefined && !isNaN(position)) {
+      const maxSectionId = Math.max(...Object.values(macToPositionMappingRef.current));
+      const minSectionId = Math.min(...Object.values(macToPositionMappingRef.current));
+      const clampedPosition = Math.min(Math.max(position, minSectionId), maxSectionId);
+      positionService.updateLocation(clampedPosition);
+    }
+  }, 50);
+
+  setIsScanning(true);
+};
+\end{lstlisting}
+
+W tym fragmencie demonstrowane jest inicjowanie oraz zatrzymywanie procesu skanowania urządzeń BLE. Kiedy skanowanie jest aktywne, co pewien interwał czasu wywoływane jest \textit{estimatePosition()}, a po ustaleniu pozycji aktualizowany jest kontekst aplikacji poprzez \textit{positionService}. Dzięki temu inne elementy aplikacji mogą wykorzystywać aktualną pozycję użytkownika w czasie rzeczywistym.
+
+\subsubsection{PathFindingService}
+
+Klasa \textit{PathFindingService} odpowiada za wyznaczanie optymalnej ścieżki przejścia przez wybrane punkty (sekcje) w sklepie, bazując na grafie połączeń między nimi. Klasa ta wykorzystuje algorytm Dijkstry do wyznaczania najkrótszych ścieżek między wierzchołkami, a następnie stosuje heurystyczne ulepszanie rozwiązania metodą \textit{2-Opt} w celu optymalizacji znalezionej trasy.
+
+Podstawowe zadania tej klasy to:  
+\begin{itemize}
+    \item Generowanie reprezentacji grafu na podstawie listy krawędzi,
+    \item Znajdywanie ścieżek między punktami za pomocą algorytmu Dijkstry,
+    \item Tworzenie planu trasy, która obejmuje wszystkie zadane sekcje (wierzchołki),
+    \item Ulepszanie trasy poprzez lokalne przekształcenia 2-Opt, skracające całkowitą długość ścieżki.
+\end{itemize}
+
+Niżej zaprezentowano wybrane fragmenty kodu wraz z omówieniem.
+
+\begin{lstlisting}[language=JavaScript, caption={Inicjalizacja i konstruktor klasy PathFindingService}, label={lst:pathfinding_init}]
+class PathFindingService {
+  storeId: number;
+  edges: Edge[];
+  graph: Graph = {};
+
+  constructor(storeId: number, edges: Edge[]) {
+    this.storeId = storeId;
+    this.edges = edges;
+  }
+
+  getPath(sections: number[], currentSection: number): number[] | undefined {
+    this.graph = this.generateGraph(this.edges);
+    try {
+      const initialPath = this.greedyPath(currentSection, sections);
+      const optimizedPath = this.twoOpt(initialPath);
+      return optimizedPath;
+    } catch (error) {
+      console.error('Error: ', error instanceof Error ? error.message : error);
+    }
+  }
+}
+\end{lstlisting}
+
+W konstruktorze przekazywana jest lista krawędzi oraz identyfikator sklepu. Metoda \textit{getPath} tworzy graf na podstawie krawędzi i wyznacza wstępną trasę metodą zachłanną, a następnie ją optymalizuje za pomocą \textit{twoOpt}.
+
+\begin{lstlisting}[language=JavaScript, caption={Generowanie grafu na podstawie krawędzi}, label={lst:pathfinding_graph}]
+generateGraph(edges: Edge[]): Graph {
+  const graph: Graph = {};
+  for (const edge of edges) {
+    if (!graph[edge.v1]) graph[edge.v1] = {};
+    if (!graph[edge.v2]) graph[edge.v2] = {};
+    graph[edge.v1][edge.v2] = edge.weight;
+    graph[edge.v2][edge.v1] = edge.weight;
+  }
+  return graph;
+}
+\end{lstlisting}
+
+Ta metoda tworzy strukturę grafu w formie obiektu, w którym dla każdego wierzchołka przechowywana jest mapa sąsiadów wraz z wagami krawędzi. Dzięki temu można efektywnie obliczać odległości między punktami.
+
+\begin{lstlisting}[language=JavaScript, caption={Algorytm Dijkstry do wyznaczania najkrótszych ścieżek}, label={lst:pathfinding_dijkstra}]
+dijkstra(
+  graph: Graph,
+  start: number
+): {
+  distances: { [key: number]: number };
+  previous: { [key: number]: number | null };
+} {
+  const distances: { [key: number]: number } = {};
+  const previous: { [key: number]: number | null } = {};
+  const queue: [number, number][] = [];
+
+  for (const vertex in graph) {
+    distances[vertex] = Infinity;
+    previous[vertex] = null;
+  }
+
+  distances[start] = 0;
+  queue.push([0, start]);
+
+  while (queue.length > 0) {
+    // Wybor najblizszego wierzcholka do przetworzenia
+    queue.sort((a, b) => a[0] - b[0]);
+    const [currentDistance, currentVertex] = queue.shift()!;
+
+    if (currentDistance > distances[currentVertex]) continue;
+
+    for (const neighbor in graph[currentVertex]) {
+      const distance = currentDistance + graph[currentVertex][neighbor];
+      if (distance < distances[neighbor]) {
+        distances[neighbor] = distance;
+        previous[neighbor] = currentVertex;
+        queue.push([distance, parseInt(neighbor)]);
+      }
+    }
+  }
+
+  return { distances, previous };
+}
+\end{lstlisting}
+
+Algorytm Dijkstry pozwala znaleźć najkrótszą ścieżkę z wierzchołka startowego do każdego innego wierzchołka w grafie. Zwraca on zarówno minimalne dystanse, jak i tablicę \textit{previous}, umożliwiającą odtworzenie konkretnej trasy.
+
+\begin{lstlisting}[language=JavaScript, caption={Odtwarzanie ścieżki na podstawie tablicy poprzedników}, label={lst:pathfinding_reconstruct}]
+reconstructPath(previous: { [key: number]: number | null }, start: number, end: number): number[] | null {
+  const path: number[] = [];
+  let current: number | null = end;
+
+  while (current !== null) {
+    path.push(current);
+    current = previous[current];
+  }
+
+  path.reverse();
+  return path[0] === start ? path : null;
+}
+\end{lstlisting}
+
+Na podstawie wyniku algorytmu Dijkstry metoda ta pozwala odtworzyć konkretną najkrótszą ścieżkę między punktami. Odtworzenie trasy polega na iteracji przez poprzedników, aż do osiągnięcia wierzchołka startowego.
+
+\begin{lstlisting}[language=JavaScript, caption={Zachłanne wyznaczanie trasy odwiedzającej dane sekcje}, label={lst:pathfinding_greedy}]
+greedyPath(start: number, vertices: number[]): number[] {
+  const path: number[] = [start];
+  let currentVertex = start;
+  const verticesSet = new Set(vertices);
+  verticesSet.delete(start);
+
+  while (verticesSet.size > 0) {
+    const { distances, previous } = this.dijkstra(this.graph, currentVertex);
+
+    let nextVertex: number | null = null;
+    let minDistance = Infinity;
+
+    verticesSet.forEach((v) => {
+      if (distances[v] < minDistance) {
+        nextVertex = v;
+        minDistance = distances[v];
+      }
+    });
+
+    if (nextVertex === null || distances[nextVertex] === Infinity) {
+      throw new Error(`No path found from vertex ${currentVertex} to any remaining vertex`);
+    }
+
+    const pathSegment = this.reconstructPath(previous, currentVertex, nextVertex);
+    if (!pathSegment) {
+      throw new Error(`No valid path segment found from vertex ${currentVertex} to vertex ${nextVertex}`);
+    }
+
+    path.push(...pathSegment.slice(1));
+    currentVertex = nextVertex;
+    verticesSet.delete(nextVertex);
+  }
+
+  return path;
+}
+\end{lstlisting}
+
+\textit{GreedyPath} (ścieżka zachłanna) dobiera kolejno najbliższą sekcję do odwiedzenia, aż wszystkie zadane sekcje zostaną uwzględnione. Ta metoda może nie dawać optymalnego rezultatu, ale stanowi dobrą bazę do dalszej optymalizacji.
+
+\begin{lstlisting}[language=JavaScript, caption={Przeliczanie całkowitej wagi (długości) trasy}, label={lst:pathfinding_weight}]
+calculatePathWeight(path: number[]): number {
+  let totalWeight = 0;
+  for (let i = 0; i < path.length - 1; i++) {
+    const from = path[i];
+    const to = path[i + 1];
+    if (this.graph[from][to] !== undefined) {
+      totalWeight += this.graph[from][to];
+    } else {
+      throw new Error(`No edge between ${from} and ${to}`);
+    }
+  }
+  return totalWeight;
+}
+\end{lstlisting}
+
+Do oceny jakości ścieżki służy metoda \textit{calculatePathWeight}, obliczająca sumaryczny dystans na podstawie krawędzi w grafie. Jest to kluczowe narzędzie do porównywania alternatywnych tras.
+
+\begin{lstlisting}[language=JavaScript, caption={Lokalna optymalizacja ścieżki metodą 2-Opt}, label={lst:pathfinding_twoopt}]
+twoOptSwap(path: number[], i: number, j: number): number[] {
+  return path.slice(0, i).concat(path.slice(i, j + 1).reverse(), path.slice(j + 1));
+}
+
+twoOpt(path: number[]): number[] {
+  let bestPath = path;
+  let bestWeight = this.calculatePathWeight(bestPath);
+  let improved = true;
+
+  while (improved) {
+    improved = false;
+    for (let i = 1; i < path.length - 2; i++) {
+      for (let j = i + 1; j < path.length - 1; j++) {
+        const newPath = this.twoOptSwap(bestPath, i, j);
+        let newWeight;
+        try {
+          newWeight = this.calculatePathWeight(newPath);
+        } catch (error) {
+          continue;
+        }
+        if (newWeight < bestWeight) {
+          bestPath = newPath;
+          bestWeight = newWeight;
+          improved = true;
+        }
+      }
+    }
+  }
+
+  return bestPath;
+}
+\end{lstlisting}
+
+Metoda \textit{twoOpt} wprowadza ulepszenia do już wyznaczonej trasy, dokonując lokalnych zmian w kolejności odwiedzanych punktów (odwrócenie fragmentów ścieżki). Jeśli po takiej zmianie trasa staje się krótsza, modyfikacja jest zachowywana. Proces powtarzany jest do momentu, aż nie można dokonać dalszej poprawy.
 
 \subsection{Główne widoki aplikacji}
 
