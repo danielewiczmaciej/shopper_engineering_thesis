@@ -92,8 +92,6 @@ Ekran koszyka pozwala użytkownikowi zarządzać produktami dodanymi do koszyka 
 W górnej części ekranu znajduje się pasek wyszukiwania, umożliwiający filtrowanie produktów według nazwy. Użytkownik może wprowadzić frazę w polu tekstowym, aby zawęzić listę wyświetlanych produktów, co znacznie ułatwia nawigację w przypadku dużej liczby elementów. Listę produktów w koszyku prezentuje przewijalna siatka, mieszcząca się pod paskiem wyszukiwania. Każdy element listy produktów w koszyku zawiera następujące informacje:
 \begin{itemize}
     \item Nazwę produktu.
-    \item Cenę jednostkową.
-    \item Ilość produktu w koszyku, wyrażoną w odpowiedniej jednostce miary (np. sztuki, kilogramy).
     \item Łączną cenę dla danej pozycji, obliczoną jako iloczyn ceny jednostkowej i ilości.
 \end{itemize}
 
@@ -174,7 +172,47 @@ Dolną część ekranu zajmuje pasek nawigacyjny, który umożliwia przejście d
 
 \section{Asystent AI}
 
-Podczas opisu dostępnych widoków aplikacji, wspomniano o dymku chatu oraz chatbocie. Oba te elementy są związane z asystentem AI, który został zaimplementowany w aplikacji. Asystent ten, jest w stanie odpowiadać na pytania użytkownika, dotyczące funkcji aplikacji, dostępności produktów czy informacji o sklepie.
+\subsection{Profil użytkownika}
+
+Na widoku użytkownika kluczowym elementem jest czat z botem, zaprojektowany w sposób intuicyjny i interaktywny. Po otwarciu widoku użytkownik widzi przestrzeń rozmowy, gdzie może prowadzić dialog z botem. Na starcie bot wysyła wiadomość powitalną, dostosowaną do użytkownika, np. \emph{"Hi! How can I help you?"}.  
+
+\begin{center}
+    \includegraphics[width=0.3\textwidth]{images/front/user_chat.png}
+\end{center}
+
+Użytkownik wprowadza swoje pytania za pomocą pola tekstowego, a odpowiedzi bota pojawiają się dynamicznie w historii czatu. Bot potrafi odpowiadać na pytania dzięki dostępowi do bazy danych, która zawiera informacje o dostępnych sklepach, ich kategoriach, produktach oraz funkcjonalnościach aplikacji. Jeśli bot znajdzie odpowiednią informację, udziela konkretnej odpowiedzi lub wskazówek. Przykładowo:  
+
+\begin{itemize}
+    \item \emph{"Where is the nearest Biedronka?"} – bot podaje lokalizację najbliższego sklepu.  
+    \item \emph{"I need milk."} – bot wskazuje najbliższy sklep, gdzie mleko jest dostępne.  
+    \item \emph{"Where can I buy bread?"} – bot sugeruje sklepy w okolicy, które oferują pieczywo.  
+\end{itemize}  
+
+Jeśli jednak bot napotka bardziej złożone pytanie lub nie znajdzie odpowiedzi w bazie danych, wyświetla humorystyczną wiadomość, np. \emph{"I'm sorry. I don't understand."}, informując użytkownika o braku odpowiednich informacji.  
+
+Bot jest w stanie odpowiedzieć na pytania dotyczące:  
+\begin{itemize}
+    \item Lokalizacji i szczegółów sklepów w okolicy,  
+    \item Kategorii produktów i ich dostępności w określonych sklepach,  
+    \item Funkcjonalności aplikacji, takich jak dodawanie produktów do koszyka czy używanie mapy do wyboru sklepów.  
+\end{itemize}  
+
+\begin{center}
+    \includegraphics[width=0.3\textwidth]{images/front/what.png}
+\end{center}
+
+\subsection{Komponent dymka chatu}
+
+\begin{center}
+    \includegraphics[width=0.3\textwidth]{images/front/cat_chat.png}
+\end{center}
+
+W przypadku korzystania z dymka chatu należy postępować analogicznie. Różnica polega na tym, że dymek jest widoczny na większości widoków w postaci małego, przeciąganego kółeczka z ikonką chatu. Po jego kliknięciu pojawia się niewielkie okno, w którym odbywa się rozmowa z asystentem - przebiega ona w identyczny sposób, co na ekranie kupującego. 
+
+
+\begin{center}
+    \includegraphics[width=0.3\textwidth]{images/front/cat_chat_open.png}
+\end{center}
 
 \section{Obsługa osoby niewidomej}
 

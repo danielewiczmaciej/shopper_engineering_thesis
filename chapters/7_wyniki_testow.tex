@@ -1,4 +1,11 @@
 \chapter{WYNIKI TESTÓW}
 \label{chapter:wyniki_testow}
 
-tekst
+\section{Ekranu nawigacji} 
+Największe trudności pojawiły się podczas implementacji mapy SVG, która miała umożliwiać wygenerowanie sklepu, po który nawigowany będzie użytkownik. Początkowo projekt był realizowany w frameworku NativeScript, który jednak nie oferował wystarczającego wsparcia dla technologii SVG. Brak odpowiednich narzędzi oraz ograniczenia platformy zmusiły nas do przepisania projektu na React Native. Decyzja ta była kluczowa, ponieważ React Native zapewnił znacznie większe możliwości, lepszą elastyczność w zakresie pracy z mapami oraz szersze wsparcie społeczności. Przepisanie projektu przyniosło oczekiwane efekty, a także pozwoliło na bardziej zaawansowaną integrację z zewnętrznymi bibliotekami.
+
+\section{Interfejs mapy sklepów} 
+Jednym z najbardziej satysfakcjonujących rezultatów testów był interfejs mapy sklepów. Po wdrożeniu i testach w środowisku produkcyjnym mapa okazała się niezwykle wygodna i intuicyjna dla użytkowników. Funkcjonalności, takie jak automatyczne centrowanie na najbliższym sklepie czy możliwość łatwego nawigowania między różnymi lokalizacjami, zostały bardzo dobrze ocenione. Testy z udziałem rzeczywistych użytkowników potwierdziły, że interfejs jest nie tylko estetyczny, ale także funkcjonalny.
+
+\section{Obsługa niewidomych} 
+Równie istotnym elementem były testy komend głosowych, które przeprowadzaliśmy w warunkach symulujących rzeczywiste użycie aplikacji przez osoby niedowidzące. W trakcie testów celowo zamykaliśmy oczy, aby sprawdzić, czy dzięki komendom głosowym możliwe jest osiągnięcie zamierzonych celów, takich jak przejście na odpowiedni widok czy dodanie produktu do koszyka. Efekty końcowe przeszły nasze oczekiwania – system rozpoznawania mowy zareagował poprawnie na większość poleceń, a intuicyjne komunikaty głosowe pozwalały na sprawne wykonywanie działań w aplikacji. Tego rodzaju testy pozwoliły na optymalizację obsługi głosowej, zwiększając jej precyzję oraz dostępność dla użytkowników.
