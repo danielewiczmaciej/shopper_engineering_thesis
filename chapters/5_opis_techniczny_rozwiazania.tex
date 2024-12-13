@@ -137,6 +137,7 @@ W odpowiedzi można znaleźć następujące pola:
     \item \textit{type} - typ odpowiedzi.
 \end{itemize}
 W polu \textit{response}, może znaleźć się jeszcze pole \textit{action} które określa jaką akcję należy wykonać po otrzymaniu odpowiedzi.
+W przypadku gdy model oczekuje na dodatkowe informacje od użytkownika, pole \textit{is\_final} będzie miało wartość \textit{false}. Poza tym, w odpowiedzi będzie pole \textit{expects\_input} z wartością \textit{true}. Daje to sygnał dla aplikacji, że użytkownik powinien podać dodatkowe informacje.
 
 \section{Serwer}
 
@@ -1967,9 +1968,9 @@ W nagłówku ekranu znajduje się tekst powitalny "Hi, \texttt{\{username\}}!", 
 W centralnej części ekranu znajduje się komponent czatu, który umożliwia interakcję z botem. Czat składa się z listy wiadomości, renderowanych w przewijalnym kontenerze, oraz pola wejściowego do wysyłania nowych wiadomości. Użytkownik może wprowadzić tekst w polu \texttt{TextInput}, a następnie wysłać go za pomocą przycisku reprezentowanego ikoną \texttt{"paper-plane"}. Wiadomości użytkownika są dodawane do stanu \texttt{messages}, a z opóźnieniem jednej sekundy do czatu dodawana jest odpowiedź bota, co symuluje interakcję w czasie rzeczywistym.
 
 Obsługa wiadomości jest realizowana przez funkcję \texttt{handleSend}, która sprawdza, czy pole wejściowe nie jest puste, a następnie aktualizuje listę wiadomości. Wiadomości są renderowane jako dymki czatu, przy czym dymki wiadomości użytkownika i bota różnią się kolorami i stylami, co ułatwia rozróżnienie nadawców.
-\subsection{Baza danych}
+\section{Baza danych}
 
-\subsubsection{Inicjalizacja bazy danych}
+\subsection{Inicjalizacja bazy danych}
 
 W przypadku tworzenia nowego środowiska konieczna jest inicjalizacja nowej bazy danych. W tym celu powstał plik \textit{init\_tables.sql}, który zawiera skrypt tworzący nową bazę danych. Skrypt ten tworzy nową bazę danych oraz tabele. Na listingu \ref{lst:init_tables} przedstawiono zawartość pliku \textit{init\_tables.sql}.
 
@@ -2047,7 +2048,7 @@ CREATE TABLE cart_items (
 Po utworzeniu bazy danych, konieczne jest dodanie danych do tabel. W tym celu powstał plik \textit{init\_data.sql}, który zawiera skrypt dodający dane do tabel. Na listingu \ref{lst:init_data} przedstawiono część zawartości pliku \textit{init\_data.sql}.
 
 \begin{figure}[H]
-\begin{lstlisting}[language=SQL, caption=Przykładowa definicja inicjalizacji danych, label=lst:init_data]
+\begin{lstlisting}[language=SQL, caption=Fragment pliku init\_data.sql, label=lst:init_data]
 DELETE FROM cart_items;
 DELETE FROM carts;
 DELETE FROM users;
