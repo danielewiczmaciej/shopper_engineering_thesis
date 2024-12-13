@@ -137,6 +137,7 @@ W odpowiedzi można znaleźć następujące pola:
     \item \textit{type} - typ odpowiedzi.
 \end{itemize}
 W polu \textit{response}, może znaleźć się jeszcze pole \textit{action} które określa jaką akcję należy wykonać po otrzymaniu odpowiedzi.
+W przypadku gdy model oczekuje na dodatkowe informacje od użytkownika, pole \textit{is\_final} będzie miało wartość \textit{false}. Poza tym, w odpowiedzi będzie pole \textit{expects\_input} z wartością \textit{true}. Daje to sygnał dla aplikacji, że użytkownik powinien podać dodatkowe informacje.
 
 \section{Serwer}
 
@@ -1997,9 +1998,10 @@ W nagłówku ekranu znajduje się tekst powitalny "Hi, \texttt{{username}}!", kt
 W centralnej części ekranu znajduje się komponent czatu, który umożliwia interakcję z botem. Czat składa się z dwóch głównych elementów: \begin{itemize} \item Lista wiadomości renderowana w przewijalnym kontenerze, w którym każda wiadomość jest prezentowana w formie dymka. Dymki są stylizowane inaczej w zależności od nadawcy (użytkownik lub bot), co pozwala łatwo rozróżnić, kto wysłał daną wiadomość. \item Pole tekstowe (\texttt{TextInput}) z przyciskiem wysyłania wiadomości, oznaczonym ikoną \texttt{"paper-plane"}. \end{itemize}
 
 Obsługa wiadomości jest realizowana przez funkcję \texttt{handleSend}, która odpowiada za interakcję z botem. Działanie tej funkcji przebiega następująco: \begin{enumerate} \item Sprawdza, czy tekst w polu wejściowym (\texttt{inputText}) nie jest pusty. Jeśli pole jest puste, funkcja kończy działanie. \item Dodaje wiadomość użytkownika do stanu \texttt{messages} za pomocą metody \texttt{setMessages}, co automatycznie powoduje jej wyświetlenie w interfejsie. \item Wysyła zapytanie POST do zewnętrznego API bota (\texttt{https://api.wit.ai/event}), korzystając z funkcji \texttt{fetch}. Zapytanie zawiera następujące elementy: \begin{itemize} \item Nagłówek \texttt{Authorization}, który zawiera token autoryzacyjny. \item Treść wiadomości w formacie JSON, w której klucz \texttt{"message"} przechowuje wartość wprowadzoną przez użytkownika. \end{itemize} \item Po otrzymaniu odpowiedzi od bota, funkcja przetwarza ją w formacie JSON (\texttt{response.json()}). Jeśli odpowiedź zawiera tekst (\texttt{data.reply}), dodaje ją do stanu \texttt{messages}, co powoduje wyświetlenie odpowiedzi bota w czacie. \item W przypadku błędu (np. brak odpowiedzi od API), w konsoli wyświetlany jest komunikat diagnostyczny, a użytkownik pozostaje bez odpowiedzi. \item Na zakończenie, wartość pola tekstowego \texttt{inputText} jest czyszczona. \end{enumerate}
-\subsection{Baza danych}
 
-\subsubsection{Inicjalizacja bazy danych}
+\section{Baza danych}
+
+\subsection{Inicjalizacja bazy danych}
 
 W przypadku tworzenia nowego środowiska konieczna jest inicjalizacja nowej bazy danych. W tym celu powstał plik \textit{init\_tables.sql}, który zawiera skrypt tworzący nową bazę danych. Skrypt ten tworzy nową bazę danych oraz tabele. Na listingu \ref{lst:init_tables} przedstawiono zawartość pliku \textit{init\_tables.sql}.
 
@@ -2077,7 +2079,7 @@ CREATE TABLE cart_items (
 Po utworzeniu bazy danych, konieczne jest dodanie danych do tabel. W tym celu powstał plik \textit{init\_data.sql}, który zawiera skrypt dodający dane do tabel. Na listingu \ref{lst:init_data} przedstawiono część zawartości pliku \textit{init\_data.sql}.
 
 \begin{figure}[H]
-\begin{lstlisting}[language=SQL, caption=Przykładowa definicja inicjalizacji danych, label=lst:init_data]
+\begin{lstlisting}[language=SQL, caption=Fragment pliku init\_data.sql, label=lst:init_data]
 DELETE FROM cart_items;
 DELETE FROM carts;
 DELETE FROM users;
