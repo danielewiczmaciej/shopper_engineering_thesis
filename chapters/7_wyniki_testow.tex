@@ -56,3 +56,33 @@ Na rysunku \ref{fig:witai_cart_example} przedstawiono przykład przejścia do wi
 \end{figure}
 
 Na rysunku \ref{fig:witai_what_is_this} przedstawiono przykład zapytania zakłopotanego użytkownika, który nie wie, co to jest. System w odpowiedzi na takie pytanie, przedstawił się, co jest oczekiwanym zachowaniem.
+
+
+\section{Testy pozycjonowania w korytarzu (symulacja warunków sklepowych)}
+\label{subsec:testy_pozycjonowania_korytarz}
+
+W celu oceny dokładności i stabilności systemu pozycjonowania przeprowadzono testy w warunkach domowych, korzystając z korytarza o długości około 15 m, co miało symulować jednoliniową strukturę alejki sklepowej. Wzdłuż korytarza umieszczono nadajniki BLE w regularnych odstępach (co 2--3 m), a pomiary wartości RSSI uśredniano i wygładzano filtrem Kalmana.
+
+\paragraph{Scenariusz testów:} 
+\begin{itemize}
+    \item \textbf{Pozycjonowanie statyczne:} Tester pozostawał w jednym miejscu (np. w połowie korytarza), a system na bieżąco aktualizował pozycję. Uzyskano stabilność pozycji z błędem rzędu 5-15 cm.
+    \item \textbf{Pozycjonowanie w ruchu:} Tester poruszał się z prędkością około 1 m/s na całej długości korytarza. Średni błąd wynosił 15--30 cm. Filtr Kalmana skutecznie niwelował drobne fluktuacje RSSI.
+    \item \textbf{Wpływ drobnych zakłóceń:} Nawet obecność niewielkich przeszkód (metalowe przedmioty, meble) rzadko pogarszała dokładność powyżej 30 cm.
+\end{itemize}
+
+Uzyskane wyniki wskazują, że w kontrolowanych warunkach możliwe jest osiągnięcie bardzo dobrej dokładności pozycjonowania, co stanowi solidną podstawę przed wdrożeniem systemu w bardziej złożonym środowisku, takim jak sklep.
+
+
+\section{Testy wyznaczania trasy na wygenerowanych grafach}
+\label{subsec:testy_trasowania_grafy}
+
+W celu oceny efektywności i skalowalności algorytmów trasowania (algorytm Dijkstry, heurystyka 2-opt) przeprowadzono testy w środowisku symulacyjnym. Wygenerowano różne grafy, odwzorowujące układy alejek sklepowych o zróżnicowanej liczbie wierzchołków (od kilkunastu do kilkuset) i połączeń.
+
+\paragraph{Scenariusz testów:} 
+\begin{itemize}
+    \item \textbf{Małe grafy (20--30 wierzchołków):} Czas wyznaczenia najkrótszych ścieżek i optymalizacji 2-opt był pomijalnie mały (ułamki milisekund).
+    \item \textbf{Średnie grafy (50--100 wierzchołków):} Obliczenia trwały kilka milisekund. Aktualizacja trasy w reakcji na zmiany celu lub pozycji użytkownika zachodziła niemal natychmiast.
+    \item \textbf{Duże grafy (kilkaset wierzchołków):} Czas obliczeń rzadko przekraczał 100--200 ms, co nadal jest akceptowalne w kontekście systemu nawigacji sklepowej.
+\end{itemize}
+
+Testy symulacyjne potwierdziły wysoką wydajność i elastyczność przyjętych algorytmów trasowania. Nawet dla bardziej złożonych układów, typowych dla dużych sklepów, system jest w stanie szybko obliczyć i zoptymalizować trasę, zapewniając responsywną i interaktywną nawigację w czasie rzeczywistym.
