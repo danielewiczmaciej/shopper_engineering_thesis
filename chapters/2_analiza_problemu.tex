@@ -9,7 +9,7 @@ Trasowanie po sklepie to zadanie polegające na znalezieniu optymalnej ścieżki
 
 Proces trasowania otrzymuje na wejściu listę wierzchołków zmapowaną z listy zakupów użytkownika. System nawigacji musi znaleźć najkrótszą drogę w grafie, zaczynając od aktualnej pozycji użytkownika (dostarczanej przez system pozycjonowania) i przechodząc przez wszystkie wierzchołki z listy.
 
-\subsection{Modelowanie sklepu jako graf}
+\subsection{Reprezentacja sklepu w formie grafu}
 Przeciętny graf sklepu ma prostą i powtarzalną strukturę: składa się z kilku długich, równoległych alejek, połączonych jedną poziomą alejką na dole i drugą u góry. Wagi krawędzi odzwierciedlają odległości pomiędzy sekcjami – często są one stałe, a wyjątki pojawiają się głównie na przejściach między alejkami i zakrętach. Dzięki temu sklep można przedstawić jako graf o regularnej strukturze, co ułatwia zastosowanie klasycznych algorytmów grafowych.
 
 \subsection{Podobieństwa i różnice z problemem komiwojażera (TSP)}
@@ -32,7 +32,7 @@ Najprostszym podejściem do problemu trasowania po sklepie jest potraktowanie go
 Wykorzystując algorytm Dijkstry, można obliczyć najkrótszą trasę pomiędzy kolejnymi produktami z listy zakupów. W celu obsłużenia wielu punktów docelowych stosuje się strategię sekwencyjnego wywoływania algorytmu dla kolejnych punktów lub łączenia technik heurystycznych.
 
 \subsubsection{Heurystyki optymalizacyjne: algorytm 2-opt i inne podejścia}
-Przy dłuższych listach produktów i większych sklepach znalezienie globalnie optymalnej trasy może być trudne obliczeniowo. W takim przypadku stosuje się heurystyki, które pozwalają na poprawę pierwotnie znalezionej ścieżki. Jedną z popularnych metod jest algorytm 2-opt, który poprzez iteracyjne zamiany krawędzi potrafi wyeliminować nielogiczne „skrzyżowania” ścieżek, skracając jej długość.
+Przy dłuższych listach produktów i większych sklepach znalezienie globalnie optymalnej trasy może być czasochłonne. W takim przypadku stosuje się heurystyki, które pozwalają na poprawę pierwotnie znalezionej ścieżki. Jedną z popularnych metod jest algorytm 2-opt, który poprzez iteracyjne zamiany krawędzi potrafi wyeliminować nielogiczne „skrzyżowania” ścieżek, skracając jej długość.
 
 Jak podkreślił Croes (1958): „Algorytm 2-opt oferuje prostą, ale skuteczną metodę poprawy tras dla problemów trasowania w grafach, co czyni go odpowiednim w praktycznych zastosowaniach” \cite{Croes1958}.
 
@@ -97,7 +97,7 @@ Fingerprinting to technika oparta na tworzeniu map referencyjnych sygnałów dla
     \item Wrażliwość na zmiany środowiska, co wymusza częste aktualizacje map sygnałów.
 \end{itemize}
 
-Jak wskazują Liu i in. (2007): „Choć fingerprinting może osiągać wysoką dokładność, utrzymanie aktualnych odcisków sygnału w stale zmieniającym się środowisku jest trudne i kosztowne” \cite{Liu2007}.
+Jak wykazano w \cite{Liu2007}: „Choć fingerprinting może osiągać wysoką dokładność, utrzymanie aktualnych odcisków sygnału w stale zmieniającym się środowisku jest trudne i kosztowne”.
 
 \subsection{Wyzwania środowiskowe w kontekście IPS}
 
@@ -111,12 +111,15 @@ Urządzenia elektroniczne, takie jak routery Wi-Fi, mogą powodować interferenc
 Dynamiczne zmiany w otoczeniu, np. ruch klientów w sklepie, dodatkowo destabilizują odczyty RSSI.
 
 \subsection{Filtr Kalmana – zastosowanie i efektywność}
-
+W ninejszym podrozdziale uwzględniono rozszerzony opis  filtrów Kalmana, ponieważ jest to kluczowy składnik zapropowanego rozwiązania.
 \subsubsection{Wygładzanie sygnałów RSSI za pomocą filtru Kalmana}
 
 Filtr Kalmana jest algorytmem stosowanym do estymacji zmiennych stanu w systemach dynamicznych, które są zakłócane przez szum. Jego szczególna efektywność wynika z połączenia predykcji modelu systemu oraz rzeczywistych obserwacji. Filtr ten znajduje zastosowanie w wielu dziedzinach, takich jak nawigacja, robotyka czy systemy pozycjonowania wewnętrznego. Zastosowanie tego filtru w IPS zostało wielokrotnie potwierdzone w literaturze. Ma i in. (2018) zauważają: „Zastosowanie filtru Kalmana do wygładzania sygnałów iBeacon pozwala znacząco obniżyć wariancję błędu pozycjonowania” \cite{Ma2018}.
+Dzięki iteracyjnemu procesowi predykcji i aktualizacji filtr Kalmana pozwala na wygładzanie sygnałów RSSI, redukując fluktuacje wynikające z zakłóceń środowiskowych i szumów.
 
-Podstawowe równania filtru Kalmana można opisać następująco:
+Zmiennymi stanu w zastosowanym filtrze Kalmana są estymowana wartość sygnału RSSI ($\hat{x}{k|k}$) oraz kowariancja błędu estymacji ($P{k|k}$), które są aktualizowane w każdej iteracji algorytmu.
+
+Podstawowe równania tego filtru można opisać następująco:
 
 \begin{itemize}
     \item \textbf{Równanie predykcji stanu:}
@@ -162,8 +165,6 @@ Podstawowe równania filtru Kalmana można opisać następująco:
         \item $I$ – macierz jednostkowa.
     \end{itemize}
 \end{itemize}
-
-Dzięki iteracyjnemu procesowi predykcji i aktualizacji filtr Kalmana pozwala na wygładzanie sygnałów RSSI, redukując fluktuacje wynikające z zakłóceń środowiskowych i szumów.
 
 \subsubsection{Porównanie z alternatywnymi technikami filtracji}
 
