@@ -996,7 +996,7 @@ W niniejszej sekcji przedstawione zostaną szczegółowe informacje na temat wid
 
 Strona tytułowa składa się z czterech elementów. Należą do nich logo aplikacji, nagłówek, krótki opis oraz przycisk "Get Started", który przenosi użytkownika do strony logowania lub kategorii wybranego sklepu.
 
-\begin{lstlisting}[language=JavaScript, caption=Strona tytułowa implementacja, label=lst:view]
+\begin{lstlisting}[language=JavaScript, caption=Strona tytułowa implementacja, label=lst:home_view]
     export default function Home() {
         const [username, setUsername] = useState('');
         const navigation = useNavigation();
@@ -1056,7 +1056,7 @@ Ekran \textbf{Login} w aplikacji odpowiada za umożliwienie użytkownikowi uwier
 
 Po wejściu na ekran inicjalizowany jest przepływ obsługi głosowej (\texttt{startVoiceLoginFlow}) za pomocą hooka \texttt{useEffect}. Funkcja ta wykorzystuje narzędzie VoiceFlow (\texttt{useVoiceFlow}) do uruchomienia scenariusza logowania zdefiniowanego w pliku \texttt{loginScreenFlow}. Przepływ ten pozwala na dynamiczne uzupełnianie pól tekstowych na podstawie rozpoznanych komend głosowych. Wprowadzone przez użytkownika dane, takie jak e-mail i hasło, są modyfikowane w locie dzięki wywoływaniu \texttt{setLogin} i \texttt{setPassword}.
 
-\begin{lstlisting}[language=JavaScript, caption=Ekran logowania implementacja, label=lst:view]
+\begin{lstlisting}[language=JavaScript, caption=Ekran logowania implementacja, label=lst:login_view]
     export default function Login() {
         const [login, setLogin] = useState('');
         const [password, setPassword] = useState('');
@@ -1187,7 +1187,7 @@ Ekran rejestracji służy do obsługi procesu rejestracji nowego użytkownika w 
 
 Po załadowaniu widoku, używany jest hook \texttt{useLayoutEffect}, aby wyłączyć wyświetlanie nagłówka w tym ekranie. Dodatkowo, komponent wykorzystuje \texttt{useEffect}, aby uruchomić funkcję obsługi rejestracji głosowej po zamontowaniu komponentu. Hooki \texttt{useRouter} i \texttt{useNavigation} są używane do nawigacji między ekranami w aplikacji.
 
-\begin{lstlisting}[language=JavaScript, caption=Ekran rejestracji implementacja, label=lst:view]
+\begin{lstlisting}[language=JavaScript, caption=Ekran rejestracji implementacja, label=lst:register_view]
     export default function Register() {
         const [login, setLogin] = useState('');
         const [password, setPassword] = useState('');
@@ -1393,7 +1393,7 @@ Po zakończeniu procesu rejestracji użytkownik jest przekierowywany do ekranu k
 
 Ekran kategorii produktów pozwala użytkownikowi przeglądać dostępne kategorie w wybranym sklepie oraz wyszukiwać je za pomocą paska wyszukiwania. Na początku komponent inicjalizuje kilka stanów za pomocą hooków \texttt{useState}, które przechowują zapytanie wyszukiwania, przefiltrowane kategorie oraz wszystkie dostępne kategorie. Do zarządzania nawigacją używana jest funkcja \texttt{useNavigation}, a także funkcje \texttt{useRouter} i \texttt{useGetAppData}, które pozwalają na zarządzanie danymi aplikacji oraz nawigacją między ekranami.
 
-\begin{lstlisting}[language=JavaScript, caption=Ekran kategorii implementacja, label=lst:view]
+\begin{lstlisting}[language=JavaScript, caption=Ekran kategorii implementacja, label=lst:categories_view]
     export default function Categories() {
         const [searchQuery, setSearchQuery] = useState('');
         const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
@@ -1497,7 +1497,7 @@ Na dole ekranu znajduje się pasek nawigacyjny, który umożliwia szybki dostęp
 
 Ekran \texttt{Products} w aplikacji Shopper umożliwia użytkownikom przeglądanie produktów w wybranej kategorii, ich wyszukiwanie oraz dodawanie do koszyka. Użytkownicy mogą zmieniać ilość produktów, a także sprawdzać ceny oraz jednostki miary. Ekran zawiera również pasek nawigacyjny, umożliwiający łatwy dostęp do innych sekcji aplikacji, takich jak kategorie, koszyk czy profil użytkownika.
 
-\begin{lstlisting}[language=JavaScript, caption=Ekran produktów implementacja, label=lst:view]
+\begin{lstlisting}[language=JavaScript, caption=Ekran produktów implementacja, label=lst:products_view]
     export default function Products() {
         const [searchQuery, setSearchQuery] = useState('');
         const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -1740,7 +1740,7 @@ Aby dodać produkt do koszyka, kupujący musi wybrać ilość i kliknąć przyci
 
 Ekran generowania kodu QR umożliwia użytkownikowi wygenerowanie kodu QR, który zawiera identyfikatory produktów znajdujących się w koszyku.
 
-\begin{lstlisting}[language=JavaScript, caption=Generowanie kodu QR implementacja, label=lst:view]
+\begin{lstlisting}[language=JavaScript, caption=Generowanie kodu QR implementacja, label=lst:code_view]
   export default function Code() { 
     const navigation = useNavigation(); 
     const router = useRouter();
@@ -1848,7 +1848,7 @@ Ekran mapy sklepów umożliwia użytkownikowi wybór sklepu z mapy. Na ekranie w
 
 Po załadowaniu danych, mapa jest ustawiona na region oparty na współrzędnych sklepu o nazwie „ETI”, jeśli taki sklep istnieje, lub na pierwszy sklep w bazie danych. W kodzie jest to realizowane w funkcji fetchStores, gdzie po pobraniu danych sklepów, ustawia się region mapy w oparciu o współrzędne sklepu ETI lub domyślnie pierwszego sklepu w bazie.
 
-\begin{lstlisting}[language=JavaScript, caption=Mapa sklepów implementacja, label=lst:view]
+\begin{lstlisting}[language=JavaScript, caption=Mapa sklepów implementacja, label=lst:map_view]
     export default function Map() {
         const navigation = useNavigation();
         const router = useRouter();
@@ -1963,7 +1963,7 @@ Funkcja saveAppData jest odpowiedzialna za zapisanie danych aplikacji, co pozwal
     \item Funkcja \texttt{fetchUnits} pobiera jednostki miary z backendu, aby umożliwić wyświetlanie cen produktów z odpowiednimi jednostkami.
     \end{itemize}
 
-\begin{lstlisting}[language=JavaScript, caption=Koszyk użytkownika implementacja, label=lst:view]
+\begin{lstlisting}[language=JavaScript, caption=Koszyk użytkownika implementacja, label=lst:cart_view]
     export default function Cart() {
         const [searchQuery, setSearchQuery] = useState('');
         const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -2147,7 +2147,7 @@ Każdy produkt w koszyku posiada przycisk umożliwiający jego usunięcie. Po kl
 
 Ekran Nawigacji w aplikacji jest zaprojektowany w taki sposób, aby umożliwić użytkownikowi łatwe śledzenie jego lokalizacji i nawigację między różnymi sekcjami aplikacji. Centralnym elementem ekranu jest mapa, która pokazuje bieżącą lokalizację użytkownika. Mapa jest renderowana przez komponent \texttt{EtiMap}, będący wcześniej zaprojektowaną mapą SVG. Przyjmuje on jako parametr \texttt{currentLocation} — współrzędne lokalizacji użytkownika. Lokalizacja ta jest aktualizowana dzięki subskrypcji na usłudze \texttt{PositionService}, która na bieżąco przekazuje zmiany lokalizacji do komponentu. Dzięki temu mapa dynamicznie reaguje na zmiany w pozycji użytkownika, co zapewnia płynne śledzenie w czasie rzeczywistym.
 
-\begin{lstlisting}[language=JavaScript, caption=Nawigacja użytkownika implementacja, label=lst:view]
+\begin{lstlisting}[language=JavaScript, caption=Nawigacja użytkownika implementacja, label=lst:navigation_view]
   export default function Navigation() {
     const { devices, isScanning, scanDevices } = useBluetoothService();
     const [currentLocation, setCurrentLocation] = useState<number | null>(null);
@@ -2213,7 +2213,7 @@ Klasa \texttt{PositionService} subskrybuje zmiany lokalizacji za pomocą obserwa
 
 Ekran Profilu Użytkownika w aplikacji został zaprojektowany tak, aby zapewnić użytkownikowi intuicyjny interfejs do zarządzania jego kontem oraz możliwość komunikacji z botem w dedykowanej sekcji czatu. Centralnym punktem ekranu jest powitanie użytkownika, którego imię jest dynamicznie pobierane z lokalnych danych aplikacji za pomocą funkcji \texttt{getAppData}. Funkcja ta, wykorzystując \texttt{useEffect}, inicjalizuje pobranie nazwy użytkownika po załadowaniu ekranu i ustawia ją w stanie \texttt{username}.
 
-\begin{lstlisting}[language=JavaScript, caption=Profil użytkownika implementacja, label=lst:view]  
+\begin{lstlisting}[language=JavaScript, caption=Profil użytkownika implementacja, label=lst:user_view]  
   export default function User() {
     const [username, setUsername] = useState('');
     const [messages, setMessages] = useState<ChatMessage[]>([{ text: 'Hi! How can I help you?', sender: 'bot' }]);
