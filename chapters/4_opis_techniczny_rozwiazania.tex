@@ -358,7 +358,7 @@ Funkcje te są odpowiedzialne za wykonywanie określonych zadań, takich jak pob
 
 Funkcja odpowiedzialna za zapisywanie danych w pamięci lokalnej aplikacji. Umożliwia zapisanie dowolnych informacji, takich jak dane użytkownika, tokeny sesji, czy inne ustawienia aplikacji. Funkcja ta oferuje również opcję ustawienia daty wygaśnięcia danych, co pozwala na automatyczne usuwanie informacji po określonym czasie. Podobnie jak w przypadku funkcji \textit{useGetAppData}, zapis odbywa się za pomocą \textit{expo-secure-store}, który zapewnia bezpieczeństwo przechowywanych danych.
 
-\begin{lstlisting}[language=JavaScript, caption=useSaveAppDataHook, label=lst:hook]
+\begin{lstlisting}[language=JavaScript, caption=useSaveAppDataHook, label=lst:hook_data]
   import { useCallback } from 'react';
   import * as SecureStore from 'expo-secure-store';
   
@@ -387,7 +387,7 @@ Funkcja oblicza datę wygaśnięcia danych (jeśli została podana) i zapisuje d
 
 Funkcja odpowiedzialna za pobieranie danych z pamięci lokalnej aplikacji. Umożliwia dostęp do zapisanych danych, takich jak tokeny sesji, dane użytkownika czy ustawienia aplikacji. Wykorzystuje do tego bibliotekę \textit{expo-secure-store}, która dostarcza gotowe rozwiązanie, zapewniające bezpieczeństwo przechowywanych informacji. 
     
-\begin{lstlisting}[language=JavaScript, caption=useGetAppDataHook, label=lst:hook]
+\begin{lstlisting}[language=JavaScript, caption=useGetAppDataHook, label=lst:hook_get_data]
   import { useCallback } from 'react';
   import * as SecureStore from 'expo-secure-store';
   
@@ -423,7 +423,7 @@ Pobieranie i usuwanie danych w pamięci lokalnej aplikacji odbywa się za pomoc�
 
 Funkcja odpowiedzialna za obsługę nawigacji w aplikacji. Umożliwia przenoszenie użytkownika między ekranami.w Funkcja ta sprawdza, czy użytkownik jest zalogowany, weryfikując obecność tokenu użytkownika w pamięci lokalnej za pomocą \textit{expo-secure-store} i w zależności od jego wartości podejmuje akcje.
       
-\begin{lstlisting}[language=JavaScript, caption=useHandleRouteChangeHook, label=lst:hook]
+\begin{lstlisting}[language=JavaScript, caption=useHandleRouteChangeHook, label=lst:hook_route]
   import { useRouter } from 'expo-router';
   import * as SecureStore from 'expo-secure-store';
   import { Screens } from '../enum/screens';
@@ -454,7 +454,7 @@ Przed przejściem na żądany ekran, funkcja sprawdza, czy w pamięci lokalnej i
 
 Funkcja odpowiedzialna za obsługę nagrywania i odtwarzania komend głosowych aplikacji. Umożliwia przetwarzanie komunikatów głosowych, rozpoznawanie mowy oraz generowanie odpowiedzi głosowych. Funkcja ta korzysta z dwóch głównych komponentów: \textit{expo-speech}, który umożliwia odtwarzanie komunikatów głosowych, oraz \textit{expo-speech-recognition}, który służy do rozpoznawania mowy.
 
-\begin{lstlisting}[language=JavaScript, caption=useSpeechFlowHook, label=lst:hook]
+\begin{lstlisting}[language=JavaScript, caption=useSpeechFlowHook, label=lst:hook_speech]
   import * as Speech from 'expo-speech';
   import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition';
   import { useState, useRef } from 'react';
@@ -535,7 +535,7 @@ Generowanie odpowiedzi głosowych na podstawie tekstu przekazanego jako argument
 
 Funkcja odpowiedzialna za obsługę komunikacji głosowej w aplikacji, umożliwiająca przeprowadzanie dialogów z użytkownikiem za pomocą poleceń głosowych oraz wykonywanie akcji w zależności od otrzymanych komend. Wykorzystuje funkcję \textit{useSpeechFlow} do obsługi mówienia (speak) i słuchania (listen). Funkcja przechodzi przez określony \textit{flow} (ciąg komunikatów i akcji) na podstawie aktualnego węzła, wykonując określone operacje jak wyświetlanie wiadomości, podejmowanie akcji, lub oczekiwanie na odpowiedź użytkownika.
     
-\begin{lstlisting}[language=JavaScript, caption=useVoiceFlowHook, label=lst:hook]
+\begin{lstlisting}[language=JavaScript, caption=useVoiceFlowHook, label=lst:hook_voice]
   import { useSpeechFlow } from './useSpeechFlow';
 
   export const useVoiceFlow = () => {
