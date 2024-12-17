@@ -1423,7 +1423,7 @@ Ekran kategorii produktów pozwala użytkownikowi przeglądać dostępne kategor
 
                 return data;
             } catch (error) {
-                console.error('Błąd podczas pobierania kategorii:', error);
+                console.error('Blad podczas pobierania kategorii:', error);
             }
             };
 
@@ -1529,7 +1529,7 @@ Ekran \texttt{Products} w aplikacji Shopper umożliwia użytkownikom przeglądan
                 setFilteredProducts(data);
                 return data;
             } catch (error) {
-                console.error('Błąd podczas pobierania produktów:', error);
+                console.error('Blad podczas pobierania produktów:', error);
             }
             };
 
@@ -1540,7 +1540,7 @@ Ekran \texttt{Products} w aplikacji Shopper umożliwia użytkownikom przeglądan
 
                 setUnits(data);
             } catch (error) {
-                console.error('Błąd podczas pobierania jednostek:', error);
+                console.error('Blad podczas pobierania jednostek:', error);
             }
             };
 
@@ -1630,10 +1630,10 @@ Ekran \texttt{Products} w aplikacji Shopper umożliwia użytkownikom przeglądan
             if (response.ok) {
                 Alert.alert(`"${product.name}" has been added to your cart`);
             } else {
-                throw new Error(`Błąd podczas dodawania do koszyka: ${response.statusText}`);
+                throw new Error(`Blad podczas dodawania do koszyka: ${response.statusText}`);
             }
             } catch (error) {
-            console.error('Błąd:', error);
+            console.error('Blad:', error);
             }
         };
 
@@ -1662,7 +1662,7 @@ Ekran \texttt{Products} w aplikacji Shopper umożliwia użytkownikom przeglądan
                 throw new Error(`Błąd podczas dodawania do koszyka: ${response.statusText}`);
             }
             } catch (error) {
-            console.error('Błąd: ', error);
+            console.error('Blad: ', error);
             }
         };
 
@@ -1998,10 +1998,10 @@ Funkcja saveAppData jest odpowiedzialna za zapisanie danych aplikacji, co pozwal
 
                 setCartItems(userCartItems);
                 } catch (error) {
-                console.error('Błąd podczas pobierania produktów z koszyka:', error);
+                console.error('Blad podczas pobierania produktów z koszyka:', error);
                 }
             } catch (error) {
-                console.error('Błąd podczas przypisywania koszyka: ', error);
+                console.error('Blad podczas przypisywania koszyka: ', error);
             }
             };
 
@@ -2011,7 +2011,7 @@ Funkcja saveAppData jest odpowiedzialna za zapisanie danych aplikacji, co pozwal
                 const data = await response.json();
                 setUnits(data);
             } catch (error) {
-                console.error('Błąd podczas pobierania jednostek:', error);
+                console.error('Blad podczas pobierania jednostek:', error);
             }
             };
 
@@ -2039,7 +2039,7 @@ Funkcja saveAppData jest odpowiedzialna za zapisanie danych aplikacji, co pozwal
 
                 return filteredCartProducts || [];
             } catch (error) {
-                console.error('Błąd podczas pobierania produktów:', error);
+                console.error('Blad podczas pobierania produktów:', error);
             }
             };
 
@@ -2076,11 +2076,11 @@ Funkcja saveAppData jest odpowiedzialna za zapisanie danych aplikacji, co pozwal
                 setCartProducts(updatedCartProducts);
                 setFilteredProducts(updatedCartProducts);
                 } else {
-                throw new Error('Błąd podczas usuwania elementu z koszyka');
+                throw new Error('Blad podczas usuwania elementu z koszyka');
                 }
             }
             } catch (error) {
-            console.error('Błąd podczas usuwania produktu:', error);
+            console.error('Blad podczas usuwania produktu:', error);
             }
         };
 
